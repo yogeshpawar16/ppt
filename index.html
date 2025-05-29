@@ -4,799 +4,1191 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Industry Trends & Market Research Infographic</title>
+	<title>HURL Trader Satisfaction Survey - Presentation Template</title>
 	<script src="https://cdn.tailwindcss.com"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 	<style>
-		body {
+		/* Custom Tailwind Configuration for Colors and Fonts */
+		:root {
+			--color-primary-deep-blue: #1E3A8A;
+			--color-secondary-forest-green: #166534;
+			--color-accent-amber: #D97706;
+			--color-neutral-charcoal: #374151;
+			--color-background-white: #FFFFFF;
+			--color-data-blue-light: #3B82F6;
+			--color-data-blue-dark: #1E40AF;
+			--color-gray: #6B7280;
+			/* For footnotes */
+		}
+
+		.font-inter {
 			font-family: 'Inter', sans-serif;
-			scroll-behavior: smooth;
 		}
 
-		.chart-container {
-			position: relative;
-			width: 100%;
-			max-width: 600px;
-			margin-left: auto;
-			margin-right: auto;
-			height: 320px;
-			max-height: 400px;
-		}
-
-		@media (min-width: 768px) {
-			.chart-container {
-				height: 350px;
-				max-height: 450px;
-			}
-		}
-
-		.stat-card {
-			background-color: #FFFFFF;
-			/* White card background */
-			border-radius: 0.5rem;
-			/* rounded-lg */
-			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-			/* shadow-md */
-			padding: 1.5rem;
-			/* p-6 */
-			margin-bottom: 2rem;
-			/* mb-8 */
-		}
-
-		.section-title {
+		/* Custom utility classes for typography based on guidelines */
+		.slide-title {
 			font-size: 2rem;
-			/* Tailwind text-3xl approx */
+			/* 32pt approx */
 			font-weight: 700;
-			/* bold */
-			color: #005c99;
-			/* Darker Blue for titles */
-			margin-bottom: 1rem;
-			border-bottom: 2px solid #ff9900;
-			/* Accent color underline */
-			padding-bottom: 0.5rem;
+			/* Bold */
+			color: var(--color-primary-deep-blue);
 		}
 
-		.sub-section-title {
+		.section-header {
 			font-size: 1.5rem;
-			/* Tailwind text-2xl approx */
+			/* 24pt approx */
 			font-weight: 600;
-			/* semibold */
-			color: #007bff;
-			/* Primary Blue for sub-titles */
-			margin-top: 1.5rem;
-			margin-bottom: 0.75rem;
+			/* Semi-Bold */
+			color: var(--color-neutral-charcoal);
 		}
 
-		.big-number {
-			font-size: 3rem;
-			/* Tailwind text-5xl approx */
-			font-weight: 700;
-			color: #007bff;
-			/* Primary Blue for big numbers */
+		.body-text {
+			font-size: 1.125rem;
+			/* 18pt approx */
+			font-weight: 400;
+			/* Regular */
+			color: var(--color-neutral-charcoal);
 		}
 
-		.kpi-value {
-			font-size: 2.25rem;
-			font-weight: 700;
-		}
-
-		.kpi-label {
-			font-size: 1rem;
-			color: #4A5568;
-			/* Gray-700 */
-		}
-
-		/* SWOT Analysis HTML/CSS Grid */
-		.swot-grid {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-			gap: 1.5rem;
-		}
-
-		.swot-item {
-			padding: 1rem;
-			border-radius: 0.375rem;
-			/* rounded-md */
-		}
-
-		.swot-item h3 {
+		.data-points {
 			font-size: 1.25rem;
-			/* text-xl */
-			font-weight: 600;
-			/* semibold */
-			margin-bottom: 0.5rem;
+			/* 20pt approx */
+			font-weight: 700;
+			/* Bold */
+			color: var(--color-primary-deep-blue);
+			/* Primary colors */
 		}
 
-		.swot-item ul {
-			list-style-type: disc;
-			padding-left: 1.25rem;
-			/* pl-5 */
+		.footnote-text {
 			font-size: 0.875rem;
-			/* text-sm */
+			/* 14pt approx */
+			font-weight: 400;
+			/* Regular */
+			color: var(--color-gray);
 		}
 
-		/* HTML Flow Chart */
-		.flow-chart-container {
+		/* Custom utility for data gradient */
+		.bg-data-gradient {
+			background-image: linear-gradient(to right, var(--color-data-blue-light), var(--color-data-blue-dark));
+		}
+
+		/* Hide all slides by default, JS will show current one */
+		.slide {
+			display: none;
+		}
+
+		/* Specific styles for visual elements */
+		.satisfaction-score-graphic {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: var(--color-primary-deep-blue);
+			color: var(--color-background-white);
+			font-size: 2.5rem;
+			font-weight: 700;
+		}
+
+		.traffic-light-indicator {
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			display: inline-block;
+			margin-right: 8px;
+		}
+
+		.bg-green-light {
+			background-color: #22C55E;
+		}
+
+		/* Tailwind green-500 */
+		.bg-amber-light {
+			background-color: #F59E0B;
+		}
+
+		/* Tailwind amber-500 */
+		.bg-red-light {
+			background-color: #EF4444;
+		}
+
+		/* Tailwind red-500 */
+
+		/* Simple bar chart styling */
+		.bar-chart-container {
 			display: flex;
 			flex-direction: column;
+			gap: 8px;
+			width: 100%;
+		}
+
+		.bar-item {
+			display: flex;
 			align-items: center;
-			gap: 1rem;
-			/* Space between items */
+			gap: 16px;
 		}
 
-		.flow-chart-item {
-			background-color: #E0F2FE;
-			/* light-blue-100 */
-			color: #0C4A6E;
-			/* sky-800 */
-			padding: 0.75rem 1.5rem;
-			/* py-3 px-6 */
-			border-radius: 9999px;
-			/* rounded-full */
+		.bar-label {
+			width: 150px;
+			/* Fixed width for labels */
+			flex-shrink: 0;
+			text-align: right;
+			font-weight: 600;
+			color: var(--color-neutral-charcoal);
+		}
+
+		.bar {
+			height: 25px;
+			border-radius: 4px;
+			flex-grow: 1;
+			background-color: var(--color-primary-deep-blue);
+			position: relative;
+		}
+
+		.bar-value {
+			position: absolute;
+			right: 8px;
+			top: 50%;
+			transform: translateY(-50%);
+			color: var(--color-background-white);
+			font-size: 0.9rem;
+			font-weight: 700;
+		}
+
+		/* Simple 4-quadrant dashboard */
+		.quadrant-dashboard {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 16px;
+			width: 100%;
+			max-width: 600px;
+			margin: 0 auto;
+		}
+
+		.quadrant-item {
+			background-color: #F3F4F6;
+			/* Tailwind gray-100 */
+			border-radius: 8px;
+			padding: 16px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
 			text-align: center;
-			min-width: 200px;
-			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			border: 1px solid #E5E7EB;
+			/* Tailwind gray-200 */
 		}
 
-		.flow-chart-arrow {
+		.quadrant-title {
+			font-weight: 600;
+			color: var(--color-neutral-charcoal);
+			margin-bottom: 8px;
+			font-size: 1rem;
+		}
+
+		.quadrant-value {
 			font-size: 1.5rem;
-			/* text-2xl */
-			color: #007bff;
-			/* Primary Blue */
-			transform: rotate(90deg);
-			/* Vertical arrow */
+			font-weight: 700;
+			color: var(--color-primary-deep-blue);
 		}
 
-		@media (min-width: 768px) {
-			.flow-chart-container {
-				flex-direction: row;
-				justify-content: center;
-			}
-
-			.flow-chart-arrow {
-				transform: rotate(0deg);
-				/* Horizontal arrow for wider screens */
-			}
+		/* Map placeholder */
+		.map-placeholder {
+			background-color: #E0E7FF;
+			/* Light blue */
+			border: 1px solid var(--color-primary-deep-blue);
+			height: 200px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.2rem;
+			color: var(--color-primary-deep-blue);
+			border-radius: 8px;
+			margin-top: 20px;
 		}
 
-		.sticky-nav {
-			position: -webkit-sticky;
-			/* Safari */
-			position: sticky;
+		/* Timeline styling */
+		.timeline-container {
+			display: flex;
+			flex-direction: column;
+			gap: 20px;
+			position: relative;
+			padding-left: 20px;
+		}
+
+		.timeline-container::before {
+			content: '';
+			position: absolute;
+			left: 0;
 			top: 0;
-			z-index: 50;
-			background-color: rgba(255, 255, 255, 0.9);
-			/* White with slight transparency */
-			backdrop-filter: blur(5px);
+			bottom: 0;
+			width: 4px;
+			background-color: #D1D5DB;
+			/* Tailwind gray-300 */
+			border-radius: 2px;
+		}
+
+		.timeline-item {
+			position: relative;
+			padding-left: 20px;
+		}
+
+		.timeline-item::before {
+			content: '';
+			position: absolute;
+			left: -8px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background-color: var(--color-primary-deep-blue);
+			border: 4px solid var(--color-background-white);
+		}
+
+		.timeline-item-title {
+			font-weight: 700;
+			color: var(--color-primary-deep-blue);
+			margin-bottom: 4px;
+		}
+
+		.timeline-item-content {
+			color: var(--color-neutral-charcoal);
+			font-size: 0.95rem;
+		}
+
+		/* Table styling */
+		.data-table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+		}
+
+		.data-table th,
+		.data-table td {
+			border: 1px solid #D1D5DB;
+			/* Tailwind gray-300 */
+			padding: 12px 16px;
+			text-align: left;
+		}
+
+		.data-table th {
+			background-color: #E5E7EB;
+			/* Tailwind gray-200 */
+			font-weight: 600;
+			color: var(--color-neutral-charcoal);
+		}
+
+		.data-table td {
+			color: var(--color-neutral-charcoal);
+		}
+
+		.data-table tbody tr:nth-child(odd) {
+			background-color: #F9FAFB;
+			/* Tailwind gray-50 */
+		}
+
+		/* Icon styling */
+		.icon {
+			display: inline-block;
+			font-size: 1.5rem;
+			margin-right: 8px;
+			vertical-align: middle;
+		}
+
+		/* General slide layout */
+		.slide-content-area {
+			padding: 40px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-start;
+			height: calc(100vh - 100px);
+			/* Adjust for header/footer if needed */
+			overflow-y: auto;
+			/* Enable scrolling for long content */
+		}
+
+		/* Responsive adjustments */
+		@media (max-width: 768px) {
+			.slide-title {
+				font-size: 1.75rem;
+				/* 28pt approx */
+			}
+
+			.section-header {
+				font-size: 1.25rem;
+				/* 20pt approx */
+			}
+
+			.body-text {
+				font-size: 1rem;
+				/* 16pt approx */
+			}
+
+			.data-points {
+				font-size: 1.125rem;
+				/* 18pt approx */
+			}
+
+			.footnote-text {
+				font-size: 0.75rem;
+				/* 12pt approx */
+			}
+
+			.satisfaction-score-graphic {
+				width: 120px;
+				height: 120px;
+				font-size: 2rem;
+			}
+
+			.quadrant-dashboard {
+				grid-template-columns: 1fr;
+				/* Stack on small screens */
+			}
+
+			.bar-label {
+				width: 100px;
+			}
 		}
 	</style>
 </head>
 
-<body class="bg-gray-100 text-gray-800">
+<body class="font-inter bg-white text-charcoal h-screen overflow-hidden">
 
-	<!-- Chosen Color Palette: "Tech Innovator"
-        Primary: #007bff (Bright Blue)
-        Secondary: #17a2b8 (Teal)
-        Accent: #ffc107 (Amber)
-        Accent 2 (Charts): #fd7e14 (Orange)
-        Neutral Text: #343a40 (Dark Gray)
-        Background Section: #f8f9fa (Light Gray for body)
-        Card Background: #ffffff (White)
-        Chart Colors: ['#007bff', '#fd7e14', '#17a2b8', '#28a745', '#6f42c1', '#dc3545']
-    -->
+	<div id="presentation-container" class="relative w-full h-full flex flex-col">
 
-	<!-- Infographic Narrative Plan:
-        1. Hero Section: Title, brief intro.
-        2. Market Overview: Market Size (Big Number), Growth Projections (Line Chart).
-        3. Market Segmentation: Revenue by Segment (Donut Chart).
-        4. Competitive Landscape: Market Share Analysis (Bar Chart), Key Player Positioning (HTML Table).
-        5. Technology Adoption: Adoption Rates of New Tech (Stacked Bar Chart).
-        6. Consumer Insights: Key Demographics (HTML List/Text), Consumer Sentiment (Fictional - could be a radar if data was available).
-        7. SWOT Analysis: Strengths, Weaknesses, Opportunities, Threats (HTML/CSS Grid).
-        8. Process Flow Example: Simplified Product Development Cycle (HTML/CSS).
-        9. Advanced Relationship Plot: R&D Spend vs. Revenue (Plotly.js Scatter Plot - WebGL).
-        10. Future Outlook: Key Predictions (Bulleted List).
-        11. Conclusion: Summary and Call to Action.
-    -->
+		<div class="flex justify-between items-center p-4 bg-gray-100 border-b border-gray-200">
+			<button id="prevBtn"
+				class="px-4 py-2 bg-primary-deep-blue text-white rounded-md shadow-md hover:bg-blue-800 transition-colors duration-200">Previous</button>
+			<span id="slideCounter" class="text-lg font-semibold text-neutral-charcoal">Slide 1 of 18</span>
+			<button id="nextBtn"
+				class="px-4 py-2 bg-primary-deep-blue text-white rounded-md shadow-md hover:bg-blue-800 transition-colors duration-200">Next</button>
+		</div>
 
-	<!-- Visualization Choices & Justification (Confirming NO SVG & NO MERMAID JS):
-        - Market Size: Inform -> Single Big Number (HTML Text). Justification: Direct impact for key metric.
-        - Growth Projections: Change -> Line Chart (Chart.js Canvas). Justification: Shows trend over time.
-        - Revenue by Segment: Compare/Inform -> Donut Chart (Chart.js Canvas). Justification: Shows proportion of whole for few categories.
-        - Market Share: Compare -> Bar Chart (Chart.js Canvas). Justification: Compares values across multiple competitors.
-        - Key Player Positioning: Organize -> Table (HTML). Justification: Detailed comparison across multiple variables.
-        - Tech Adoption Rates: Change/Compare -> Stacked Bar Chart (Chart.js Canvas). Justification: Shows composition within categories over time.
-        - Consumer Demographics: Inform -> List/Text (HTML). Justification: Simple presentation of key facts.
-        - SWOT Analysis: Organize -> HTML/CSS Grid. Justification: Clear grouping of qualitative data points. NO SVG/MERMAID.
-        - Process Flow: Organize -> HTML/CSS Flexbox. Justification: Simple linear process. NO SVG/MERMAID.
-        - R&D vs Revenue: Relationships -> Scatter Plot (Plotly.js WebGL/Canvas). Justification: Shows correlation between two continuous variables.
-        - Future Predictions: Inform/Organize -> List (HTML). Justification: Clear, concise presentation of future outlook.
-        - Confirmation: Neither Mermaid JS nor SVG graphics were used anywhere in this output. All charts are Canvas-based (Chart.js, Plotly.js with WebGL/Canvas), and diagrams are HTML/CSS.
-    -->
+		<div id="slides-wrapper" class="flex-grow relative">
 
-	<header class="bg-gradient-to-r from-[#007bff] to-[#005c99] text-white p-8 text-center sticky-nav shadow-lg">
-		<h1 class="text-4xl md:text-5xl font-bold mb-2">The Future of Tech: 2025 Industry Insights</h1>
-		<p class="text-lg md:text-xl">An In-depth Analysis of Market Dynamics, Trends, and Opportunities</p>
-		<nav class="mt-4">
-			<ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm md:text-base">
-				<li><a href="#market-overview" class="hover:underline">Market Overview</a></li>
-				<li><a href="#segmentation" class="hover:underline">Segmentation</a></li>
-				<li><a href="#competitive-landscape" class="hover:underline">Competition</a></li>
-				<li><a href="#tech-adoption" class="hover:underline">Tech Adoption</a></li>
-				<li><a href="#consumer-insights" class="hover:underline">Consumers</a></li>
-				<li><a href="#swot" class="hover:underline">SWOT</a></li>
-				<li><a href="#process-flow" class="hover:underline">Process Flow</a></li>
-				<li><a href="#advanced-plot" class="hover:underline">R&D Analysis</a></li>
-				<li><a href="#future-outlook" class="hover:underline">Outlook</a></li>
-			</ul>
-		</nav>
-	</header>
-
-	<main class="container mx-auto p-4 md:p-8">
-
-		<section id="market-overview" class="stat-card">
-			<h2 class="section-title">Global Tech Market Overview</h2>
-			<p class="mb-6 text-gray-600">The global technology market continues its robust expansion, driven by digital
-				transformation initiatives across industries and increasing consumer demand for connected devices and services.
-				This section provides a snapshot of the current market size and projected growth.</p>
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-				<div>
-					<h3 class="sub-section-title">Current Market Valuation</h3>
-					<p class="big-number">$5.2 Trillion</p>
-					<p class="text-gray-700 mt-2">As of Q4 2024, the global tech market showcases significant value, underlining
-						its critical role in the world economy. This figure encompasses hardware, software, and IT services.</p>
+			<div id="slide-1"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center text-center p-8">
+				<div class="absolute top-8 right-8">
+					<img src="/images/hurl.png" alt="HURL Logo" class="h-12">
 				</div>
-				<div class="chart-container h-[300px] md:h-[350px]">
-					<canvas id="marketGrowthChart"></canvas>
-				</div>
-			</div>
-			<p class="mt-4 text-sm text-gray-600">The line chart illustrates a consistent upward trajectory, with an
-				anticipated compound annual growth rate (CAGR) of 8.5% over the next five years, signaling strong investor
-				confidence and continuous innovation.</p>
-		</section>
-
-		<section id="segmentation" class="stat-card">
-			<h2 class="section-title">Market Segmentation by Revenue</h2>
-			<p class="mb-6 text-gray-600">Understanding the contribution of different segments is key to identifying major
-				revenue streams and areas of potential growth. The following visualization breaks down market revenue by core
-				technology segments.</p>
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-				<div class="chart-container h-[300px] md:h-[350px]">
-					<canvas id="segmentDonutChart"></canvas>
-				</div>
-				<div>
-					<h3 class="sub-section-title">Key Segment Insights</h3>
-					<ul class="list-disc pl-5 text-gray-700 space-y-1">
-						<li><strong>Software & SaaS:</strong> Dominates with the largest share, fueled by cloud adoption and
-							subscription models.</li>
-						<li><strong>Hardware & Devices:</strong> Remains a significant contributor, with growth in IoT and
-							wearables.</li>
-						<li><strong>IT & Cloud Services:</strong> Shows the fastest growth, highlighting the shift towards cloud
-							infrastructure.</li>
-						<li><strong>E-commerce Platforms:</strong> Continues strong performance, driven by online retail expansion.
-						</li>
-					</ul>
-					<p class="mt-3 text-sm text-gray-600">The donut chart clearly depicts Software & SaaS as the leading segment.
-						This underscores the ongoing digital transformation where businesses increasingly rely on sophisticated
-						software solutions and cloud-based services to operate and innovate.</p>
-				</div>
-			</div>
-		</section>
-
-		<section id="competitive-landscape" class="stat-card">
-			<h2 class="section-title">Competitive Landscape</h2>
-			<p class="mb-6 text-gray-600">The tech industry is characterized by intense competition, with established giants
-				and agile startups vying for market share. This section analyzes the positioning of key players.</p>
-			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-				<div>
-					<h3 class="sub-section-title">Market Share Analysis (Top 5 Players)</h3>
-					<div class="chart-container h-[300px] md:h-[400px]">
-						<canvas id="marketShareChart"></canvas>
+				<div class="max-w-4xl mx-auto">
+					<h1 class="slide-title mb-4">HURL Trader Satisfaction Survey Analysis</h1>
+					<h2 class="section-header text-neutral-charcoal mb-8">Strategic Insights & Action Plan for Enhanced Market
+						Leadership</h2>
+					<div class="body-text space-y-2">
+						<p>Presentation Date: May 2025</p>
+						<p>Prepared for: HURL Executive Leadership</p>
+						<p>Based on: 456 Trader Responses | 15 Satisfaction Dimensions</p>
 					</div>
-					<p class="mt-3 text-sm text-gray-600">The bar chart highlights the market share distribution among the top
-						five industry leaders. While Alpha Corp maintains a lead, Beta Systems and Gamma Inc. are closing the gap
-						through strategic acquisitions and innovation in AI.</p>
 				</div>
-				<div>
-					<h3 class="sub-section-title">Key Player Positioning</h3>
-					<div class="overflow-x-auto">
-						<table class="min-w-full bg-white border border-gray-300 text-sm">
-							<thead class="bg-gray-200">
-								<tr>
-									<th class="py-2 px-3 border-b text-left text-gray-700">Company</th>
-									<th class="py-2 px-3 border-b text-left text-gray-700">Strength</th>
-									<th class="py-2 px-3 border-b text-left text-gray-700">Focus Area</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="hover:bg-gray-50">
-									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Alpha Corp</td>
-									<td class="py-2 px-3 border-b text-gray-700">Cloud Infrastructure, AI</td>
-									<td class="py-2 px-3 border-b text-gray-700">Enterprise Solutions</td>
-								</tr>
-								<tr class="hover:bg-gray-50">
-									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Beta Systems</td>
-									<td class="py-2 px-3 border-b text-gray-700">Consumer Electronics, SaaS</td>
-									<td class="py-2 px-3 border-b text-gray-700">Global Consumer Market</td>
-								</tr>
-								<tr class="hover:bg-gray-50">
-									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Gamma Inc.</td>
-									<td class="py-2 px-3 border-b text-gray-700">AI Research, Autonomous Systems</td>
-									<td class="py-2 px-3 border-b text-gray-700">Future Technologies</td>
-								</tr>
-								<tr class="hover:bg-gray-50">
-									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Delta Solutions</td>
-									<td class="py-2 px-3 border-b text-gray-700">Cybersecurity, Data Analytics</td>
-									<td class="py-2 px-3 border-b text-gray-700">Security & Compliance</td>
-								</tr>
-								<tr class="hover:bg-gray-50">
-									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Epsilon Digital</td>
-									<td class="py-2 px-3 border-b text-gray-700">E-commerce, Digital Marketing</td>
-									<td class="py-2 px-3 border-b text-gray-700">Online Retail & Services</td>
-								</tr>
-							</tbody>
-						</table>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Welcome to our comprehensive analysis of trader satisfaction. This presentation transforms
+					456 trader responses into actionable strategic priorities that will drive revenue growth and competitive
+					advantage."
+				</p>
+			</div>
+
+			<div id="slide-2"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Executive Summary: Strong Foundation with Clear Growth Opportunities</h1>
+				<div class="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-5xl">
+					<div class="satisfaction-score-graphic mb-8 md:mb-0">85.1/100 ⭐</div>
+					<div class="flex-1 space-y-4 body-text">
+						<p><span class="font-bold text-primary-deep-blue">Overall Performance:</span> 85.1/100 Satisfaction Index ⭐
+							(Very Good)</p>
+						<p><span class="font-bold text-primary-deep-blue">Strategic Priority:</span> Western Region (+5.2 point
+							opportunity)</p>
+						<p><span class="font-bold text-primary-deep-blue">Competitive Advantage:</span> Product Quality Leadership
+							(4.70/5.0)</p>
+						<p><span class="font-bold text-primary-deep-blue">Revenue Impact:</span> 6-12% improvement potential in Year
+							1</p>
+						<p><span class="font-bold text-primary-deep-blue">Key Focus Areas:</span> Regional standardization, pricing
+							perception, trust building</p>
 					</div>
-					<p class="mt-3 text-sm text-gray-600">The table provides a qualitative overview of the strategic positioning
-						and core strengths of leading companies, offering insights into their competitive advantages and primary
-						market focus.</p>
 				</div>
-			</div>
-		</section>
-
-		<section id="tech-adoption" class="stat-card">
-			<h2 class="section-title">Emerging Technology Adoption Trends</h2>
-			<p class="mb-6 text-gray-600">The pace of technological innovation is accelerating. This section explores the
-				adoption rates of key emerging technologies across industries, indicating future investment priorities.</p>
-			<div class="chart-container h-[350px] md:h-[450px] lg:max-w-3xl">
-				<canvas id="techAdoptionChart"></canvas>
-			</div>
-			<p class="mt-4 text-sm text-gray-600">The stacked bar chart visualizes the adoption lifecycle (Early Adoption,
-				Growth Phase, Mature) for critical technologies like AI/ML, IoT, Blockchain, and Quantum Computing over the past
-				three years. AI/ML and IoT are clearly in the growth phase, with significant enterprise uptake, while Quantum
-				Computing remains in early R&D for most.</p>
-		</section>
-
-		<section id="consumer-insights" class="stat-card">
-			<h2 class="section-title">Consumer Insights & Demographics</h2>
-			<p class="mb-6 text-gray-600">Understanding consumer behavior and demographic profiles is crucial for product
-				development and marketing strategies. Key insights reveal a digitally native consumer base with high
-				expectations for personalization and seamless experiences.</p>
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-				<div>
-					<h3 class="sub-section-title">Key Demographic Segments</h3>
-					<ul class="list-none space-y-4">
-						<li class="flex items-start">
-							<span class="text-2xl text-[#007bff] mr-3">&#128100;</span>
-							<div><strong>Millennials & Gen Z:</strong> Comprise 65% of active tech consumers, driving demand for
-								mobile-first solutions and social commerce.</div>
-						</li>
-						<li class="flex items-start">
-							<span class="text-2xl text-[#007bff] mr-3">&#127758;</span>
-							<div><strong>Urban Dwellers:</strong> Higher adoption rates for smart home devices and high-speed internet
-								services (75% vs 45% rural).</div>
-						</li>
-						<li class="flex items-start">
-							<span class="text-2xl text-[#007bff] mr-3">&#128187;</span>
-							<div><strong>Remote Workers:</strong> Increased spending on collaboration tools, cybersecurity, and home
-								office setups (average $1,200/year).</div>
-						</li>
-					</ul>
+				<div class="quadrant-dashboard mt-12">
+					<div class="quadrant-item">
+						<div class="quadrant-title">Overall Performance</div>
+						<div class="quadrant-value">85.1/100</div>
+						<span class="traffic-light-indicator bg-green-light"></span> Good
+					</div>
+					<div class="quadrant-item">
+						<div class="quadrant-title">Strategic Priority</div>
+						<div class="quadrant-value">Western Region</div>
+						<span class="traffic-light-indicator bg-amber-light"></span> Opportunity
+					</div>
+					<div class="quadrant-item">
+						<div class="quadrant-title">Competitive Advantage</div>
+						<div class="quadrant-value">Product Quality</div>
+						<span class="traffic-light-indicator bg-green-light"></span> Strong
+					</div>
+					<div class="quadrant-item">
+						<div class="quadrant-title">Revenue Impact</div>
+						<div class="quadrant-value">6-12%</div>
+						<span class="traffic-light-indicator bg-green-light"></span> High Potential
+					</div>
 				</div>
-				<div>
-					<h3 class="sub-section-title">Top Consumer Expectations</h3>
-					<ul class="list-none space-y-4">
-						<li class="flex items-start">
-							<span class="text-2xl text-[#ffc107] mr-3">&#128176;</span>
-							<div><strong>Value for Money:</strong> 88% prioritize value over brand loyalty for tech purchases.</div>
-						</li>
-						<li class="flex items-start">
-							<span class="text-2xl text-[#ffc107] mr-3">&#128241;</span>
-							<div><strong>Seamless Experience:</strong> 72% expect consistent experience across all digital channels.
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "HURL demonstrates strong baseline performance with specific opportunities for significant
+					improvement. Our analysis identifies clear pathways to enhance competitive positioning and drive revenue
+					growth."
+				</p>
+			</div>
+
+			<div id="slide-3"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Survey Methodology: Robust Data Foundation</h1>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl body-text">
+					<div class="space-y-4">
+						<p><span class="font-bold text-primary-deep-blue">Survey Scope:</span> 456 trader responses (95%+ completion
+							rate)</p>
+						<p><span class="font-bold text-primary-deep-blue">Geographic Coverage:</span> 3 primary regions, 8+ states
+						</p>
+						<p><span class="font-bold text-primary-deep-blue">Question Categories:</span> 15 satisfaction dimensions
+							across 5 business areas</p>
+						<p><span class="font-bold text-primary-deep-blue">Data Quality Score:</span> <span
+								class="data-points">95.7/100</span> (Excellent)</p>
+						<p><span class="font-bold text-primary-deep-blue">Statistical Power:</span> >400 responses per question
+							(high confidence)</p>
+						<p><span class="font-bold text-primary-deep-blue">Analysis Approach:</span> Statistical analysis, regional
+							segmentation, predictive modeling</p>
+					</div>
+					<div class="flex flex-col items-center justify-center space-y-6">
+						<div class="w-full h-auto max-h-48 map-placeholder rounded-lg shadow-md">Geographic Coverage Map Placeholder
+						</div>
+						<div class="w-full bg-gray-200 rounded-full h-4">
+							<div class="bg-forest-green h-4 rounded-full" style="width: 95%;"></div>
+							<span class="text-xs text-gray-700 mt-1 block text-center">Survey Completion: 95%+</span>
+						</div>
+						<div class="w-full text-center text-primary-deep-blue font-semibold">Methodology Flow Diagram Placeholder
+						</div>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Our analysis is based on statistically robust data with excellent completion rates and
+					geographic representation, providing high confidence in our strategic recommendations."
+				</p>
+			</div>
+
+			<div id="slide-4"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">HURL Performance Dashboard: Above-Average with Improvement Opportunities</h1>
+				<div class="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-5xl">
+					<div class="satisfaction-score-graphic mb-8 md:mb-0">85.1/100 ⭐</div>
+					<div class="flex-1 space-y-4 body-text">
+						<p><span class="font-bold text-primary-deep-blue">Overall Satisfaction Index:</span> 85.1/100 (Above
+							Industry Average)</p>
+						<p><span class="font-bold text-primary-deep-blue">Response Distribution:</span> 89% positive ratings (4-5
+							stars)</p>
+						<p><span class="font-bold text-primary-deep-blue">Satisfaction Consistency:</span> All questions above
+							4.0/5.0</p>
+						<p><span class="font-bold text-primary-deep-blue">Performance Range:</span> 4.18 - 4.70 (narrow spread
+							indicates balanced excellence)</p>
+						<p><span class="font-bold text-primary-deep-blue">Trader Loyalty Indicators:</span> 94.4% rate 4.0+ overall
+						</p>
+					</div>
+				</div>
+				<div class="bar-chart-container mt-12 w-full max-w-3xl">
+					<h3 class="section-header mb-4 text-center">Satisfaction Distribution</h3>
+					<div class="bar-item">
+						<span class="bar-label">4-5 Stars</span>
+						<div class="bar" style="width: 89%;">
+							<span class="bar-value">89%</span>
+						</div>
+					</div>
+					<div class="bar-item">
+						<span class="bar-label">3 Stars</span>
+						<div class="bar bg-amber-light" style="width: 8%;">
+							<span class="bar-value">8%</span>
+						</div>
+					</div>
+					<div class="bar-item">
+						<span class="bar-label">1-2 Stars</span>
+						<div class="bar bg-red-light" style="width: 3%;">
+							<span class="bar-value">3%</span>
+						</div>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "HURL's performance significantly exceeds typical B2B satisfaction benchmarks, with strong
+					consistency across all dimensions. This solid foundation creates opportunity for strategic enhancement."
+				</p>
+			</div>
+
+			<div id="slide-5"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Category Performance: Product Excellence Leads, Pricing Needs Focus</h1>
+				<div class="w-full max-w-4xl space-y-6">
+					<div>
+						<h2 class="section-header mb-4"><span class="icon">🏆</span> Strongest Categories:</h2>
+						<div class="bar-chart-container">
+							<div class="bar-item">
+								<span class="bar-label">Product & Supply</span>
+								<div class="bar bg-forest-green" style="width: 88.2%;">
+									<span class="bar-value">88.2/100</span>
+								</div>
+							</div>
+							<div class="bar-item">
+								<span class="bar-label">Trust & Reputation</span>
+								<div class="bar bg-primary-deep-blue" style="width: 83%;">
+									<span class="bar-value">83.0/100</span>
+								</div>
+							</div>
+							<div class="bar-item">
+								<span class="bar-label">Customer Service</span>
+								<div class="bar bg-primary-deep-blue" style="width: 82.7%;">
+									<span class="bar-value">82.7/100</span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div>
+						<h2 class="section-header mb-4"><span class="icon">⚡</span> Focus Categories:</h2>
+						<div class="bar-chart-container">
+							<div class="bar-item">
+								<span class="bar-label">Pricing & Value</span>
+								<div class="bar bg-accent-amber" style="width: 81.8%;">
+									<span class="bar-value">81.8/100</span>
+								</div>
+							</div>
+							<div class="bar-item">
+								<span class="bar-label">Order & Delivery</span>
+								<div class="bar bg-accent-amber" style="width: 82.6%;">
+									<span class="bar-value">82.6/100</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Our product quality creates clear competitive differentiation, while pricing perception
+					represents our primary improvement opportunity. The narrow performance range indicates operational maturity."
+				</p>
+			</div>
+
+			<div id="slide-6"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Excellence Areas: Competitive Differentiators</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">🎯</span> Top Performing Questions:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Product Quality Consistency: <span class="data-points">4.70/5.0</span></span>
+							<div class="flex items-center">
+								<div class="w-48 bg-gray-200 rounded-full h-3">
+									<div class="bg-forest-green h-3 rounded-full" style="width: 72%;"></div>
+								</div>
+								<span class="ml-2 text-sm text-gray-700">72% max rating</span>
 							</div>
 						</li>
-						<li class="flex items-start">
-							<span class="text-2xl text-[#ffc107] mr-3">&#128272;</span>
-							<div><strong>Data Privacy:</strong> 65% are more concerned about data privacy now than a year ago.</div>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Supply Reliability: <span class="data-points">4.49/5.0</span></span>
+							<div class="flex items-center">
+								<div class="w-48 bg-gray-200 rounded-full h-3">
+									<div class="bg-primary-deep-blue h-3 rounded-full" style="width: 54%;"></div>
+								</div>
+								<span class="ml-2 text-sm text-gray-700">54% max rating</span>
+							</div>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Communication Transparency: <span class="data-points">4.46/5.0</span></span>
+							<div class="flex items-center">
+								<div class="w-48 bg-gray-200 rounded-full h-3">
+									<div class="bg-primary-deep-blue h-3 rounded-full" style="width: 52%;"></div>
+								</div>
+								<span class="ml-2 text-sm text-gray-700">52% max rating</span>
+							</div>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Overall Trust: <span class="data-points">4.45/5.0</span></span>
+							<div class="flex items-center">
+								<div class="w-48 bg-gray-200 rounded-full h-3">
+									<div class="bg-primary-deep-blue h-3 rounded-full" style="width: 52%;"></div>
+								</div>
+								<span class="ml-2 text-sm text-gray-700">52% max rating</span>
+							</div>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">After-Sales Support: <span class="data-points">4.42/5.0</span></span>
+							<div class="flex items-center">
+								<div class="w-48 bg-gray-200 rounded-full h-3">
+									<div class="bg-primary-deep-blue h-3 rounded-full" style="width: 49%;"></div>
+								</div>
+								<span class="ml-2 text-sm text-gray-700">49% max rating</span>
+							</div>
 						</li>
 					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Strategic Implications:</span> These strengths
+						create sustainable competitive advantages and should be protected while scaling.</p>
 				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Product quality consistency is our flagship differentiator with 72% of traders giving
+					maximum ratings. This excellence should be leveraged for competitive positioning and protected during
+					scaling."
+				</p>
 			</div>
-			<p class="mt-4 text-sm text-gray-600">These insights highlight the importance of tailoring tech products and
-				services to meet the specific needs and expectations of diverse consumer segments, with a strong emphasis on
-				digital fluency, value, and trust.</p>
-		</section>
 
-		<section id="swot" class="stat-card">
-			<h2 class="section-title">SWOT Analysis for the Tech Industry</h2>
-			<p class="mb-6 text-gray-600">A strategic overview of the Strengths, Weaknesses, Opportunities, and Threats
-				shaping the technology sector, providing a balanced perspective on its current state and future potential.</p>
-			<div class="swot-grid">
-				<div class="swot-item bg-green-100 border-l-4 border-green-500">
-					<h3 class="text-green-700">Strengths 💪</h3>
-					<ul class="text-green-600">
-						<li>Rapid innovation cycles</li>
-						<li>High global demand</li>
-						<li>Scalable business models</li>
-						<li>Access to vast amounts of data</li>
+			<div id="slide-7"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Strategic Improvement Priorities: Targeted Opportunities</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">⚠️</span> Priority Improvement Areas:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Pricing Competitiveness: <span class="data-points">4.18/5.0</span></span>
+							<span class="text-sm text-gray-700">(Highest variance, lowest satisfaction)</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Payment Terms Clarity: <span class="data-points">4.33/5.0</span></span>
+							<span class="text-sm text-gray-700">(8.1% neutral responses)</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Delivery Timeliness: <span class="data-points">4.35/5.0</span></span>
+							<span class="text-sm text-gray-700">(8.0% neutral responses)</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Inventory Availability: <span class="data-points">4.39/5.0</span></span>
+							<span class="text-sm text-gray-700">(Regional inconsistencies)</span>
+						</li>
 					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Impact Potential:</span> Each 0.1 point
+						improvement = estimated 1-2% revenue impact</p>
+
+					<div class="quadrant-dashboard mt-12">
+						<div class="quadrant-item bg-amber-100 border-amber-300">
+							<div class="quadrant-title">Pricing Competitiveness</div>
+							<div class="quadrant-value">High Impact</div>
+							<span class="traffic-light-indicator bg-amber-light"></span> Priority
+						</div>
+						<div class="quadrant-item bg-amber-100 border-amber-300">
+							<div class="quadrant-title">Payment Terms Clarity</div>
+							<div class="quadrant-value">Medium Impact</div>
+							<span class="traffic-light-indicator bg-amber-light"></span> Opportunity
+						</div>
+						<div class="quadrant-item bg-amber-100 border-amber-300">
+							<div class="quadrant-title">Delivery Timeliness</div>
+							<div class="quadrant-value">Medium Impact</div>
+							<span class="traffic-light-indicator bg-amber-light"></span> Opportunity
+						</div>
+						<div class="quadrant-item bg-amber-100 border-amber-300">
+							<div class="quadrant-title">Inventory Availability</div>
+							<div class="quadrant-value">Medium Impact</div>
+							<span class="traffic-light-indicator bg-amber-light"></span> Opportunity
+						</div>
+					</div>
 				</div>
-				<div class="swot-item bg-red-100 border-l-4 border-red-500">
-					<h3 class="text-red-700">Weaknesses 📉</h3>
-					<ul class="text-red-600">
-						<li>Talent shortages in specialized areas</li>
-						<li>Cybersecurity vulnerabilities</li>
-						<li>Complex regulatory landscapes</li>
-						<li>Supply chain dependencies</li>
-					</ul>
-				</div>
-				<div class="swot-item bg-blue-100 border-l-4 border-blue-500">
-					<h3 class="text-blue-700">Opportunities 🚀</h3>
-					<ul class="text-blue-600">
-						<li>Expansion into emerging markets</li>
-						<li>Advancements in AI and Machine Learning</li>
-						<li>Growth of IoT and connected devices</li>
-						<li>Development of sustainable technologies</li>
-					</ul>
-				</div>
-				<div class="swot-item bg-yellow-100 border-l-4 border-yellow-500">
-					<h3 class="text-yellow-700">Threats ⚠️</h3>
-					<ul class="text-yellow-600">
-						<li>Increasing geopolitical tensions</li>
-						<li>Data privacy regulations and breaches</li>
-						<li>Economic downturns impacting R&D</li>
-						<li>Intense global competition</li>
-					</ul>
-				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Pricing competitiveness shows the highest improvement potential with direct revenue impact.
+					These four areas represent our best opportunities for measurable business results."
+				</p>
 			</div>
-			<p class="mt-4 text-sm text-gray-600">This SWOT analysis, implemented using an HTML/CSS grid, highlights the
-				dynamic nature of the tech industry. While strong innovation and demand are key strengths, companies must
-				navigate talent gaps and security risks. Emerging technologies like AI and IoT present significant
-				opportunities, but global uncertainties and regulatory changes pose notable threats.</p>
-		</section>
 
-		<section id="process-flow" class="stat-card">
-			<h2 class="section-title">Simplified Product Development Cycle</h2>
-			<p class="mb-6 text-gray-600">This diagram, created with HTML and Tailwind CSS, illustrates a typical, simplified
-				lifecycle for developing and launching a new tech product, from initial conception to market release and
-				iteration.</p>
-			<div class="flow-chart-container py-4">
-				<div class="flow-chart-item">Idea & Research 💡</div>
-				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
-				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
-				<div class="flow-chart-item">Design & Prototyping 🎨</div>
-				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
-				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
-				<div class="flow-chart-item">Development & Testing 💻</div>
-				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
-				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
-				<div class="flow-chart-item">Launch & Marketing 🚀</div>
-				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
-				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
-				<div class="flow-chart-item">Feedback & Iteration 🔄</div>
+			<div id="slide-8"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Regional Analysis: Significant Performance Variations</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4">Regional Satisfaction Rankings:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li class="flex items-center justify-between">
+							<span class="flex-1"><span class="icon">🥇</span> Northern Region: <span
+									class="data-points">87.3/100</span> (90 traders)</span>
+							<span class="text-sm text-gray-700">- Benchmark Excellence</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1"><span class="icon">🥈</span> Eastern Region: <span
+									class="data-points">86.2/100</span> (266 traders)</span>
+							<span class="text-sm text-gray-700">- Volume Leader</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1"><span class="icon">🥉</span> Western Region: <span
+									class="data-points">82.1/100</span> (86 traders)</span>
+							<span class="text-sm text-gray-700">- Improvement Opportunity</span>
+						</li>
+					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Key Insight:</span> 5.2 point gap between best
+						and worst performing regions represents significant standardization opportunity</p>
+
+					<div class="bar-chart-container mt-8">
+						<h3 class="section-header mb-4 text-center">Regional Performance Gap</h3>
+						<div class="bar-item">
+							<span class="bar-label">Northern (87.3)</span>
+							<div class="bar bg-forest-green" style="width: 87.3%;">
+								<span class="bar-value">87.3</span>
+							</div>
+						</div>
+						<div class="bar-item">
+							<span class="bar-label">Eastern (86.2)</span>
+							<div class="bar bg-primary-deep-blue" style="width: 86.2%;">
+								<span class="bar-value">86.2</span>
+							</div>
+						</div>
+						<div class="bar-item">
+							<span class="bar-label">Western (82.1)</span>
+							<div class="bar bg-accent-amber" style="width: 82.1%;">
+								<span class="bar-value">82.1</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Regional analysis reveals our most significant improvement opportunity. The 5.2 point
+					satisfaction gap between Northern and Western regions represents both challenge and opportunity for
+					standardization."
+				</p>
 			</div>
-			<p class="mt-4 text-sm text-gray-600">This visualization demonstrates how basic HTML elements and CSS (Tailwind)
-				can be used to create simple process flows without relying on SVG or specialized diagramming libraries. Each
-				stage is crucial for successful product innovation.</p>
-		</section>
 
-		<section id="advanced-plot" class="stat-card">
-			<h2 class="section-title">R&D Investment vs. Revenue Growth (Fictional Data)</h2>
-			<p class="mb-6 text-gray-600">This scatter plot, rendered using Plotly.js with WebGL for performance, explores the
-				potential relationship between Research & Development expenditure and subsequent revenue growth for a sample of
-				fictional tech companies. This type of analysis can help identify investment effectiveness.</p>
-			<div id="rdRevenueScatterPlot" class="chart-container h-[400px] md:h-[450px] lg:max-w-3xl"></div>
-			<p class="mt-4 text-sm text-gray-600">The scatter plot suggests a positive correlation between higher R&D spending
-				and revenue growth, though variations exist. Companies with sustained, strategic R&D investment (represented by
-				larger bubble sizes indicating market cap) tend to see more significant top-line expansion. Plotly.js allows for
-				more complex visualizations like this, rendered efficiently using WebGL or Canvas.</p>
-		</section>
+			<div id="slide-9"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Northern Region: Best Practice Benchmark</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">🏆</span> Northern Region Advantages:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li>Leads ALL 5 categories with consistent excellence</li>
+						<li>Strongest in Pricing & Value: <span class="data-points">86.1/100</span> (vs 79.4 Western)</li>
+						<li>Service Excellence: <span class="data-points">87.8/100</span> Order & Delivery</li>
+						<li>Trust Leadership: <span class="data-points">87.1/100</span> Trust & Reputation</li>
+						<li>Risk Profile: Lowest (<span class="data-points">12.5/100</span> risk score)</li>
+					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Success Factors:</span> Superior pricing
+						communication, service consistency, relationship management</p>
 
-		<section id="future-outlook" class="stat-card">
-			<h2 class="section-title">Future Outlook & Key Predictions (2026-2030)</h2>
-			<p class="mb-6 text-gray-600">Looking ahead, several transformative trends are expected to redefine the technology
-				landscape. These predictions highlight areas of significant potential and disruption.</p>
-			<ul class="list-disc pl-5 space-y-2 text-gray-700">
-				<li><strong>AI Pervasiveness:</strong> Artificial Intelligence will become deeply integrated into nearly all
-					software and services, driving hyper-personalization and automation.</li>
-				<li><strong>The Metaverse Matures:</strong> Virtual and augmented reality applications will expand beyond gaming
-					into enterprise, education, and social interaction.</li>
-				<li><strong>Sustainable Tech:</strong> Growing emphasis on green computing, renewable energy solutions for data
-					centers, and circular economy models for hardware.</li>
-				<li><strong>Decentralization Wave:</strong> Broader adoption of blockchain and Web3 technologies for enhanced
-					security, transparency, and user control.</li>
-				<li><strong>Quantum Leap:</strong> Early commercial applications of quantum computing will emerge,
-					revolutionizing fields like drug discovery and complex system optimization.</li>
-			</ul>
-			<p class="mt-4 text-sm text-gray-600">These forward-looking statements suggest a future where technology is even
-				more intelligent, immersive, sustainable, and decentralized. Navigating these shifts will require strategic
-				foresight and adaptability from industry players.</p>
-		</section>
+					<div class="flex items-center justify-center mt-8 space-x-4">
+						<span class="icon">💡</span> <span class="text-lg font-semibold text-primary-deep-blue">Superior Pricing
+							Communication</span>
+						<span class="icon">📈</span> <span class="text-lg font-semibold text-primary-deep-blue">Service
+							Consistency</span>
+						<span class="icon">🤝</span> <span class="text-lg font-semibold text-primary-deep-blue">Relationship
+							Management</span>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Northern region represents our operational excellence benchmark. Their practices in pricing
+					communication and service delivery create the blueprint for system-wide improvement."
+				</p>
+			</div>
 
-		<section class="text-center py-10">
-			<h2 class="section-title">Conclusion: Navigating the Next Wave of Tech</h2>
-			<p class="max-w-3xl mx-auto text-gray-700 mb-6">The technology industry is at a pivotal juncture, brimming with
-				opportunities driven by relentless innovation and evolving user demands. Key success factors will include
-				strategic investment in emerging technologies, fostering talent, adapting to regulatory changes, and maintaining
-				a strong focus on customer-centric solutions. This infographic provides a snapshot of the current landscape and
-				future horizons.</p>
-			<a href="#market-overview"
-				class="bg-[#007bff] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#005c99] transition duration-300 inline-block shadow-md">Back
-				to Top</a>
-		</section>
-	</main>
+			<div id="slide-10"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Eastern Region: Scale + Satisfaction Excellence</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">💪</span> Eastern Region Strengths:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li>Massive Scale: <span class="data-points">266 traders</span> (58% of total business)</li>
+						<li>Consistent Performance: <span class="data-points">86.2/100</span> with lowest variability (0.59 SD)</li>
+						<li>Operational Proof: High satisfaction at scale is achievable</li>
+						<li>Revenue Impact: Largest segment for optimization opportunities</li>
+						<li>Stability: Most predictable satisfaction experience</li>
+					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Strategic Value:</span> Proves satisfaction and
+						scale can coexist successfully</p>
 
-	<footer class="bg-gray-800 text-gray-300 text-center p-6 mt-8">
-		<p>&copy; 2025 Tech Industry Insights Group. All Rights Reserved.</p>
-		<p class="text-sm">Data presented is illustrative and for demonstration purposes only.</p>
-	</footer>
+					<div class="bar-chart-container mt-8">
+						<h3 class="section-header mb-4 text-center">Trader Base Comparison</h3>
+						<div class="bar-item">
+							<span class="bar-label">Eastern (266)</span>
+							<div class="bar bg-primary-deep-blue" style="width: 100%;">
+								<span class="bar-value">266 Traders</span>
+							</div>
+						</div>
+						<div class="bar-item">
+							<span class="bar-label">Northern (90)</span>
+							<div class="bar bg-forest-green" style="width: 33.8%;">
+								<span class="bar-value">90 Traders</span>
+							</div>
+						</div>
+						<div class="bar-item">
+							<span class="bar-label">Western (86)</span>
+							<div class="bar bg-accent-amber" style="width: 32.3%;">
+								<span class="bar-value">86 Traders</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Eastern region proves that scale and satisfaction aren't mutually exclusive. With 58% of our
+					trader base, they demonstrate the viability of efficient, high-satisfaction operations."
+				</p>
+			</div>
+
+			<div id="slide-11"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Western Region: Priority Transformation Opportunity</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">⚡</span> Western Region Challenges:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li>Performance Gap: <span class="data-points">5.2 points</span> behind Northern region</li>
+						<li>Pricing Weakness: <span class="data-points">79.4/100</span> (6.7 points behind Northern)</li>
+						<li>Service Inconsistency: Highest variability (<span class="data-points">0.73 SD</span>)</li>
+						<li>Risk Profile: <span class="data-points">26.8/100</span> risk score (highest)</li>
+					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Opportunity:</span> 86 traders affected (18.9%
+						of base)</p>
+					<p><span class="font-bold text-primary-deep-blue">Transformation Potential:</span> +5 point improvement = 3-5%
+						revenue impact</p>
+
+					<div class="bar-chart-container mt-8">
+						<h3 class="section-header mb-4 text-center">Western Region Performance vs. Northern</h3>
+						<div class="bar-item">
+							<span class="bar-label">Western (82.1)</span>
+							<div class="bar bg-accent-amber" style="width: 82.1%;">
+								<span class="bar-value">82.1</span>
+							</div>
+						</div>
+						<div class="bar-item">
+							<span class="bar-label">Northern (87.3)</span>
+							<div class="bar bg-forest-green" style="width: 87.3%;">
+								<span class="bar-value">87.3</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Western region represents our greatest improvement opportunity. With 86 traders affected,
+					successful transformation could deliver 3-5% revenue improvement while standardizing service excellence."
+				</p>
+			</div>
+
+			<div id="slide-12"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Trust Building: Relationship Strength Drivers</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">🤝</span> Strongest Trust Predictors:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Peer Reputation: <span class="data-points">r = 0.512</span></span>
+							<span class="text-sm text-gray-700">(Market positioning matters most)</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Communication Transparency: <span class="data-points">r = 0.487</span></span>
+							<span class="text-sm text-gray-700">(Openness builds confidence)</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Overall Value Proposition: <span class="data-points">r = 0.468</span></span>
+							<span class="text-sm text-gray-700">(Holistic value perception)</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">After-Sales Support: <span class="data-points">r = 0.445</span></span>
+							<span class="text-sm text-gray-700">(Service excellence sustains relationships)</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="flex-1">Supply Reliability: <span class="data-points">r = 0.421</span></span>
+							<span class="text-sm text-gray-700">(Operational consistency)</span>
+						</li>
+					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Key Insight:</span> Reputation and transparency
+						predict trust better than operational metrics</p>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Surprisingly, market reputation and communication transparency predict long-term trust
+					better than operational efficiency. This guides our relationship strategy toward reputation management and
+					transparency."
+				</p>
+			</div>
+
+			<div id="slide-13"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Strategic Action Plan: Four-Pillar Approach</h1>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-5xl body-text">
+					<div class="col-span-full">
+						<h2 class="section-header mb-4"><span class="icon">🎯</span> Strategic Priorities:</h2>
+					</div>
+					<div class="p-6 rounded-lg shadow-md bg-blue-50 border-l-4 border-primary-deep-blue">
+						<h3 class="section-header text-primary-deep-blue mb-2">Priority 1: Western Region Transformation</h3>
+						<p class="data-points mb-2">(40% budget)</p>
+						<ul class="list-disc list-inside space-y-1">
+							<li>Target: +5.2 satisfaction points in 12 months</li>
+							<li>Focus: Pricing, service standardization, trust building</li>
+						</ul>
+					</div>
+					<div class="p-6 rounded-lg shadow-md bg-green-50 border-l-4 border-secondary-forest-green">
+						<h3 class="section-header text-secondary-forest-green mb-2">Priority 2: Eastern Region Optimization</h3>
+						<p class="data-points mb-2">(30% budget)</p>
+						<ul class="list-disc list-inside space-y-1">
+							<li>Target: Maintain 86+ satisfaction, improve efficiency</li>
+							<li>Focus: Process excellence, predictive management</li>
+						</ul>
+					</div>
+					<div class="p-6 rounded-lg shadow-md bg-blue-50 border-l-4 border-primary-deep-blue">
+						<h3 class="section-header text-primary-deep-blue mb-2">Priority 3: Northern Region Expansion</h3>
+						<p class="data-points mb-2">(20% budget)</p>
+						<ul class="list-disc list-inside space-y-1">
+							<li>Target: Scale success model to new markets</li>
+							<li>Focus: Best practice transfer, market expansion</li>
+						</ul>
+					</div>
+					<div class="p-6 rounded-lg shadow-md bg-green-50 border-l-4 border-secondary-forest-green">
+						<h3 class="section-header text-secondary-forest-green mb-2">Priority 4: Trust-Based Strategy</h3>
+						<p class="data-points mb-2">(10% budget)</p>
+						<ul class="list-disc list-inside space-y-1">
+							<li>Target: Strengthen relationship durability</li>
+							<li>Focus: Reputation building, transparency enhancement</li>
+						</ul>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Our four-pillar strategy balances transformation, optimization, expansion, and relationship
+					building for comprehensive market leadership enhancement."
+				</p>
+			</div>
+
+			<div id="slide-14"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Western Region Transformation: Detailed Action Plan</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">🔧</span> Transformation Initiatives:</h2>
+					<div class="timeline-container">
+						<div class="timeline-item">
+							<h3 class="timeline-item-title">Phase 1 (0-3 months): Foundation</h3>
+							<ul class="timeline-item-content list-disc list-inside space-y-1">
+								<li>Deploy dedicated improvement team</li>
+								<li>Implement Northern pricing communication practices</li>
+								<li>Begin service delivery standardization</li>
+							</ul>
+						</div>
+						<div class="timeline-item">
+							<h3 class="timeline-item-title">Phase 2 (3-9 months): Execution</h3>
+							<ul class="timeline-item-content list-disc list-inside space-y-1">
+								<li>Launch comprehensive training programs</li>
+								<li>Implement consistency monitoring systems</li>
+								<li>Execute trust building initiatives</li>
+							</ul>
+						</div>
+						<div class="timeline-item">
+							<h3 class="timeline-item-title">Phase 3 (9-12 months): Optimization</h3>
+							<ul class="timeline-item-content list-disc list-inside space-y-1">
+								<li>Achieve 85+ satisfaction target</li>
+								<li>Measure ROI and revenue impact</li>
+								<li>Standardize improved practices</li>
+							</ul>
+						</div>
+					</div>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Success Metrics:</span> 82.1 → 85+ satisfaction
+						index, 3-5% revenue improvement</p>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Western region transformation requires systematic, phased approach with dedicated resources
+					and clear milestones. Success here validates our standardization strategy."
+				</p>
+			</div>
+
+			<div id="slide-15"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Business Impact Projections: 6-12% Revenue Improvement</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">💰</span> Year 1 Impact Projections:</h2>
+					<table class="data-table">
+						<thead>
+							<tr>
+								<th>Initiative</th>
+								<th>Investment</th>
+								<th>Revenue Impact</th>
+								<th>Payback</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td class="font-semibold text-primary-deep-blue">Western Transformation</td>
+								<td>High</td>
+								<td>3-5% improvement</td>
+								<td>8-12 months</td>
+							</tr>
+							<tr>
+								<td class="font-semibold text-primary-deep-blue">Eastern Optimization</td>
+								<td>High</td>
+								<td>2-4% margin improvement</td>
+								<td>6-9 months</td>
+							</tr>
+							<tr>
+								<td class="font-semibold text-primary-deep-blue">Northern Expansion</td>
+								<td>Medium</td>
+								<td>5-8% growth</td>
+								<td>12-18 months</td>
+							</tr>
+							<tr>
+								<td class="font-semibold text-primary-deep-blue">Trust Building</td>
+								<td>Medium</td>
+								<td>1-3% loyalty improvement</td>
+								<td>18-24 months</td>
+							</tr>
+						</tbody>
+					</table>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Total Expected Impact:</span> 6-12% revenue
+						improvement in Year 1</p>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Conservative projections indicate 6-12% revenue improvement in Year 1, with Western region
+					transformation providing fastest payback and Northern expansion driving longer-term growth."
+				</p>
+			</div>
+
+			<div id="slide-16"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">12-Month Implementation Timeline</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">📅</span> Implementation Phases:</h2>
+					<div class="timeline-container">
+						<div class="timeline-item">
+							<h3 class="timeline-item-title">Months 1-3: Foundation</h3>
+							<ul class="timeline-item-content list-disc list-inside space-y-1">
+								<li>Western region team deployment</li>
+								<li>Northern best practice documentation</li>
+								<li>Eastern efficiency baseline establishment</li>
+								<li>Trust building program launch</li>
+							</ul>
+						</div>
+						<div class="timeline-item">
+							<h3 class="timeline-item-title">Months 4-6: Acceleration</h3>
+							<ul class="timeline-item-content list-disc list-inside space-y-1">
+								<li>Western transformation execution</li>
+								<li>Eastern optimization implementation</li>
+								<li>Northern expansion planning</li>
+								<li>Trust measurement system deployment</li>
+							</ul>
+						</div>
+						<div class="timeline-item">
+							<h3 class="timeline-item-title">Months 7-12: Optimization</h3>
+							<ul class="timeline-item-content list-disc list-inside space-y-1">
+								<li>Performance measurement and adjustment</li>
+								<li>Best practice scaling</li>
+								<li>Market expansion execution</li>
+								<li>ROI validation and reporting</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Implementation requires coordinated execution across all regions with clear milestones and
+					regular progress reviews. Early foundation work enables accelerated results in latter half."
+				</p>
+			</div>
+
+			<div id="slide-17"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Measuring Success: KPIs and Monitoring System</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">📊</span> Key Performance Indicators:</h2>
+					<ul class="list-none p-0 space-y-3">
+						<li class="font-bold text-primary-deep-blue">Primary Metrics:</li>
+						<ul class="list-disc list-inside ml-4 space-y-1">
+							<li>Overall Satisfaction Index: <span class="data-points">85.1 → 87+ points</span></li>
+							<li>Regional Gap Reduction: <span class="data-points">5.2 → <3 points</span>
+							</li>
+							<li>Western Region: <span class="data-points">82.1 → 85+ points</span></li>
+							<li>Trust Correlation Strength: <span class="data-points">+15% improvement</span></li>
+						</ul>
+					</ul>
+					<h2 class="section-header mt-8 mb-4">Monitoring Approach:</h2>
+					<ul class="list-disc list-inside space-y-1">
+						<li>Monthly regional satisfaction tracking</li>
+						<li>Quarterly business impact reviews</li>
+						<li>Annual comprehensive survey replication</li>
+					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Reporting Structure:</span> Executive dashboard
+						with early warning indicators</p>
+				</div>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Success measurement requires disciplined monthly tracking with quarterly reviews to ensure
+					initiatives deliver expected business results and enable course correction."
+				</p>
+			</div>
+
+			<div id="slide-18"
+				class="slide absolute inset-0 bg-background-white flex flex-col justify-center items-center p-8">
+				<h1 class="slide-title mb-8">Next Steps: From Insights to Action</h1>
+				<div class="w-full max-w-4xl space-y-6 body-text">
+					<h2 class="section-header mb-4"><span class="icon">⚡</span> Immediate Actions (Next 30 Days):</h2>
+					<ul class="list-disc list-inside space-y-1">
+						<li>Executive Approval: Secure leadership commitment and budget allocation</li>
+						<li>Team Formation: Establish Western region transformation team</li>
+						<li>Best Practice Documentation: Begin Northern region success factor analysis</li>
+						<li>Baseline Establishment: Implement satisfaction monitoring systems</li>
+					</ul>
+					<h2 class="section-header mt-8 mb-4"><span class="icon">🎯</span> 90-Day Milestones:</h2>
+					<ul class="list-disc list-inside space-y-1">
+						<li>Western region improvement initiative launched</li>
+						<li>Northern best practices documented and transfer begun</li>
+						<li>Eastern region efficiency programs implemented</li>
+						<li>Trust building programs operational</li>
+					</ul>
+					<p class="mt-8"><span class="font-bold text-primary-deep-blue">Expected Outcomes:</span> Clear progress toward
+						6-12% revenue improvement with measurable satisfaction gains</p>
+				</div>
+				<button
+					class="mt-12 px-8 py-4 bg-accent-amber text-white text-xl font-bold rounded-lg shadow-lg hover:bg-orange-600 transition-colors duration-300">
+					Secure Leadership Commitment Today!
+				</button>
+				<p class="footnote-text absolute bottom-4 left-4 right-4 text-center">
+					Presenter Notes: "Success depends on immediate action and sustained commitment. The next 30 days are critical
+					for establishing foundation for transformation. Leadership commitment today drives revenue results within 12
+					months."
+				</p>
+			</div>
+
+		</div>
+	</div>
 
 	<script>
-		const primaryColor = '#007bff';
-		const accentColor1 = '#fd7e14';
-		const accentColor2 = '#17a2b8';
-		const accentColor3 = '#28a745';
-		const accentColor4 = '#6f42c1';
-		const accentColor5 = '#dc3545';
-		const chartFontColor = '#343a40';
+		// JavaScript for slide navigation
+		const slides = document.querySelectorAll('.slide');
+		const prevBtn = document.getElementById('prevBtn');
+		const nextBtn = document.getElementById('nextBtn');
+		const slideCounter = document.getElementById('slideCounter');
+		let currentSlideIndex = 0;
 
-		function wrapLabel(str, maxWidth) {
-			if (str.length <= maxWidth) {
-				return str;
-			}
-			const words = str.split(' ');
-			let currentLine = '';
-			const lines = [];
-			for (const word of words) {
-				if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
-					lines.push(currentLine.trim());
-					currentLine = '';
+		// Function to show a specific slide
+		function showSlide(index) {
+			slides.forEach((slide, i) => {
+				if (i === index) {
+					slide.style.display = 'flex'; // Use flex to maintain layout
+				} else {
+					slide.style.display = 'none';
 				}
-				currentLine += word + ' ';
-			}
-			lines.push(currentLine.trim());
-			return lines;
+			});
+			slideCounter.textContent = `Slide ${index + 1} of ${slides.length}`;
+			updateNavigationButtons();
 		}
 
-		const tooltipTitleCallback = (tooltipItems) => {
-			const item = tooltipItems[0];
-			let label = item.chart.data.labels[item.dataIndex];
-			if (Array.isArray(label)) {
-				return label.join(' ');
+		// Function to update button states (enabled/disabled)
+		function updateNavigationButtons() {
+			prevBtn.disabled = currentSlideIndex === 0;
+			nextBtn.disabled = currentSlideIndex === slides.length - 1;
+
+			// Apply Tailwind classes for disabled state
+			if (prevBtn.disabled) {
+				prevBtn.classList.add('opacity-50', 'cursor-not-allowed');
+			} else {
+				prevBtn.classList.remove('opacity-50', 'cursor-not-allowed');
 			}
-			return label;
-		};
-
-		const commonChartOptions = {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				legend: {
-					labels: {
-						color: chartFontColor,
-						font: { size: 12 }
-					}
-				},
-				tooltip: {
-					callbacks: {
-						title: tooltipTitleCallback
-					},
-					bodyFont: { size: 12 },
-					titleFont: { size: 14, weight: 'bold' }
-				}
-			},
-			scales: {
-				y: {
-					beginAtZero: true,
-					ticks: {
-						color: chartFontColor,
-						font: { size: 10 }
-					},
-					grid: { color: '#e0e0e0' }
-				},
-				x: {
-					ticks: {
-						color: chartFontColor,
-						font: { size: 10 },
-						maxRotation: 45,
-						minRotation: 0
-					},
-					grid: { display: false }
-				}
+			if (nextBtn.disabled) {
+				nextBtn.classList.add('opacity-50', 'cursor-not-allowed');
+			} else {
+				nextBtn.classList.remove('opacity-50', 'cursor-not-allowed');
 			}
-		};
+		}
 
-		const commonPieDonutOptions = {
-			responsive: true,
-			maintainAspectRatio: false,
-			plugins: {
-				legend: {
-					position: 'bottom',
-					labels: {
-						color: chartFontColor,
-						font: { size: 12 },
-						padding: 15,
-						usePointStyle: true,
-						pointStyle: 'circle'
-					}
-				},
-				tooltip: {
-					callbacks: {
-						title: tooltipTitleCallback,
-						label: function (context) {
-							let label = context.label || '';
-							if (label) {
-								label += ': ';
-							}
-							if (context.parsed !== null) {
-								label += context.parsed + '%';
-							}
-							return label;
-						}
-					},
-					bodyFont: { size: 12 },
-					titleFont: { size: 14, weight: 'bold' }
-				}
-			}
-		};
-
-		const marketGrowthLabels = ['2021', '2022', '2023', '2024', '2025 (Est.)'].map(label => wrapLabel(label, 16));
-		new Chart(document.getElementById('marketGrowthChart'), {
-			type: 'line',
-			data: {
-				labels: marketGrowthLabels,
-				datasets: [{
-					label: 'Global Tech Market Size (USD Trillion)',
-					data: [3.8, 4.2, 4.7, 5.2, 5.7],
-					borderColor: primaryColor,
-					backgroundColor: 'rgba(0, 123, 255, 0.1)',
-					fill: true,
-					tension: 0.3
-				}]
-			},
-			options: commonChartOptions
-		});
-
-		const segmentDonutLabels = ['Software & SaaS', 'Hardware & Devices', 'IT & Cloud Services', 'E-commerce Platforms', 'Other Tech Segments'].map(label => wrapLabel(label, 16));
-		new Chart(document.getElementById('segmentDonutChart'), {
-			type: 'doughnut',
-			data: {
-				labels: segmentDonutLabels,
-				datasets: [{
-					label: 'Market Segmentation by Revenue',
-					data: [40, 25, 20, 10, 5],
-					backgroundColor: [primaryColor, accentColor1, accentColor2, accentColor3, accentColor4],
-					hoverOffset: 4
-				}]
-			},
-			options: commonPieDonutOptions
-		});
-
-		const marketShareLabels = ['Alpha Corp.', 'Beta Systems', 'Gamma Inc.', 'Delta Solutions', 'Epsilon Digital'].map(label => wrapLabel(label, 16));
-		new Chart(document.getElementById('marketShareChart'), {
-			type: 'bar',
-			data: {
-				labels: marketShareLabels,
-				datasets: [{
-					label: 'Market Share (%)',
-					data: [28, 22, 18, 15, 10],
-					backgroundColor: [primaryColor, accentColor1, accentColor2, accentColor3, accentColor4],
-					borderColor: [primaryColor, accentColor1, accentColor2, accentColor3, accentColor4],
-					borderWidth: 1
-				}]
-			},
-			options: commonChartOptions
-		});
-
-		const techAdoptionLabels = ['AI & Machine Learning', 'Internet of Things (IoT)', 'Blockchain Technology', 'Quantum Computing', '5G Connectivity'].map(label => wrapLabel(label, 20));
-		new Chart(document.getElementById('techAdoptionChart'), {
-			type: 'bar',
-			data: {
-				labels: techAdoptionLabels,
-				datasets: [
-					{
-						label: 'Early Adoption Phase',
-						data: [10, 15, 40, 70, 5],
-						backgroundColor: accentColor2,
-					},
-					{
-						label: 'Growth Phase',
-						data: [50, 45, 30, 15, 35],
-						backgroundColor: accentColor1,
-					},
-					{
-						label: 'Mature Phase',
-						data: [20, 20, 5, 2, 40],
-						backgroundColor: primaryColor,
-					}
-				]
-			},
-			options: {
-				...commonChartOptions,
-				indexAxis: 'y',
-				scales: {
-					x: { ...commonChartOptions.scales.x, stacked: true, title: { display: true, text: 'Adoption Percentage (%)', color: chartFontColor } },
-					y: { ...commonChartOptions.scales.y, stacked: true }
-				},
-				plugins: {
-					...commonChartOptions.plugins,
-					tooltip: {
-						callbacks: {
-							title: (tooltipItems) => {
-								const item = tooltipItems[0];
-								let label = item.chart.data.labels[item.dataIndex];
-								if (Array.isArray(label)) { return label.join(' '); }
-								return label;
-							},
-							label: function (context) {
-								let label = context.dataset.label || '';
-								if (label) { label += ': '; }
-								if (context.parsed.x !== null) { label += context.parsed.x + '%'; }
-								return label;
-							}
-						}
-					}
-				}
+		// Event listener for previous button
+		prevBtn.addEventListener('click', () => {
+			if (currentSlideIndex > 0) {
+				currentSlideIndex--;
+				showSlide(currentSlideIndex);
 			}
 		});
 
-		const rdData = {
-			x: [5, 8, 12, 6, 10, 15, 7, 9, 11, 13],
-			y: [10, 15, 25, 12, 20, 30, 14, 18, 22, 28],
-			companyNames: ['Company A', 'Company B', 'Company C', 'Company D', 'Company E', 'Company F', 'Company G', 'Company H', 'Company I', 'Company J'],
-			marketCap: [100, 150, 300, 80, 200, 400, 90, 120, 180, 250]
-		};
+		// Event listener for next button
+		nextBtn.addEventListener('click', () => {
+			if (currentSlideIndex < slides.length - 1) {
+				currentSlideIndex++;
+				showSlide(currentSlideIndex);
+			}
+		});
 
-		const trace1 = {
-			x: rdData.x,
-			y: rdData.y,
-			mode: 'markers',
-			type: 'scatter',
-			text: rdData.companyNames,
-			marker: {
-				size: rdData.marketCap.map(mc => mc / 10),
-				color: primaryColor,
-				opacity: 0.7,
-				line: {
-					color: 'rgba(0,0,0,0.5)',
-					width: 1
-				}
-			},
-			hovertemplate: '<b>%{text}</b><br>' +
-				'R&D Spend: %{x}M USD<br>' +
-				'Revenue Growth: %{y}%<extra></extra>'
-		};
-
-		const layout = {
-			xaxis: {
-				title: 'R&D Expenditure (Millions USD)',
-				color: chartFontColor,
-				gridcolor: '#e0e0e0',
-				zerolinecolor: '#c0c0c0'
-			},
-			yaxis: {
-				title: 'Annual Revenue Growth (%)',
-				color: chartFontColor,
-				gridcolor: '#e0e0e0',
-				zerolinecolor: '#c0c0c0'
-			},
-			margin: { l: 50, r: 20, b: 50, t: 30, pad: 4 },
-			paper_bgcolor: 'rgba(0,0,0,0)',
-			plot_bgcolor: 'rgba(0,0,0,0)',
-			font: {
-				family: 'Inter, sans-serif',
-				color: chartFontColor
-			},
-			hovermode: 'closest'
-		};
-
-		const config = { responsive: true, displayModeBar: false };
-
-		Plotly.newPlot('rdRevenueScatterPlot', [trace1], layout, config);
-
-
+		// Initialize the presentation on page load
+		document.addEventListener('DOMContentLoaded', () => {
+			showSlide(currentSlideIndex);
+		});
 	</script>
 </body>
 
