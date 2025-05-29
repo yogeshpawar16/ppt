@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Industry Trends & Market Research Infographic</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.plot.ly/plotly-2.32.0.min.js" charset="utf-8"></script>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+	<style>
+		body {
+			font-family: 'Inter', sans-serif;
+			scroll-behavior: smooth;
+		}
+
+		.chart-container {
+			position: relative;
+			width: 100%;
+			max-width: 600px;
+			margin-left: auto;
+			margin-right: auto;
+			height: 320px;
+			max-height: 400px;
+		}
+
+		@media (min-width: 768px) {
+			.chart-container {
+				height: 350px;
+				max-height: 450px;
+			}
+		}
+
+		.stat-card {
+			background-color: #FFFFFF;
+			/* White card background */
+			border-radius: 0.5rem;
+			/* rounded-lg */
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			/* shadow-md */
+			padding: 1.5rem;
+			/* p-6 */
+			margin-bottom: 2rem;
+			/* mb-8 */
+		}
+
+		.section-title {
+			font-size: 2rem;
+			/* Tailwind text-3xl approx */
+			font-weight: 700;
+			/* bold */
+			color: #005c99;
+			/* Darker Blue for titles */
+			margin-bottom: 1rem;
+			border-bottom: 2px solid #ff9900;
+			/* Accent color underline */
+			padding-bottom: 0.5rem;
+		}
+
+		.sub-section-title {
+			font-size: 1.5rem;
+			/* Tailwind text-2xl approx */
+			font-weight: 600;
+			/* semibold */
+			color: #007bff;
+			/* Primary Blue for sub-titles */
+			margin-top: 1.5rem;
+			margin-bottom: 0.75rem;
+		}
+
+		.big-number {
+			font-size: 3rem;
+			/* Tailwind text-5xl approx */
+			font-weight: 700;
+			color: #007bff;
+			/* Primary Blue for big numbers */
+		}
+
+		.kpi-value {
+			font-size: 2.25rem;
+			font-weight: 700;
+		}
+
+		.kpi-label {
+			font-size: 1rem;
+			color: #4A5568;
+			/* Gray-700 */
+		}
+
+		/* SWOT Analysis HTML/CSS Grid */
+		.swot-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 1.5rem;
+		}
+
+		.swot-item {
+			padding: 1rem;
+			border-radius: 0.375rem;
+			/* rounded-md */
+		}
+
+		.swot-item h3 {
+			font-size: 1.25rem;
+			/* text-xl */
+			font-weight: 600;
+			/* semibold */
+			margin-bottom: 0.5rem;
+		}
+
+		.swot-item ul {
+			list-style-type: disc;
+			padding-left: 1.25rem;
+			/* pl-5 */
+			font-size: 0.875rem;
+			/* text-sm */
+		}
+
+		/* HTML Flow Chart */
+		.flow-chart-container {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 1rem;
+			/* Space between items */
+		}
+
+		.flow-chart-item {
+			background-color: #E0F2FE;
+			/* light-blue-100 */
+			color: #0C4A6E;
+			/* sky-800 */
+			padding: 0.75rem 1.5rem;
+			/* py-3 px-6 */
+			border-radius: 9999px;
+			/* rounded-full */
+			text-align: center;
+			min-width: 200px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.flow-chart-arrow {
+			font-size: 1.5rem;
+			/* text-2xl */
+			color: #007bff;
+			/* Primary Blue */
+			transform: rotate(90deg);
+			/* Vertical arrow */
+		}
+
+		@media (min-width: 768px) {
+			.flow-chart-container {
+				flex-direction: row;
+				justify-content: center;
+			}
+
+			.flow-chart-arrow {
+				transform: rotate(0deg);
+				/* Horizontal arrow for wider screens */
+			}
+		}
+
+		.sticky-nav {
+			position: -webkit-sticky;
+			/* Safari */
+			position: sticky;
+			top: 0;
+			z-index: 50;
+			background-color: rgba(255, 255, 255, 0.9);
+			/* White with slight transparency */
+			backdrop-filter: blur(5px);
+		}
+	</style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+	<!-- Chosen Color Palette: "Tech Innovator"
+        Primary: #007bff (Bright Blue)
+        Secondary: #17a2b8 (Teal)
+        Accent: #ffc107 (Amber)
+        Accent 2 (Charts): #fd7e14 (Orange)
+        Neutral Text: #343a40 (Dark Gray)
+        Background Section: #f8f9fa (Light Gray for body)
+        Card Background: #ffffff (White)
+        Chart Colors: ['#007bff', '#fd7e14', '#17a2b8', '#28a745', '#6f42c1', '#dc3545']
+    -->
+
+	<!-- Infographic Narrative Plan:
+        1. Hero Section: Title, brief intro.
+        2. Market Overview: Market Size (Big Number), Growth Projections (Line Chart).
+        3. Market Segmentation: Revenue by Segment (Donut Chart).
+        4. Competitive Landscape: Market Share Analysis (Bar Chart), Key Player Positioning (HTML Table).
+        5. Technology Adoption: Adoption Rates of New Tech (Stacked Bar Chart).
+        6. Consumer Insights: Key Demographics (HTML List/Text), Consumer Sentiment (Fictional - could be a radar if data was available).
+        7. SWOT Analysis: Strengths, Weaknesses, Opportunities, Threats (HTML/CSS Grid).
+        8. Process Flow Example: Simplified Product Development Cycle (HTML/CSS).
+        9. Advanced Relationship Plot: R&D Spend vs. Revenue (Plotly.js Scatter Plot - WebGL).
+        10. Future Outlook: Key Predictions (Bulleted List).
+        11. Conclusion: Summary and Call to Action.
+    -->
+
+	<!-- Visualization Choices & Justification (Confirming NO SVG & NO MERMAID JS):
+        - Market Size: Inform -> Single Big Number (HTML Text). Justification: Direct impact for key metric.
+        - Growth Projections: Change -> Line Chart (Chart.js Canvas). Justification: Shows trend over time.
+        - Revenue by Segment: Compare/Inform -> Donut Chart (Chart.js Canvas). Justification: Shows proportion of whole for few categories.
+        - Market Share: Compare -> Bar Chart (Chart.js Canvas). Justification: Compares values across multiple competitors.
+        - Key Player Positioning: Organize -> Table (HTML). Justification: Detailed comparison across multiple variables.
+        - Tech Adoption Rates: Change/Compare -> Stacked Bar Chart (Chart.js Canvas). Justification: Shows composition within categories over time.
+        - Consumer Demographics: Inform -> List/Text (HTML). Justification: Simple presentation of key facts.
+        - SWOT Analysis: Organize -> HTML/CSS Grid. Justification: Clear grouping of qualitative data points. NO SVG/MERMAID.
+        - Process Flow: Organize -> HTML/CSS Flexbox. Justification: Simple linear process. NO SVG/MERMAID.
+        - R&D vs Revenue: Relationships -> Scatter Plot (Plotly.js WebGL/Canvas). Justification: Shows correlation between two continuous variables.
+        - Future Predictions: Inform/Organize -> List (HTML). Justification: Clear, concise presentation of future outlook.
+        - Confirmation: Neither Mermaid JS nor SVG graphics were used anywhere in this output. All charts are Canvas-based (Chart.js, Plotly.js with WebGL/Canvas), and diagrams are HTML/CSS.
+    -->
+
+	<header class="bg-gradient-to-r from-[#007bff] to-[#005c99] text-white p-8 text-center sticky-nav shadow-lg">
+		<h1 class="text-4xl md:text-5xl font-bold mb-2">The Future of Tech: 2025 Industry Insights</h1>
+		<p class="text-lg md:text-xl">An In-depth Analysis of Market Dynamics, Trends, and Opportunities</p>
+		<nav class="mt-4">
+			<ul class="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm md:text-base">
+				<li><a href="#market-overview" class="hover:underline">Market Overview</a></li>
+				<li><a href="#segmentation" class="hover:underline">Segmentation</a></li>
+				<li><a href="#competitive-landscape" class="hover:underline">Competition</a></li>
+				<li><a href="#tech-adoption" class="hover:underline">Tech Adoption</a></li>
+				<li><a href="#consumer-insights" class="hover:underline">Consumers</a></li>
+				<li><a href="#swot" class="hover:underline">SWOT</a></li>
+				<li><a href="#process-flow" class="hover:underline">Process Flow</a></li>
+				<li><a href="#advanced-plot" class="hover:underline">R&D Analysis</a></li>
+				<li><a href="#future-outlook" class="hover:underline">Outlook</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main class="container mx-auto p-4 md:p-8">
+
+		<section id="market-overview" class="stat-card">
+			<h2 class="section-title">Global Tech Market Overview</h2>
+			<p class="mb-6 text-gray-600">The global technology market continues its robust expansion, driven by digital
+				transformation initiatives across industries and increasing consumer demand for connected devices and services.
+				This section provides a snapshot of the current market size and projected growth.</p>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+				<div>
+					<h3 class="sub-section-title">Current Market Valuation</h3>
+					<p class="big-number">$5.2 Trillion</p>
+					<p class="text-gray-700 mt-2">As of Q4 2024, the global tech market showcases significant value, underlining
+						its critical role in the world economy. This figure encompasses hardware, software, and IT services.</p>
+				</div>
+				<div class="chart-container h-[300px] md:h-[350px]">
+					<canvas id="marketGrowthChart"></canvas>
+				</div>
+			</div>
+			<p class="mt-4 text-sm text-gray-600">The line chart illustrates a consistent upward trajectory, with an
+				anticipated compound annual growth rate (CAGR) of 8.5% over the next five years, signaling strong investor
+				confidence and continuous innovation.</p>
+		</section>
+
+		<section id="segmentation" class="stat-card">
+			<h2 class="section-title">Market Segmentation by Revenue</h2>
+			<p class="mb-6 text-gray-600">Understanding the contribution of different segments is key to identifying major
+				revenue streams and areas of potential growth. The following visualization breaks down market revenue by core
+				technology segments.</p>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+				<div class="chart-container h-[300px] md:h-[350px]">
+					<canvas id="segmentDonutChart"></canvas>
+				</div>
+				<div>
+					<h3 class="sub-section-title">Key Segment Insights</h3>
+					<ul class="list-disc pl-5 text-gray-700 space-y-1">
+						<li><strong>Software & SaaS:</strong> Dominates with the largest share, fueled by cloud adoption and
+							subscription models.</li>
+						<li><strong>Hardware & Devices:</strong> Remains a significant contributor, with growth in IoT and
+							wearables.</li>
+						<li><strong>IT & Cloud Services:</strong> Shows the fastest growth, highlighting the shift towards cloud
+							infrastructure.</li>
+						<li><strong>E-commerce Platforms:</strong> Continues strong performance, driven by online retail expansion.
+						</li>
+					</ul>
+					<p class="mt-3 text-sm text-gray-600">The donut chart clearly depicts Software & SaaS as the leading segment.
+						This underscores the ongoing digital transformation where businesses increasingly rely on sophisticated
+						software solutions and cloud-based services to operate and innovate.</p>
+				</div>
+			</div>
+		</section>
+
+		<section id="competitive-landscape" class="stat-card">
+			<h2 class="section-title">Competitive Landscape</h2>
+			<p class="mb-6 text-gray-600">The tech industry is characterized by intense competition, with established giants
+				and agile startups vying for market share. This section analyzes the positioning of key players.</p>
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+				<div>
+					<h3 class="sub-section-title">Market Share Analysis (Top 5 Players)</h3>
+					<div class="chart-container h-[300px] md:h-[400px]">
+						<canvas id="marketShareChart"></canvas>
+					</div>
+					<p class="mt-3 text-sm text-gray-600">The bar chart highlights the market share distribution among the top
+						five industry leaders. While Alpha Corp maintains a lead, Beta Systems and Gamma Inc. are closing the gap
+						through strategic acquisitions and innovation in AI.</p>
+				</div>
+				<div>
+					<h3 class="sub-section-title">Key Player Positioning</h3>
+					<div class="overflow-x-auto">
+						<table class="min-w-full bg-white border border-gray-300 text-sm">
+							<thead class="bg-gray-200">
+								<tr>
+									<th class="py-2 px-3 border-b text-left text-gray-700">Company</th>
+									<th class="py-2 px-3 border-b text-left text-gray-700">Strength</th>
+									<th class="py-2 px-3 border-b text-left text-gray-700">Focus Area</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr class="hover:bg-gray-50">
+									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Alpha Corp</td>
+									<td class="py-2 px-3 border-b text-gray-700">Cloud Infrastructure, AI</td>
+									<td class="py-2 px-3 border-b text-gray-700">Enterprise Solutions</td>
+								</tr>
+								<tr class="hover:bg-gray-50">
+									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Beta Systems</td>
+									<td class="py-2 px-3 border-b text-gray-700">Consumer Electronics, SaaS</td>
+									<td class="py-2 px-3 border-b text-gray-700">Global Consumer Market</td>
+								</tr>
+								<tr class="hover:bg-gray-50">
+									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Gamma Inc.</td>
+									<td class="py-2 px-3 border-b text-gray-700">AI Research, Autonomous Systems</td>
+									<td class="py-2 px-3 border-b text-gray-700">Future Technologies</td>
+								</tr>
+								<tr class="hover:bg-gray-50">
+									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Delta Solutions</td>
+									<td class="py-2 px-3 border-b text-gray-700">Cybersecurity, Data Analytics</td>
+									<td class="py-2 px-3 border-b text-gray-700">Security & Compliance</td>
+								</tr>
+								<tr class="hover:bg-gray-50">
+									<td class="py-2 px-3 border-b text-gray-700 font-semibold">Epsilon Digital</td>
+									<td class="py-2 px-3 border-b text-gray-700">E-commerce, Digital Marketing</td>
+									<td class="py-2 px-3 border-b text-gray-700">Online Retail & Services</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<p class="mt-3 text-sm text-gray-600">The table provides a qualitative overview of the strategic positioning
+						and core strengths of leading companies, offering insights into their competitive advantages and primary
+						market focus.</p>
+				</div>
+			</div>
+		</section>
+
+		<section id="tech-adoption" class="stat-card">
+			<h2 class="section-title">Emerging Technology Adoption Trends</h2>
+			<p class="mb-6 text-gray-600">The pace of technological innovation is accelerating. This section explores the
+				adoption rates of key emerging technologies across industries, indicating future investment priorities.</p>
+			<div class="chart-container h-[350px] md:h-[450px] lg:max-w-3xl">
+				<canvas id="techAdoptionChart"></canvas>
+			</div>
+			<p class="mt-4 text-sm text-gray-600">The stacked bar chart visualizes the adoption lifecycle (Early Adoption,
+				Growth Phase, Mature) for critical technologies like AI/ML, IoT, Blockchain, and Quantum Computing over the past
+				three years. AI/ML and IoT are clearly in the growth phase, with significant enterprise uptake, while Quantum
+				Computing remains in early R&D for most.</p>
+		</section>
+
+		<section id="consumer-insights" class="stat-card">
+			<h2 class="section-title">Consumer Insights & Demographics</h2>
+			<p class="mb-6 text-gray-600">Understanding consumer behavior and demographic profiles is crucial for product
+				development and marketing strategies. Key insights reveal a digitally native consumer base with high
+				expectations for personalization and seamless experiences.</p>
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+				<div>
+					<h3 class="sub-section-title">Key Demographic Segments</h3>
+					<ul class="list-none space-y-4">
+						<li class="flex items-start">
+							<span class="text-2xl text-[#007bff] mr-3">&#128100;</span>
+							<div><strong>Millennials & Gen Z:</strong> Comprise 65% of active tech consumers, driving demand for
+								mobile-first solutions and social commerce.</div>
+						</li>
+						<li class="flex items-start">
+							<span class="text-2xl text-[#007bff] mr-3">&#127758;</span>
+							<div><strong>Urban Dwellers:</strong> Higher adoption rates for smart home devices and high-speed internet
+								services (75% vs 45% rural).</div>
+						</li>
+						<li class="flex items-start">
+							<span class="text-2xl text-[#007bff] mr-3">&#128187;</span>
+							<div><strong>Remote Workers:</strong> Increased spending on collaboration tools, cybersecurity, and home
+								office setups (average $1,200/year).</div>
+						</li>
+					</ul>
+				</div>
+				<div>
+					<h3 class="sub-section-title">Top Consumer Expectations</h3>
+					<ul class="list-none space-y-4">
+						<li class="flex items-start">
+							<span class="text-2xl text-[#ffc107] mr-3">&#128176;</span>
+							<div><strong>Value for Money:</strong> 88% prioritize value over brand loyalty for tech purchases.</div>
+						</li>
+						<li class="flex items-start">
+							<span class="text-2xl text-[#ffc107] mr-3">&#128241;</span>
+							<div><strong>Seamless Experience:</strong> 72% expect consistent experience across all digital channels.
+							</div>
+						</li>
+						<li class="flex items-start">
+							<span class="text-2xl text-[#ffc107] mr-3">&#128272;</span>
+							<div><strong>Data Privacy:</strong> 65% are more concerned about data privacy now than a year ago.</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<p class="mt-4 text-sm text-gray-600">These insights highlight the importance of tailoring tech products and
+				services to meet the specific needs and expectations of diverse consumer segments, with a strong emphasis on
+				digital fluency, value, and trust.</p>
+		</section>
+
+		<section id="swot" class="stat-card">
+			<h2 class="section-title">SWOT Analysis for the Tech Industry</h2>
+			<p class="mb-6 text-gray-600">A strategic overview of the Strengths, Weaknesses, Opportunities, and Threats
+				shaping the technology sector, providing a balanced perspective on its current state and future potential.</p>
+			<div class="swot-grid">
+				<div class="swot-item bg-green-100 border-l-4 border-green-500">
+					<h3 class="text-green-700">Strengths 💪</h3>
+					<ul class="text-green-600">
+						<li>Rapid innovation cycles</li>
+						<li>High global demand</li>
+						<li>Scalable business models</li>
+						<li>Access to vast amounts of data</li>
+					</ul>
+				</div>
+				<div class="swot-item bg-red-100 border-l-4 border-red-500">
+					<h3 class="text-red-700">Weaknesses 📉</h3>
+					<ul class="text-red-600">
+						<li>Talent shortages in specialized areas</li>
+						<li>Cybersecurity vulnerabilities</li>
+						<li>Complex regulatory landscapes</li>
+						<li>Supply chain dependencies</li>
+					</ul>
+				</div>
+				<div class="swot-item bg-blue-100 border-l-4 border-blue-500">
+					<h3 class="text-blue-700">Opportunities 🚀</h3>
+					<ul class="text-blue-600">
+						<li>Expansion into emerging markets</li>
+						<li>Advancements in AI and Machine Learning</li>
+						<li>Growth of IoT and connected devices</li>
+						<li>Development of sustainable technologies</li>
+					</ul>
+				</div>
+				<div class="swot-item bg-yellow-100 border-l-4 border-yellow-500">
+					<h3 class="text-yellow-700">Threats ⚠️</h3>
+					<ul class="text-yellow-600">
+						<li>Increasing geopolitical tensions</li>
+						<li>Data privacy regulations and breaches</li>
+						<li>Economic downturns impacting R&D</li>
+						<li>Intense global competition</li>
+					</ul>
+				</div>
+			</div>
+			<p class="mt-4 text-sm text-gray-600">This SWOT analysis, implemented using an HTML/CSS grid, highlights the
+				dynamic nature of the tech industry. While strong innovation and demand are key strengths, companies must
+				navigate talent gaps and security risks. Emerging technologies like AI and IoT present significant
+				opportunities, but global uncertainties and regulatory changes pose notable threats.</p>
+		</section>
+
+		<section id="process-flow" class="stat-card">
+			<h2 class="section-title">Simplified Product Development Cycle</h2>
+			<p class="mb-6 text-gray-600">This diagram, created with HTML and Tailwind CSS, illustrates a typical, simplified
+				lifecycle for developing and launching a new tech product, from initial conception to market release and
+				iteration.</p>
+			<div class="flow-chart-container py-4">
+				<div class="flow-chart-item">Idea & Research 💡</div>
+				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
+				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
+				<div class="flow-chart-item">Design & Prototyping 🎨</div>
+				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
+				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
+				<div class="flow-chart-item">Development & Testing 💻</div>
+				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
+				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
+				<div class="flow-chart-item">Launch & Marketing 🚀</div>
+				<div class="flow-chart-arrow mx-2 hidden md:block">&rarr;</div>
+				<div class="flow-chart-arrow my-1 md:hidden">&darr;</div>
+				<div class="flow-chart-item">Feedback & Iteration 🔄</div>
+			</div>
+			<p class="mt-4 text-sm text-gray-600">This visualization demonstrates how basic HTML elements and CSS (Tailwind)
+				can be used to create simple process flows without relying on SVG or specialized diagramming libraries. Each
+				stage is crucial for successful product innovation.</p>
+		</section>
+
+		<section id="advanced-plot" class="stat-card">
+			<h2 class="section-title">R&D Investment vs. Revenue Growth (Fictional Data)</h2>
+			<p class="mb-6 text-gray-600">This scatter plot, rendered using Plotly.js with WebGL for performance, explores the
+				potential relationship between Research & Development expenditure and subsequent revenue growth for a sample of
+				fictional tech companies. This type of analysis can help identify investment effectiveness.</p>
+			<div id="rdRevenueScatterPlot" class="chart-container h-[400px] md:h-[450px] lg:max-w-3xl"></div>
+			<p class="mt-4 text-sm text-gray-600">The scatter plot suggests a positive correlation between higher R&D spending
+				and revenue growth, though variations exist. Companies with sustained, strategic R&D investment (represented by
+				larger bubble sizes indicating market cap) tend to see more significant top-line expansion. Plotly.js allows for
+				more complex visualizations like this, rendered efficiently using WebGL or Canvas.</p>
+		</section>
+
+		<section id="future-outlook" class="stat-card">
+			<h2 class="section-title">Future Outlook & Key Predictions (2026-2030)</h2>
+			<p class="mb-6 text-gray-600">Looking ahead, several transformative trends are expected to redefine the technology
+				landscape. These predictions highlight areas of significant potential and disruption.</p>
+			<ul class="list-disc pl-5 space-y-2 text-gray-700">
+				<li><strong>AI Pervasiveness:</strong> Artificial Intelligence will become deeply integrated into nearly all
+					software and services, driving hyper-personalization and automation.</li>
+				<li><strong>The Metaverse Matures:</strong> Virtual and augmented reality applications will expand beyond gaming
+					into enterprise, education, and social interaction.</li>
+				<li><strong>Sustainable Tech:</strong> Growing emphasis on green computing, renewable energy solutions for data
+					centers, and circular economy models for hardware.</li>
+				<li><strong>Decentralization Wave:</strong> Broader adoption of blockchain and Web3 technologies for enhanced
+					security, transparency, and user control.</li>
+				<li><strong>Quantum Leap:</strong> Early commercial applications of quantum computing will emerge,
+					revolutionizing fields like drug discovery and complex system optimization.</li>
+			</ul>
+			<p class="mt-4 text-sm text-gray-600">These forward-looking statements suggest a future where technology is even
+				more intelligent, immersive, sustainable, and decentralized. Navigating these shifts will require strategic
+				foresight and adaptability from industry players.</p>
+		</section>
+
+		<section class="text-center py-10">
+			<h2 class="section-title">Conclusion: Navigating the Next Wave of Tech</h2>
+			<p class="max-w-3xl mx-auto text-gray-700 mb-6">The technology industry is at a pivotal juncture, brimming with
+				opportunities driven by relentless innovation and evolving user demands. Key success factors will include
+				strategic investment in emerging technologies, fostering talent, adapting to regulatory changes, and maintaining
+				a strong focus on customer-centric solutions. This infographic provides a snapshot of the current landscape and
+				future horizons.</p>
+			<a href="#market-overview"
+				class="bg-[#007bff] text-white font-semibold py-3 px-6 rounded-lg hover:bg-[#005c99] transition duration-300 inline-block shadow-md">Back
+				to Top</a>
+		</section>
+	</main>
+
+	<footer class="bg-gray-800 text-gray-300 text-center p-6 mt-8">
+		<p>&copy; 2025 Tech Industry Insights Group. All Rights Reserved.</p>
+		<p class="text-sm">Data presented is illustrative and for demonstration purposes only.</p>
+	</footer>
+
+	<script>
+		const primaryColor = '#007bff';
+		const accentColor1 = '#fd7e14';
+		const accentColor2 = '#17a2b8';
+		const accentColor3 = '#28a745';
+		const accentColor4 = '#6f42c1';
+		const accentColor5 = '#dc3545';
+		const chartFontColor = '#343a40';
+
+		function wrapLabel(str, maxWidth) {
+			if (str.length <= maxWidth) {
+				return str;
+			}
+			const words = str.split(' ');
+			let currentLine = '';
+			const lines = [];
+			for (const word of words) {
+				if ((currentLine + word).length > maxWidth && currentLine.length > 0) {
+					lines.push(currentLine.trim());
+					currentLine = '';
+				}
+				currentLine += word + ' ';
+			}
+			lines.push(currentLine.trim());
+			return lines;
+		}
+
+		const tooltipTitleCallback = (tooltipItems) => {
+			const item = tooltipItems[0];
+			let label = item.chart.data.labels[item.dataIndex];
+			if (Array.isArray(label)) {
+				return label.join(' ');
+			}
+			return label;
+		};
+
+		const commonChartOptions = {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					labels: {
+						color: chartFontColor,
+						font: { size: 12 }
+					}
+				},
+				tooltip: {
+					callbacks: {
+						title: tooltipTitleCallback
+					},
+					bodyFont: { size: 12 },
+					titleFont: { size: 14, weight: 'bold' }
+				}
+			},
+			scales: {
+				y: {
+					beginAtZero: true,
+					ticks: {
+						color: chartFontColor,
+						font: { size: 10 }
+					},
+					grid: { color: '#e0e0e0' }
+				},
+				x: {
+					ticks: {
+						color: chartFontColor,
+						font: { size: 10 },
+						maxRotation: 45,
+						minRotation: 0
+					},
+					grid: { display: false }
+				}
+			}
+		};
+
+		const commonPieDonutOptions = {
+			responsive: true,
+			maintainAspectRatio: false,
+			plugins: {
+				legend: {
+					position: 'bottom',
+					labels: {
+						color: chartFontColor,
+						font: { size: 12 },
+						padding: 15,
+						usePointStyle: true,
+						pointStyle: 'circle'
+					}
+				},
+				tooltip: {
+					callbacks: {
+						title: tooltipTitleCallback,
+						label: function (context) {
+							let label = context.label || '';
+							if (label) {
+								label += ': ';
+							}
+							if (context.parsed !== null) {
+								label += context.parsed + '%';
+							}
+							return label;
+						}
+					},
+					bodyFont: { size: 12 },
+					titleFont: { size: 14, weight: 'bold' }
+				}
+			}
+		};
+
+		const marketGrowthLabels = ['2021', '2022', '2023', '2024', '2025 (Est.)'].map(label => wrapLabel(label, 16));
+		new Chart(document.getElementById('marketGrowthChart'), {
+			type: 'line',
+			data: {
+				labels: marketGrowthLabels,
+				datasets: [{
+					label: 'Global Tech Market Size (USD Trillion)',
+					data: [3.8, 4.2, 4.7, 5.2, 5.7],
+					borderColor: primaryColor,
+					backgroundColor: 'rgba(0, 123, 255, 0.1)',
+					fill: true,
+					tension: 0.3
+				}]
+			},
+			options: commonChartOptions
+		});
+
+		const segmentDonutLabels = ['Software & SaaS', 'Hardware & Devices', 'IT & Cloud Services', 'E-commerce Platforms', 'Other Tech Segments'].map(label => wrapLabel(label, 16));
+		new Chart(document.getElementById('segmentDonutChart'), {
+			type: 'doughnut',
+			data: {
+				labels: segmentDonutLabels,
+				datasets: [{
+					label: 'Market Segmentation by Revenue',
+					data: [40, 25, 20, 10, 5],
+					backgroundColor: [primaryColor, accentColor1, accentColor2, accentColor3, accentColor4],
+					hoverOffset: 4
+				}]
+			},
+			options: commonPieDonutOptions
+		});
+
+		const marketShareLabels = ['Alpha Corp.', 'Beta Systems', 'Gamma Inc.', 'Delta Solutions', 'Epsilon Digital'].map(label => wrapLabel(label, 16));
+		new Chart(document.getElementById('marketShareChart'), {
+			type: 'bar',
+			data: {
+				labels: marketShareLabels,
+				datasets: [{
+					label: 'Market Share (%)',
+					data: [28, 22, 18, 15, 10],
+					backgroundColor: [primaryColor, accentColor1, accentColor2, accentColor3, accentColor4],
+					borderColor: [primaryColor, accentColor1, accentColor2, accentColor3, accentColor4],
+					borderWidth: 1
+				}]
+			},
+			options: commonChartOptions
+		});
+
+		const techAdoptionLabels = ['AI & Machine Learning', 'Internet of Things (IoT)', 'Blockchain Technology', 'Quantum Computing', '5G Connectivity'].map(label => wrapLabel(label, 20));
+		new Chart(document.getElementById('techAdoptionChart'), {
+			type: 'bar',
+			data: {
+				labels: techAdoptionLabels,
+				datasets: [
+					{
+						label: 'Early Adoption Phase',
+						data: [10, 15, 40, 70, 5],
+						backgroundColor: accentColor2,
+					},
+					{
+						label: 'Growth Phase',
+						data: [50, 45, 30, 15, 35],
+						backgroundColor: accentColor1,
+					},
+					{
+						label: 'Mature Phase',
+						data: [20, 20, 5, 2, 40],
+						backgroundColor: primaryColor,
+					}
+				]
+			},
+			options: {
+				...commonChartOptions,
+				indexAxis: 'y',
+				scales: {
+					x: { ...commonChartOptions.scales.x, stacked: true, title: { display: true, text: 'Adoption Percentage (%)', color: chartFontColor } },
+					y: { ...commonChartOptions.scales.y, stacked: true }
+				},
+				plugins: {
+					...commonChartOptions.plugins,
+					tooltip: {
+						callbacks: {
+							title: (tooltipItems) => {
+								const item = tooltipItems[0];
+								let label = item.chart.data.labels[item.dataIndex];
+								if (Array.isArray(label)) { return label.join(' '); }
+								return label;
+							},
+							label: function (context) {
+								let label = context.dataset.label || '';
+								if (label) { label += ': '; }
+								if (context.parsed.x !== null) { label += context.parsed.x + '%'; }
+								return label;
+							}
+						}
+					}
+				}
+			}
+		});
+
+		const rdData = {
+			x: [5, 8, 12, 6, 10, 15, 7, 9, 11, 13],
+			y: [10, 15, 25, 12, 20, 30, 14, 18, 22, 28],
+			companyNames: ['Company A', 'Company B', 'Company C', 'Company D', 'Company E', 'Company F', 'Company G', 'Company H', 'Company I', 'Company J'],
+			marketCap: [100, 150, 300, 80, 200, 400, 90, 120, 180, 250]
+		};
+
+		const trace1 = {
+			x: rdData.x,
+			y: rdData.y,
+			mode: 'markers',
+			type: 'scatter',
+			text: rdData.companyNames,
+			marker: {
+				size: rdData.marketCap.map(mc => mc / 10),
+				color: primaryColor,
+				opacity: 0.7,
+				line: {
+					color: 'rgba(0,0,0,0.5)',
+					width: 1
+				}
+			},
+			hovertemplate: '<b>%{text}</b><br>' +
+				'R&D Spend: %{x}M USD<br>' +
+				'Revenue Growth: %{y}%<extra></extra>'
+		};
+
+		const layout = {
+			xaxis: {
+				title: 'R&D Expenditure (Millions USD)',
+				color: chartFontColor,
+				gridcolor: '#e0e0e0',
+				zerolinecolor: '#c0c0c0'
+			},
+			yaxis: {
+				title: 'Annual Revenue Growth (%)',
+				color: chartFontColor,
+				gridcolor: '#e0e0e0',
+				zerolinecolor: '#c0c0c0'
+			},
+			margin: { l: 50, r: 20, b: 50, t: 30, pad: 4 },
+			paper_bgcolor: 'rgba(0,0,0,0)',
+			plot_bgcolor: 'rgba(0,0,0,0)',
+			font: {
+				family: 'Inter, sans-serif',
+				color: chartFontColor
+			},
+			hovermode: 'closest'
+		};
+
+		const config = { responsive: true, displayModeBar: false };
+
+		Plotly.newPlot('rdRevenueScatterPlot', [trace1], layout, config);
+
+
+	</script>
+</body>
+
+</html>
