@@ -1,0 +1,1764 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Project Review - School of Inspirational Leadership</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0a0a23 0%, #1a1a40 25%, #2d1b69 50%, #1a1a40 75%, #0a0a23 100%);
+            color: #1e293b;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .presentation-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
+            display: none;
+            padding: 3vh 4vw;
+            overflow-y: auto;
+            backdrop-filter: blur(20px);
+            box-sizing: border-box;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .slide-header {
+            position: relative;
+            border-bottom: 4px solid transparent;
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #3b82f6 100%) padding-box,
+                        linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #3b82f6 100%) border-box;
+            border-image: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #3b82f6 100%) 1;
+            padding-bottom: 2vh;
+            margin-bottom: 3vh;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .slide-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .logo-container {
+            position: absolute;
+            top: -1vh;
+            right: 0;
+            display: flex;
+            gap: 2vw;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .sil-logo {
+            width: 8vw;
+            min-width: 120px;
+            height: 6vh;
+            min-height: 80px;
+            background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: clamp(10px, 0.8vw, 14px);
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(5, 150, 105, 0.4), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.4s ease;
+            line-height: 1.2;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sil-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .sil-logo:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(5, 150, 105, 0.6);
+        }
+
+        .sil-logo:hover::before {
+            animation: logoShimmer 1.5s ease-in-out;
+        }
+
+        @keyframes logoShimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .slide-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            background: linear-gradient(135deg, #1e40af 0%, #6366f1 30%, #8b5cf6 60%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            margin-bottom: 1vh;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .slide-subtitle {
+            font-size: clamp(1rem, 1.5vw, 1.5rem);
+            color: #64748b;
+            font-weight: 500;
+            line-height: 1.4;
+            font-style: italic;
+        }
+
+        .slide-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+            padding-bottom: 2vh;
+        }
+
+        .content-section {
+            margin-bottom: 3vh;
+        }
+
+        .section-title {
+            font-size: clamp(1.2rem, 1.8vw, 1.8rem);
+            background: linear-gradient(135deg, #1e40af 0%, #6366f1 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 2vh;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #6366f1, transparent);
+            margin-left: 20px;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 2vw;
+            margin: 2vh 0;
+        }
+
+        .achievement-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 20px;
+            padding: 2vh 2vw;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1), 
+                        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        }
+
+        .achievement-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6, #3b82f6);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .achievement-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+
+        .achievement-card:hover::before {
+            opacity: 1;
+        }
+
+        .achievement-card.completed::before {
+            background: linear-gradient(90deg, #059669, #10b981, #34d399);
+            opacity: 1;
+        }
+
+        .achievement-card.live::before {
+            background: linear-gradient(90deg, #dc2626, #ef4444, #f87171);
+            opacity: 1;
+        }
+
+        .achievement-card.ready::before {
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa);
+            opacity: 1;
+        }
+
+        .achievement-label {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 1vh;
+            font-size: clamp(0.9rem, 1.1vw, 1.1rem);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .achievement-value {
+            font-size: clamp(2rem, 3vw, 3rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #1e40af 0%, #6366f1 50%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1vh;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .achievement-status {
+            font-size: clamp(0.9rem, 1vw, 1rem);
+            color: #64748b;
+            line-height: 1.6;
+            margin-top: 1vh;
+        }
+
+        .status-indicator {
+            padding: 1vh 2vw;
+            border-radius: 25px;
+            font-size: clamp(0.8rem, 0.9vw, 0.9rem);
+            font-weight: 700;
+            margin-top: 1vh;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-completed { 
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%); 
+            color: #059669; 
+            border: 2px solid #10b981;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .status-live { 
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%); 
+            color: #dc2626; 
+            border: 2px solid #ef4444;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .status-ready { 
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%); 
+            color: #1e40af; 
+            border: 2px solid #3b82f6;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #3b82f6 100%);
+            color: white;
+            padding: 3vh 2vw;
+            border-radius: 20px;
+            margin: 2vh 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: clamp(1rem, 1.3vw, 1.3rem);
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .metrics-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2vh 0;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .metrics-table th,
+        .metrics-table td {
+            padding: 2vh 2vw;
+            text-align: left;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+            font-size: clamp(0.9rem, 1vw, 1rem);
+        }
+
+        .metrics-table th {
+            background: linear-gradient(135deg, #1e40af 0%, #6366f1 50%, #8b5cf6 100%);
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metrics-table tr {
+            transition: all 0.3s ease;
+        }
+
+        .metrics-table tbody tr:hover {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .roi-showcase {
+            background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+            color: white;
+            padding: 4vh 2vw;
+            border-radius: 25px;
+            text-align: center;
+            margin: 3vh 0;
+            box-shadow: 0 25px 60px rgba(5, 150, 105, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roi-showcase::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .roi-value {
+            font-size: clamp(3rem, 5vw, 5rem);
+            font-weight: 900;
+            margin: 2vh 0;
+            text-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+            gap: 2vw;
+            margin: 2vh 0;
+        }
+
+        .feature-item {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border: 2px solid rgba(148, 163, 184, 0.2);
+            border-radius: 15px;
+            padding: 2vh 2vw;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+
+        .feature-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+            margin-bottom: 1vh;
+            display: block;
+        }
+
+        .feature-title {
+            font-weight: 700;
+            color: #1e40af;
+            margin-bottom: 1vh;
+            font-size: clamp(1rem, 1.1vw, 1.1rem);
+        }
+
+        .tech-feature {
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border-left: 6px solid #6366f1;
+            padding: 2vh 2vw;
+            margin: 1vh 0;
+            border-radius: 0 15px 15px 0;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tech-feature:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .critical-finding {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border: 3px solid #ef4444;
+            border-radius: 15px;
+            padding: 2vh 2vw;
+            margin: 2vh 0;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+        }
+
+        .success-metric {
+            background: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+            border: 3px solid #22c55e;
+            border-radius: 15px;
+            padding: 2vh 2vw;
+            margin: 2vh 0;
+            box-shadow: 0 10px 30px rgba(34, 197, 94, 0.3);
+        }
+
+        .acknowledgment-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 3px solid #0ea5e9;
+            border-radius: 15px;
+            padding: 2vh 2vw;
+            margin: 2vh 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .priority-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+            border: 3px solid #f59e0b;
+            padding: 2vh 2vw;
+            border-radius: 15px;
+            margin: 2vh 0;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 2vh;
+            right: 2vw;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
+            backdrop-filter: blur(20px);
+            padding: 1vh 2vw;
+            border-radius: 25px;
+            font-weight: 700;
+            color: #1e40af;
+            border: 2px solid rgba(99, 102, 241, 0.3);
+            font-size: clamp(0.9rem, 1vw, 1rem);
+            z-index: 1000;
+        }
+
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5vh 5vw;
+        }
+
+        .title-slide h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 6vw, 6rem);
+            background: linear-gradient(135deg, #1e40af 0%, #6366f1 30%, #8b5cf6 60%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            margin-bottom: 2vh;
+            letter-spacing: -0.03em;
+            text-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .title-slide h2 {
+            font-size: clamp(1.5rem, 3vw, 3rem);
+            color: #059669;
+            font-weight: 700;
+            margin-bottom: 4vh;
+            font-style: italic;
+        }
+
+        .presenter-info {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            color: white;
+            padding: 2vh 3vw;
+            border-radius: 20px;
+            margin-top: 3vh;
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            font-weight: 600;
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.4);
+        }
+
+        .date-info {
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            color: #64748b;
+            margin-top: 3vh;
+            font-weight: 500;
+        }
+
+        /* Scrollbar Styling */
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: rgba(241, 245, 249, 0.8);
+            border-radius: 10px;
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 10px;
+        }
+
+        .slide::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2vh 3vw;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 2vh;
+                justify-content: center;
+            }
+        }
+
+        /* Floating Animation Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(99, 102, 241, 0.3);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Hover instruction for navigation */
+        .navigation-hint {
+            position: fixed;
+            bottom: 2vh;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.9);
+            color: white;
+            padding: 1vh 2vw;
+            border-radius: 25px;
+            font-size: clamp(0.8rem, 1vw, 1rem);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .navigation-hint:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element" style="left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-element" style="left: 20%; animation-delay: 2s;"></div>
+        <div class="floating-element" style="left: 30%; animation-delay: 4s;"></div>
+        <div class="floating-element" style="left: 40%; animation-delay: 6s;"></div>
+        <div class="floating-element" style="left: 50%; animation-delay: 8s;"></div>
+        <div class="floating-element" style="left: 60%; animation-delay: 10s;"></div>
+        <div class="floating-element" style="left: 70%; animation-delay: 12s;"></div>
+        <div class="floating-element" style="left: 80%; animation-delay: 14s;"></div>
+        <div class="floating-element" style="left: 90%; animation-delay: 16s;"></div>
+    </div>
+
+    <div class="presentation-container">
+        <div class="slide-counter">
+            Slide <span id="current-slide">1</span> of <span id="total-slides">12</span>
+        </div>
+
+        <div class="navigation-hint">
+            Use ← → Arrow Keys or Swipe to Navigate
+        </div>
+
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active title-slide">
+            <div class="logo-container" style="position: relative; margin-bottom: 4vh;">
+                <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+            </div>
+            
+            <h1>MONTHLY PROJECT REVIEW</h1>
+            <h2>May 2025 - Exceptional Achievements</h2>
+            
+            <div class="achievement-grid" style="margin-top: 5vh; max-width: 90vw;">
+                <div class="achievement-card completed">
+                    <div class="achievement-label">SOMAA.AI v3.02</div>
+                    <div class="achievement-value">✅</div>
+                    <div class="achievement-status">Development Completed</div>
+                    <div class="status-indicator status-completed">Ready for Deployment</div>
+                </div>
+                <div class="achievement-card live">
+                    <div class="achievement-label">Behavioral Interview Platform</div>
+                    <div class="achievement-value">🚀</div>
+                    <div class="achievement-status">Live & Operational</div>
+                    <div class="status-indicator status-live">Enterprise-Ready Solution</div>
+                </div>
+                <div class="achievement-card ready">
+                    <div class="achievement-label">HURL 360° Analysis</div>
+                    <div class="achievement-value">📊</div>
+                    <div class="achievement-status">2,056+ Responses Delivered</div>
+                    <div class="status-indicator status-ready">Comprehensive Insights</div>
+                </div>
+            </div>
+            
+            <div class="presenter-info">
+                <strong>Presented by:</strong> Akash | School of Inspirational Leadership
+            </div>
+            
+            <div class="date-info">
+                <strong>Date:</strong> May 2025<br>
+                <strong>Status:</strong> Executive Review Ready
+            </div>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Executive Summary</div>
+                <div class="slide-subtitle">Major Accomplishments Overview</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="content-section">
+                    <div class="section-title">🎯 PROJECT COMPLETION SCORECARD</div>
+                    
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Achievement</th>
+                                <th>Status</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>SOMAA.AI v3.02 Development</strong></td>
+                                <td style="color: #059669; font-weight: 700;">✅ COMPLETED</td>
+                                <td>Ready for Deployment</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Behavioral Interview Platform</strong></td>
+                                <td style="color: #dc2626; font-weight: 700;">🚀 LIVE & OPERATIONAL</td>
+                                <td>Enterprise-Ready Solution</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HURL Survey Program</strong></td>
+                                <td style="color: #1e40af; font-weight: 700;">✅ DELIVERED</td>
+                                <td>2,056+ Responses Analyzed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">📊 KEY PERFORMANCE INDICATORS</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-label">Technical Platforms</div>
+                            <div class="achievement-value">2</div>
+                            <div class="achievement-status">Major Systems Delivered</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Survey Responses</div>
+                            <div class="achievement-value">2,056+</div>
+                            <div class="achievement-status">Participants Analyzed</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Client Organizations</div>
+                            <div class="achievement-value">1</div>
+                            <div class="achievement-status">Comprehensive Analysis</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Success Rate</div>
+                            <div class="achievement-value">100%</div>
+                            <div class="achievement-status">Deployment Uptime</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: SOMAA.AI v3.02 -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">SOMAA.AI v3.02</div>
+                <div class="slide-subtitle">Development Completion - Ready for Deployment</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="highlight-box">
+                    🔧 DEVELOPMENT STATUS: READY FOR DEPLOYMENT<br>
+                    <strong>Version 3.02 is fully developed and tested - awaiting production launch</strong>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">📋 Current Status</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">✅</div>
+                            <div class="feature-title">Fully Developed</div>
+                            <div>All features implemented and comprehensively tested</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⏳</div>
+                            <div class="feature-title">Awaiting Deployment</div>
+                            <div>Ready for immediate production launch</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-title">Version 3.02</div>
+                            <div>Enhanced capabilities and performance optimizations</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🚀 Enhanced Capabilities</div>
+                    <div class="tech-feature">
+                        <strong>Advanced Analytics Engine:</strong> Enhanced data processing capabilities with improved insight generation and predictive analytics
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Improved User Interface:</strong> Modern, intuitive design with enhanced user experience and accessibility features
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Performance Optimization:</strong> Faster processing speeds, improved system efficiency, and reduced resource consumption
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Comprehensive Testing:</strong> Full QA cycle completed with zero critical issues and extensive stress testing
+                    </div>
+                </div>
+
+                <div class="success-metric">
+                    <strong>🎯 Technical Readiness:</strong> Production-ready code with complete documentation, deployment package prepared, and immediate deployment capability available. All systems verified and optimized for enterprise deployment.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Behavioral Interview Platform -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Behavioral Interview Platform</div>
+                <div class="slide-subtitle">Live Application - Operational Success</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="highlight-box">
+                    🚀 LIVE APPLICATION - OPERATIONAL SUCCESS<br>
+                    <strong>URL:</strong> https://interview-app-1091742458180.asia-south1.run.app<br>
+                    <strong>Demo Access:</strong> Username: admin | Password: admin123<br>
+                    <strong>Status:</strong> 100% Uptime Since Launch
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🎯 Core Features Delivered</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">📋</div>
+                            <div class="feature-title">Structured Interview Process</div>
+                            <div>4 behavioral categories: Accountability, Adaptability, Resilience, Change Management</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎲</div>
+                            <div class="feature-title">Dynamic Question System</div>
+                            <div>Random selection algorithm ensuring unbiased interviews</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-title">Standardized Scoring</div>
+                            <div>1-5 scale with detailed behavioral descriptions</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-title">Comprehensive Reporting</div>
+                            <div>PDF & Excel export capabilities with analytics</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <div class="feature-title">Analytics Dashboard</div>
+                            <div>Performance trends and detailed insights</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">💻</div>
+                            <div class="feature-title">Responsive Design</div>
+                            <div>Optimized for all devices and screen sizes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">⚙️ Technical Excellence</div>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Technology</th>
+                                <th>Status</th>
+                                <th>Performance</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Backend Framework</strong></td>
+                                <td>Flask, PostgreSQL</td>
+                                <td style="color: #059669; font-weight: 700;">🚀 Live</td>
+                                <td>100% Uptime</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cloud Infrastructure</strong></td>
+                                <td>Google Cloud Platform</td>
+                                <td style="color: #059669; font-weight: 700;">✅ Deployed</td>
+                                <td>Scalable Architecture</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Security</strong></td>
+                                <td>Enterprise-grade protocols</td>
+                                <td style="color: #059669; font-weight: 700;">🔒 Secured</td>
+                                <td>Multi-layer protection</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="success-metric">
+                    <strong>🎯 Platform Excellence:</strong> Enterprise-ready solution delivering streamlined recruitment workflow, standardized candidate assessment, reduced hiring bias, and comprehensive interview documentation for enhanced decision-making.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: HURL Survey Program -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">HURL Survey Program</div>
+                <div class="slide-subtitle">360-Degree Organizational Analysis Completed</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="roi-showcase">
+                    <div style="font-size: 1.6em; position: relative; z-index: 2;">Total Survey Reach</div>
+                    <div class="roi-value">2,056+</div>
+                    <div style="font-size: 1.4em; position: relative; z-index: 2;">Participants Across 4 Critical Areas</div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">📊 Comprehensive Survey Breakdown</div>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Survey Type</th>
+                                <th>Responses</th>
+                                <th>Focus Area</th>
+                                <th>Completion Rate</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Employee Satisfaction (ESS)</strong></td>
+                                <td style="font-weight: 700; color: #1e40af; font-size: 1.2em;">588</td>
+                                <td>Internal Engagement Analysis</td>
+                                <td style="color: #059669; font-weight: 700;">89%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Management Effectiveness (MHS)</strong></td>
+                                <td style="font-weight: 700; color: #1e40af; font-size: 1.2em;">369</td>
+                                <td>Leadership Performance Assessment</td>
+                                <td style="color: #059669; font-weight: 700;">92%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Farmer Satisfaction</strong></td>
+                                <td style="font-weight: 700; color: #1e40af; font-size: 1.2em;">640</td>
+                                <td>Customer Experience Evaluation</td>
+                                <td style="color: #059669; font-weight: 700;">95-100%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Trader Satisfaction</strong></td>
+                                <td style="font-weight: 700; color: #1e40af; font-size: 1.2em;">459</td>
+                                <td>Partner Relations Assessment</td>
+                                <td style="color: #059669; font-weight: 700;">95%+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🎯 Analytical Excellence</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🌐</div>
+                            <div class="feature-title">Comprehensive Coverage</div>
+                            <div>360-degree analysis: Employees, Management, Customers, Partners</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-title">Data Quality</div>
+                            <div>Industry-leading standards with 95%+ confidence levels</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🗺️</div>
+                            <div class="feature-title">Geographic Reach</div>
+                            <div>Multi-state coverage across diverse agricultural regions</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-title">Statistical Rigor</div>
+                            <div>Advanced analytics with comprehensive reporting frameworks</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-metric">
+                    <strong>🏆 Deliverables Completed:</strong> Executive presentation decks, detailed statistical analysis reports, strategic recommendations with ROI projections, and comprehensive implementation roadmaps delivered.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Employee Insights -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Employee Insights</div>
+                <div class="slide-subtitle">Critical Findings & Value Creation Opportunities (588 Responses)</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="content-section">
+                    <div class="section-title">📊 Current State Analysis</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-label">Overall Satisfaction</div>
+                            <div class="achievement-value">3.4/5.0</div>
+                            <div class="achievement-status">Below industry standard of 3.8</div>
+                            <div class="status-indicator status-ready">89% Participation Excellence</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Work-Life Balance</div>
+                            <div class="achievement-value">2.8/5.0</div>
+                            <div class="achievement-status">Primary satisfaction driver identified</div>
+                            <div class="status-indicator status-live">🚨 Critical Priority</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Recognition Systems</div>
+                            <div class="achievement-value">3.1/5.0</div>
+                            <div class="achievement-status">Explains 23% of variance</div>
+                            <div class="status-indicator status-ready">Strategic Opportunity</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Career Progression</div>
+                            <div class="achievement-value">3.2/5.0</div>
+                            <div class="achievement-status">18% retention impact correlation</div>
+                            <div class="status-indicator status-ready">Growth Focus Area</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="critical-finding">
+                    <strong>🚨 Business Impact Assessment:</strong><br><br>
+                    • <strong>Risk Exposure:</strong> ₹8+ crore annual value destruction identified<br>
+                    • <strong>Attrition Risk:</strong> 15% voluntary turnover projected within 12 months<br>
+                    • <strong>Productivity Gap:</strong> 20-25% performance below organizational potential<br>
+                    • <strong>Competitive Disadvantage:</strong> Falling behind industry leaders in key metrics
+                </div>
+
+                <div class="roi-showcase">
+                    <div style="font-size: 1.6em; position: relative; z-index: 2;">Value Creation Opportunity</div>
+                    <div class="roi-value" style="position: relative; z-index: 2;">₹15+</div>
+                    <div style="font-size: 1.4em; position: relative; z-index: 2;">Crore Potential | 520-760% ROI</div>
+                    <div style="margin-top: 25px; font-size: 1.2em; position: relative; z-index: 2;">
+                        <strong>Investment Required:</strong> ₹2.5 crores (0.017% of revenue)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Management Effectiveness -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Management Effectiveness</div>
+                <div class="slide-subtitle">Transformation Roadmap & Performance Analysis (369 Responses)</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="content-section">
+                    <div class="section-title">📊 Current Performance Metrics</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-label">Management Effectiveness Score</div>
+                            <div class="achievement-value">63.8/100</div>
+                            <div class="achievement-status">Moderate performance level</div>
+                            <div class="status-indicator status-ready">92% Exceptional Participation</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Improvement Potential</div>
+                            <div class="achievement-value">+11.2</div>
+                            <div class="achievement-status">Points achievable to excellence</div>
+                            <div class="status-indicator status-completed">Target: 75+ Points</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🚨 Critical Performance Gaps</div>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Management Practice</th>
+                                <th>Current Score</th>
+                                <th>Priority Level</th>
+                                <th>Business Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Feedback Systems</strong></td>
+                                <td style="color: #dc2626; font-weight: 700; font-size: 1.1em;">54.4/100</td>
+                                <td style="color: #dc2626; font-weight: 700;">🚨 Highest Priority</td>
+                                <td>Weekly collection mechanism failing</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Performance Visibility</strong></td>
+                                <td style="color: #dc2626; font-weight: 700; font-size: 1.1em;">59.0/100</td>
+                                <td style="color: #dc2626; font-weight: 700;">🚨 Critical Gap</td>
+                                <td>Transparency and accountability crisis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Leadership Development</strong></td>
+                                <td style="color: #f59e0b; font-weight: 700; font-size: 1.1em;">Variable</td>
+                                <td style="color: #f59e0b; font-weight: 700;">⚠️ Attention Required</td>
+                                <td>Succession planning vulnerability</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="critical-finding">
+                    <strong>🏢 Department Performance Analysis:</strong><br><br>
+                    <strong>28.4-Point Performance Gap</strong> identified between highest and lowest performing departments<br><br>
+                    • <strong>Top Performers:</strong> Instrumentation (79.2), Security (77.4), Marketing (76.4)<br>
+                    • <strong>Immediate Support Needed:</strong> Urea Production (50.8), Ammonia Production (53.2), Finance (57.6)<br>
+                    • <strong>Strategic Implication:</strong> Unacceptable performance variability requiring standardization
+                </div>
+
+                <div class="roi-showcase">
+                    <div style="font-size: 1.6em; position: relative; z-index: 2;">Expected Value Creation</div>
+                    <div class="roi-value" style="position: relative; z-index: 2;">₹16.6+</div>
+                    <div style="font-size: 1.4em; position: relative; z-index: 2;">Crore Annual Returns</div>
+                    <div style="margin-top: 25px; font-size: 1.2em; position: relative; z-index: 2;">
+                        <strong>Investment:</strong> ₹2.07 crores | <strong>Payback:</strong> 4-6 months
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Customer Excellence -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Customer Excellence</div>
+                <div class="slide-subtitle">Farmers & Traders Insights (1,099 Total Responses)</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="content-section">
+                    <div class="section-title">🌾 Farmer Satisfaction Survey (640 Responses)</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-label">Overall Satisfaction</div>
+                            <div class="achievement-value">4.4/5.0</div>
+                            <div class="achievement-status">Excellent performance</div>
+                            <div class="status-indicator status-completed">69.1% Highly Satisfied</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Product Excellence</div>
+                            <div class="achievement-value">4.82/5.0</div>
+                            <div class="achievement-status">Core fertilizer rating</div>
+                            <div class="status-indicator status-completed">99% Positive Sentiment</div>
+                        </div>
+                    </div>
+                    
+                    <div class="success-metric">
+                        <strong>Outstanding Achievement:</strong> Zero negative ratings with 99% positive sentiment across all farmer feedback. Strong Bihar leadership with expansion opportunities identified.
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🏪 Trader Satisfaction Survey (459 Responses)</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-label">Overall Performance</div>
+                            <div class="achievement-value">85.1/100</div>
+                            <div class="achievement-status">Very Good rating</div>
+                            <div class="status-indicator status-completed">94.4% Loyalty</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Product Quality Leadership</div>
+                            <div class="achievement-value">4.70/5.0</div>
+                            <div class="achievement-status">Market leadership confirmed</div>
+                            <div class="status-indicator status-completed">Strong Foundation</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">📈 Growth Opportunities</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">💰</div>
+                            <div class="feature-title">Pricing Perception (Farmers)</div>
+                            <div>4.17/5.0 - 15.9% improvement opportunity with value communication</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌍</div>
+                            <div class="feature-title">Regional Standardization (Traders)</div>
+                            <div>Western Region +5.2 point opportunity for performance alignment</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-title">Revenue Impact Potential</div>
+                            <div>6-12% improvement achievable through strategic interventions</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Combined Customer Value:</strong> 1,099 responses confirming market leadership with clear roadmap for enhanced performance and geographic expansion opportunities
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Technical Achievements -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Technical Achievements</div>
+                <div class="slide-subtitle">Platform Excellence & Development Milestones</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="content-section">
+                    <div class="section-title">💻 Development & Deployment Milestones</div>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Technology</th>
+                                <th>Status</th>
+                                <th>Capability</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Interview Platform</strong></td>
+                                <td>Flask, PostgreSQL, GCP</td>
+                                <td style="color: #dc2626; font-weight: 700;">🚀 Live</td>
+                                <td>100% Uptime</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SOMAA.AI v3.02</strong></td>
+                                <td>Advanced Analytics</td>
+                                <td style="color: #059669; font-weight: 700;">✅ Ready</td>
+                                <td>Enhanced Performance</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Survey Processing</strong></td>
+                                <td>Statistical Analysis</td>
+                                <td style="color: #059669; font-weight: 700;">✅ Delivered</td>
+                                <td>95%+ Confidence</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🏗️ Infrastructure Achievements</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">☁️</div>
+                            <div class="feature-title">Cloud Deployment</div>
+                            <div>Google Cloud Platform implementation with enterprise-grade reliability</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📈</div>
+                            <div class="feature-title">Scalability</div>
+                            <div>Cloud-native architecture designed for growth and expansion</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🔒</div>
+                            <div class="feature-title">Security</div>
+                            <div>Enterprise-grade security protocols and data protection</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📱</div>
+                            <div class="feature-title">User Experience</div>
+                            <div>Responsive design optimized for all devices and platforms</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🧪</div>
+                            <div class="feature-title">Quality Assurance</div>
+                            <div>Comprehensive QA protocols with zero-defect deployment</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📖</div>
+                            <div class="feature-title">Documentation</div>
+                            <div>Complete technical documentation and deployment guides</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-metric">
+                    <strong>🎯 Quality Excellence:</strong> Zero-defect deployment achievement with statistical rigor maintained across all analytical processes. Enterprise-grade standards achieved throughout development lifecycle.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Business Impact -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Business Impact</div>
+                <div class="slide-subtitle">Value Creation Summary & ROI Analysis</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="roi-showcase">
+                    <div style="font-size: 1.6em; position: relative; z-index: 2;">Total Value Creation Potential</div>
+                    <div class="roi-value" style="position: relative; z-index: 2;">₹30+</div>
+                    <div style="font-size: 1.4em; position: relative; z-index: 2;">Crore Opportunity Identified</div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">💰 Quantified Business Opportunities</div>
+                    <table class="metrics-table">
+                        <thead>
+                            <tr>
+                                <th>Area</th>
+                                <th>Current State</th>
+                                <th>Opportunity</th>
+                                <th>Investment</th>
+                                <th>ROI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Employee Engagement</strong></td>
+                                <td>3.4/5.0 satisfaction</td>
+                                <td style="color: #059669; font-weight: 700;">₹15+ crore value</td>
+                                <td>₹2.5 crores</td>
+                                <td style="color: #059669; font-weight: 700;">520-760%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Management Effectiveness</strong></td>
+                                <td>63.8/100 score</td>
+                                <td style="color: #059669; font-weight: 700;">₹16.6+ crore returns</td>
+                                <td>₹2.07 crores</td>
+                                <td style="color: #059669; font-weight: 700;">4-6 month payback</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Customer Excellence</strong></td>
+                                <td>Strong foundation</td>
+                                <td style="color: #059669; font-weight: 700;">6-12% revenue growth</td>
+                                <td>Targeted programs</td>
+                                <td style="color: #059669; font-weight: 700;">Immediate returns</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🎯 Client Success Metrics</div>
+                    <div class="achievement-grid">
+                        <div class="achievement-card">
+                            <div class="achievement-label">Data Quality</div>
+                            <div class="achievement-value">95%+</div>
+                            <div class="achievement-status">Completion rates achieved</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Statistical Confidence</div>
+                            <div class="achievement-value">Industry</div>
+                            <div class="achievement-status">Leading reliability standards</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Actionable Insights</div>
+                            <div class="achievement-value">Clear</div>
+                            <div class="achievement-status">Implementation roadmaps</div>
+                        </div>
+                        <div class="achievement-card">
+                            <div class="achievement-label">Executive Readiness</div>
+                            <div class="achievement-value">Board</div>
+                            <div class="achievement-status">Level presentation quality</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Investment Efficiency:</strong> Less than 0.1% of revenue investment for transformational impact with comprehensive organizational optimization roadmap and measurable value creation
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Next Steps -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Next Steps & Strategic Priorities</div>
+                <div class="slide-subtitle">Implementation Roadmap & Future Initiatives</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="content-section">
+                    <div class="section-title">🎯 Immediate Priorities (Next 30 Days)</div>
+                    <div class="priority-box">
+                        <strong>1. SOMAA.AI v3.02 Deployment</strong><br>
+                        • <strong>Action:</strong> Production deployment planning and execution<br>
+                        • <strong>Timeline:</strong> Immediate deployment capability available<br>
+                        • <strong>Impact:</strong> Advanced analytics capabilities live for client use
+                    </div>
+                    <div class="priority-box">
+                        <strong>2. Behavioral Interview Platform Enhancement</strong><br>
+                        • <strong>Action:</strong> User feedback integration and feature refinement<br>
+                        • <strong>Timeline:</strong> Continuous improvement cycle implementation<br>
+                        • <strong>Impact:</strong> Enhanced user experience and expanded functionality
+                    </div>
+                    <div class="priority-box">
+                        <strong>3. HURL Implementation Support</strong><br>
+                        • <strong>Action:</strong> Strategic consultation for survey insights implementation<br>
+                        • <strong>Timeline:</strong> Ongoing advisory support and guidance<br>
+                        • <strong>Impact:</strong> Value realization from identified opportunities
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">📅 Medium-Term Development (Next 90 Days)</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">🔗</div>
+                            <div class="feature-title">Platform Integration</div>
+                            <div>Cross-system connectivity and seamless data flow between platforms</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-title">Advanced Analytics</div>
+                            <div>Enhanced reporting capabilities and predictive analytics features</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏢</div>
+                            <div class="feature-title">Client Expansion</div>
+                            <div>Additional organizational assessment opportunities and partnerships</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">⚙️</div>
+                            <div class="feature-title">Technology Enhancement</div>
+                            <div>Continued platform optimization and performance improvements</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🚀 Long-Term Vision (6-12 Months)</div>
+                    <div class="tech-feature">
+                        <strong>Market Expansion:</strong> Scale successful methodologies to additional client organizations and industry sectors
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Product Evolution:</strong> Advanced AI and ML integration for enhanced predictive capabilities
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Industry Leadership:</strong> Establish thought leadership in organizational analytics and transformation
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Sustainable Growth:</strong> Build scalable platform ecosystem for long-term value creation
+                    </div>
+                </div>
+
+                <div class="success-metric">
+                    <strong>🎯 Success Metrics for Next Review:</strong> SOMAA.AI v3.02 deployment success and user adoption, Behavioral Interview Platform usage analytics, HURL implementation progress with early ROI indicators, and new client acquisition milestones.
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Team Excellence & Future Vision -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <div class="sil-logo">School of<br>Inspirational<br>Leadership</div>
+                </div>
+                <div class="slide-title">Team Excellence & Future Vision</div>
+                <div class="slide-subtitle">Celebrating Achievement & Strategic Direction</div>
+            </div>
+
+            <div class="slide-content">
+                <div class="content-section">
+                    <div class="section-title">🤝 Client Partnership Excellence</div>
+                    <div class="acknowledgment-box">
+                        <strong>🏢 HURL Organization:</strong> Trust, confidence, and exceptional collaboration enabling comprehensive organizational analysis<br><br>
+                        <strong>📊 Survey Participants:</strong> 2,056+ individuals who provided honest, valuable feedback enabling data-driven insights<br><br>
+                        <strong>🎯 Stakeholder Engagement:</strong> Outstanding cooperation and collaboration across all organizational levels and departments
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">⭐ Team Excellence Achievements</div>
+                    <div class="feature-list">
+                        <div class="feature-item">
+                            <div class="feature-icon">💎</div>
+                            <div class="feature-title">Development Quality</div>
+                            <div>Zero-defect deployment with enterprise-grade standards and comprehensive testing</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-title">Analytical Rigor</div>
+                            <div>Statistical excellence in survey processing with industry-leading confidence levels</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🎯</div>
+                            <div class="feature-title">Client Service</div>
+                            <div>Executive-level deliverable quality with board-ready presentations and actionable insights</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🚀</div>
+                            <div class="feature-title">Innovation Leadership</div>
+                            <div>Technical and methodological advancement in organizational analytics and platform development</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🏆</div>
+                            <div class="feature-title">Project Excellence</div>
+                            <div>Successful delivery of multiple complex projects with measurable business impact</div>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">🌟</div>
+                            <div class="feature-title">Strategic Impact</div>
+                            <div>Creation of transformational value propositions and implementation roadmaps</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🚀 Strategic Vision Forward</div>
+                    <div class="tech-feature">
+                        <strong>Organizational Analytics Leadership:</strong> Establishing the School of Inspirational Leadership as the premier provider of data-driven organizational transformation
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Technology Innovation:</strong> Continued advancement in AI-powered analytics and automated insight generation
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Market Expansion:</strong> Scaling methodologies across diverse industries and organizational scales
+                    </div>
+                    <div class="tech-feature">
+                        <strong>Sustainable Impact:</strong> Creating lasting value through evidence-based transformation strategies
+                    </div>
+                </div>
+
+                <div class="roi-showcase">
+                    <div style="font-size: 1.6em; position: relative; z-index: 2;">Future Excellence</div>
+                    <div style="font-size: 2.2em; margin: 25px 0; position: relative; z-index: 2; font-family: 'Playfair Display', serif;">Innovation Through Excellence</div>
+                    <div style="font-size: 1.3em; position: relative; z-index: 2; line-height: 1.5;">
+                        This month's achievements represent a solid foundation for continued excellence in organizational analytics, platform development, and transformational client value creation across diverse industry sectors.
+                    </div>
+                    <div style="margin-top: 30px; font-size: 1.2em; font-style: italic; position: relative; z-index: 2;">
+                        <strong>"Excellence achieved through innovation, collaboration, and unwavering commitment to quality."</strong>
+                    </div>
+                    <div style="margin-top: 25px; font-size: 1.1em; position: relative; z-index: 2;">
+                        <strong>— Akash | School of Inspirational Leadership</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+            
+            // Auto-scroll to top when changing slides
+            slides[currentSlide].scrollTop = 0;
+        }
+
+        function changeSlide(direction) {
+            if (direction === 1 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (direction === -1 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                changeSlide(-1);
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                showSlide(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                showSlide(totalSlides - 1);
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                // Could add fullscreen toggle here
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                changeSlide(1); // Swipe left - next slide
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                changeSlide(-1); // Swipe right - previous slide
+            }
+        }
+
+        // Initialize
+        showSlide(0);
+
+        // Auto-hide cursor during presentation
+        let mouseTimer;
+        document.addEventListener('mousemove', function() {
+            document.body.style.cursor = 'default';
+            clearTimeout(mouseTimer);
+            mouseTimer = setTimeout(() => {
+                document.body.style.cursor = 'none';
+            }, 5000);
+        });
+
+        // Smooth scrolling enhancement
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.style.scrollBehavior = 'smooth';
+        });
+
+        // Add floating animation elements
+        function createFloatingElements() {
+            const container = document.querySelector('.floating-elements');
+            for (let i = 0; i < 15; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 20 + 's';
+                element.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(element);
+            }
+        }
+
+        // Initialize floating elements
+        createFloatingElements();
+
+        // Auto-hide navigation hint after a few seconds
+        setTimeout(() => {
+            const hint = document.querySelector('.navigation-hint');
+            if (hint) {
+                hint.style.opacity = '0.3';
+            }
+        }, 5000);
+    </script>
+</body>
+</html>
