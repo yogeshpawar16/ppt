@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,6 +47,7 @@
                 opacity: 0;
                 transform: translateX(50px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -67,19 +69,14 @@
             gap: 40px;
         }
 
-        .logo-placeholder {
-            width: 120px;
-            height: 60px;
+        .logo-image {
+            max-width: 120px;
+            max-height: 60px;
+            object-fit: contain;
             background: #fff;
-            border: 2px dashed #2a5298;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #2a5298;
-            border-radius: 8px;
-            text-align: center;
             padding: 5px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .slide-number {
@@ -129,14 +126,14 @@
             background: white;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             border-left: 5px solid #2a5298;
             transition: transform 0.3s ease;
         }
 
         .metric-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .metric-title {
@@ -165,10 +162,11 @@
             background: white;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
-        .table th, .table td {
+        .table th,
+        .table td {
             padding: 15px;
             text-align: left;
             border-bottom: 1px solid #e0e0e0;
@@ -210,7 +208,7 @@
             background: white;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             border-top: 5px solid;
         }
 
@@ -280,13 +278,13 @@
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .nav-btn:hover {
             background: #1e3c72;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
         .nav-btn:disabled {
@@ -309,7 +307,7 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.5);
+            background: rgba(255, 255, 255, 0.5);
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -328,7 +326,7 @@
             text-align: center;
             font-size: 1.1em;
             font-weight: 600;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .emoji {
@@ -355,19 +353,19 @@
             .slide {
                 padding: 20px 30px;
             }
-            
+
             h1 {
                 font-size: 2em;
             }
-            
+
             .metrics-grid {
                 grid-template-columns: 1fr;
             }
-            
+
             .phase-container {
                 grid-template-columns: 1fr;
             }
-            
+
             .navigation {
                 bottom: 15px;
                 right: 15px;
@@ -375,21 +373,26 @@
         }
     </style>
 </head>
+
 <body>
     <div class="presentation-container">
         <!-- Slide 1: Title & Opportunity -->
         <div class="slide active">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">1 / 10</div>
             </div>
-            
+
             <h1>HURL EMPLOYEE ENGAGEMENT TRANSFORMATION</h1>
             <p class="subtitle">Strategic Analysis & Executive Recommendations</p>
-            
+
             <div class="highlight-box">
                 <h2>THE STRATEGIC OPPORTUNITY</h2>
                 <p><em>"Unlocking HURL's Hidden Productivity Potential"</em></p>
@@ -419,25 +422,30 @@
             </div>
 
             <div class="highlight-box">
-                <strong>TODAY'S DECISION:</strong> Approve strategic investment to unlock massive productivity improvement opportunity
+                <strong>TODAY'S DECISION:</strong> Approve strategic investment to unlock massive productivity
+                improvement opportunity
             </div>
         </div>
 
         <!-- Slide 2: Burning Platform -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">2 / 10</div>
             </div>
-            
+
             <h1>THE BURNING PLATFORM</h1>
             <p class="subtitle"><em>"Why Immediate Action is Critical"</em></p>
 
             <h2><span class="emoji">🚨</span>Current State Consequences</h2>
-            
+
             <div class="phase-container">
                 <div class="phase-card phase-1">
                     <div class="phase-title">Operational Impact</div>
@@ -448,7 +456,7 @@
                         <li>Quality Issues: Higher error rates and rework requirements</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">Strategic Risks</div>
                     <ul class="bullet-list">
@@ -462,25 +470,30 @@
 
             <div class="highlight-box">
                 <h3>THE TIPPING POINT</h3>
-                <p>We're approaching critical mass where talent flight becomes irreversible, potentially devastating institutional knowledge and market position</p>
+                <p>We're approaching critical mass where talent flight becomes irreversible, potentially devastating
+                    institutional knowledge and market position</p>
             </div>
         </div>
 
         <!-- Slide 3: Employee Voice Analysis -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">3 / 10</div>
             </div>
-            
+
             <h1>EMPLOYEE VOICE ANALYSIS</h1>
             <p class="subtitle"><em>"What Our Workforce Is Telling Us"</em></p>
 
             <h2>Survey Insights (500+ responses, 95% confidence level)</h2>
-            
+
             <table class="table">
                 <thead>
                     <tr>
@@ -547,18 +560,22 @@
         <!-- Slide 4: Workforce Segmentation -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">4 / 10</div>
             </div>
-            
+
             <h1>WORKFORCE SEGMENTATION & RISK MATRIX</h1>
             <p class="subtitle"><em>"Strategic Intervention by Employee Persona"</em></p>
 
             <h2>Employee Risk Stratification</h2>
-            
+
             <div class="phase-container">
                 <div class="phase-card phase-3">
                     <div class="phase-title">CHAMPIONS (25%)</div>
@@ -569,7 +586,7 @@
                         <div class="percentage-fill" style="width: 25%"></div>
                     </div>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">CONTRIBUTORS (45%)</div>
                     <div class="phase-timeline">Generally positive, improvable</div>
@@ -579,7 +596,7 @@
                         <div class="percentage-fill" style="width: 45%"></div>
                     </div>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">CONCERNED (20%)</div>
                     <div class="phase-timeline">Mixed signals, intervention needed</div>
@@ -589,7 +606,7 @@
                         <div class="percentage-fill" style="width: 20%"></div>
                     </div>
                 </div>
-                
+
                 <div class="phase-card phase-1">
                     <div class="phase-title">CRITICAL (10%)</div>
                     <div class="phase-timeline">High flight risk, immediate action</div>
@@ -605,7 +622,8 @@
             <div class="metrics-grid">
                 <div class="metric-card">
                     <div class="metric-title risk-high">BARAUNI 🚨</div>
-                    <div class="metric-description">Highest concentration of at-risk employees (immediate intervention)</div>
+                    <div class="metric-description">Highest concentration of at-risk employees (immediate intervention)
+                    </div>
                 </div>
                 <div class="metric-card">
                     <div class="metric-title risk-medium">SINDRI ⚠️</div>
@@ -625,13 +643,17 @@
         <!-- Slide 5: Root Cause Analysis -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">5 / 10</div>
             </div>
-            
+
             <h1>SCIENTIFIC ROOT CAUSE ANALYSIS</h1>
             <p class="subtitle"><em>"The Psychology and Data Behind the Solutions"</em></p>
 
@@ -645,7 +667,7 @@
                         <li>Manager Relationship: Mediates 45% of other dimension impacts</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-3">
                     <div class="phase-title">Organizational Psychology Framework</div>
                     <ul class="bullet-list">
@@ -691,25 +713,30 @@
 
             <div class="highlight-box">
                 <h3>Best Practice Insights</h3>
-                <p>Companies achieving 4.2+ satisfaction demonstrate significantly higher profitability, superior productivity levels, much lower turnover rates, and better customer satisfaction scores</p>
+                <p>Companies achieving 4.2+ satisfaction demonstrate significantly higher profitability, superior
+                    productivity levels, much lower turnover rates, and better customer satisfaction scores</p>
             </div>
         </div>
 
         <!-- Slide 6: Transformation Blueprint -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">6 / 10</div>
             </div>
-            
+
             <h1>TRANSFORMATION BLUEPRINT</h1>
             <p class="subtitle"><em>"Strategic Value Creation Pathway"</em></p>
 
             <h2>Three-Phase Strategic Approach</h2>
-            
+
             <div class="phase-container">
                 <div class="phase-card phase-1">
                     <div class="phase-title">PHASE 1: CRISIS STABILIZATION</div>
@@ -724,7 +751,7 @@
                     </ul>
                     <p><strong>Expected Impact:</strong> 25% improvement in work-life satisfaction</p>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">PHASE 2: SYSTEMATIC IMPROVEMENT</div>
                     <div class="phase-timeline">3-12 months</div>
@@ -738,7 +765,7 @@
                     </ul>
                     <p><strong>Expected Impact:</strong> Overall satisfaction 3.4 → 3.9</p>
                 </div>
-                
+
                 <div class="phase-card phase-3">
                     <div class="phase-title">PHASE 3: CULTURE EXCELLENCE</div>
                     <div class="phase-timeline">12-18 months</div>
@@ -757,18 +784,22 @@
         <!-- Slide 7: Value Creation Model -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">7 / 10</div>
             </div>
-            
+
             <h1>VALUE CREATION MODEL</h1>
             <p class="subtitle"><em>"The Strategic Business Impact"</em></p>
 
             <h2>Transformation Value Pathways</h2>
-            
+
             <div class="phase-container">
                 <div class="phase-card phase-1">
                     <div class="phase-title">IMMEDIATE RETURNS (Year 1)</div>
@@ -780,7 +811,7 @@
                         <li>Operational Excellence: Enhanced efficiency across functions</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">SUSTAINED VALUE (Years 2-3)</div>
                     <ul class="bullet-list">
@@ -790,7 +821,7 @@
                         <li>Market Position: Competitive advantage through excellence</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-3">
                     <div class="phase-title">STRATEGIC TRANSFORMATION (Years 4-5)</div>
                     <ul class="bullet-list">
@@ -811,13 +842,17 @@
         <!-- Slide 8: Implementation Excellence -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">8 / 10</div>
             </div>
-            
+
             <h1>IMPLEMENTATION EXCELLENCE</h1>
             <p class="subtitle"><em>"Guaranteed Execution Framework"</em></p>
 
@@ -831,7 +866,7 @@
                         <li><strong>Employee Champions:</strong> Grassroots change network</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">RISK MITIGATION STRATEGIES</div>
                     <ul class="bullet-list">
@@ -890,18 +925,22 @@
         <!-- Slide 9: Competitive Advantage -->
         <div class="slide">
             <div class="header">
+
+
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">9 / 10</div>
             </div>
-            
+
             <h1>COMPETITIVE ADVANTAGE CREATION</h1>
             <p class="subtitle"><em>"Beyond Employee Satisfaction - Strategic Positioning"</em></p>
 
             <h2>Business Ecosystem Impact</h2>
-            
+
             <div class="phase-container">
                 <div class="phase-card phase-3">
                     <div class="phase-title">Customer Experience Amplification</div>
@@ -911,7 +950,7 @@
                         <li>Customer lifetime value optimization</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">Innovation & Quality Excellence</div>
                     <ul class="bullet-list">
@@ -920,7 +959,7 @@
                         <li>Innovation pipeline enhancement</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-1">
                     <div class="phase-title">Market Leadership Positioning</div>
                     <ul class="bullet-list">
@@ -949,20 +988,23 @@
 
             <div class="highlight-box">
                 <h3>ESG & Sustainability Leadership</h3>
-                <p>Employee wellbeing excellence demonstrates ESG commitment, building stakeholder confidence in sustainable business practices and investment attractiveness</p>
+                <p>Employee wellbeing excellence demonstrates ESG commitment, building stakeholder confidence in
+                    sustainable business practices and investment attractiveness</p>
             </div>
         </div>
 
         <!-- Slide 10: Decision Point -->
         <div class="slide">
             <div class="header">
+
                 <div class="logo-container">
-                    <div class="logo-placeholder">HURL Logo</div>
-                    <div class="logo-placeholder">School of Inspirational Leadership Logo</div>
+                    <img src="/images/hurl.jpeg" alt="HURL Logo" class="logo-image">
+                    <img src="/images/image.webp" alt="School of Inspirational Leadership Logo" class="logo-image">
                 </div>
+
                 <div class="slide-number">10 / 10</div>
             </div>
-            
+
             <h1>THE DECISION POINT</h1>
             <p class="subtitle"><em>"Strategic Transformation Requires Leadership Commitment"</em></p>
 
@@ -977,7 +1019,7 @@
                         <li>Progress Reporting (transformation progress tracking)</li>
                     </ul>
                 </div>
-                
+
                 <div class="phase-card phase-2">
                     <div class="phase-title">30-DAY IMPLEMENTATION TIMELINE</div>
                     <ul class="bullet-list">
@@ -1019,9 +1061,12 @@
 
             <div class="highlight-box">
                 <h2>THE STRATEGIC ASK</h2>
-                <p>We're requesting approval for strategic investment that will generate exceptional returns while transforming HURL into India's most admired employer. The business case is validated, the methodology is proven, and the urgency is clear.</p>
+                <p>We're requesting approval for strategic investment that will generate exceptional returns while
+                    transforming HURL into India's most admired employer. The business case is validated, the
+                    methodology is proven, and the urgency is clear.</p>
                 <br>
-                <p><strong>The data is clear. The opportunity is massive. The path is proven. Our workforce is ready to drive exceptional value creation.</strong></p>
+                <p><strong>The data is clear. The opportunity is massive. The path is proven. Our workforce is ready to
+                        drive exceptional value creation.</strong></p>
                 <br>
                 <p><em>The only question is: do we start this transformation today?</em></p>
             </div>
@@ -1057,12 +1102,12 @@
         function showSlide(n) {
             slides[currentSlide].classList.remove('active');
             indicators[currentSlide].classList.remove('active');
-            
+
             currentSlide = (n + totalSlides) % totalSlides;
-            
+
             slides[currentSlide].classList.add('active');
             indicators[currentSlide].classList.add('active');
-            
+
             // Update navigation buttons
             document.getElementById('prevBtn').disabled = currentSlide === 0;
             document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
@@ -1081,7 +1126,7 @@
         }
 
         // Keyboard navigation
-        document.addEventListener('keydown', function(e) {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'ArrowRight' || e.key === ' ') {
                 e.preventDefault();
                 changeSlide(1);
@@ -1108,7 +1153,7 @@
 
         // Call animation when slide changes
         const originalShowSlide = showSlide;
-        showSlide = function(n) {
+        showSlide = function (n) {
             originalShowSlide(n);
             setTimeout(animateBars, 300);
         }
@@ -1117,4 +1162,5 @@
         setTimeout(animateBars, 1000);
     </script>
 </body>
+
 </html>
