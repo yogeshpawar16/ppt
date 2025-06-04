@@ -1,0 +1,3662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREDAI - Democratizing Credit Access Through AI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --secondary-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --accent-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --dark-gradient: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --shadow-primary: 0 8px 32px rgba(102, 126, 234, 0.3);
+            --shadow-secondary: 0 8px 32px rgba(79, 172, 254, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.9);
+            --text-muted: rgba(255, 255, 255, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-gradient);
+            overflow: hidden;
+            color: var(--text-primary);
+            cursor: default;
+            user-select: none;
+            margin: 0;
+            padding: 0;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .presentation-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+        
+        .background-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-gradient);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -3;
+        }
+        
+        .geometric-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+            animation: float 20s ease-in-out infinite;
+            backdrop-filter: blur(1px);
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 60px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(100%) rotateY(45deg);
+            transition: all 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            overflow-y: auto;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .slide::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .slide::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .slide::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        /* Firefox scrollbar styling */
+        .slide {
+            scrollbar-width: thin;
+            scrollbar-color: #667eea rgba(255, 255, 255, 0.1);
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0) rotateY(0deg);
+        }
+        
+        .slide.prev {
+            transform: translateX(-100%) rotateY(-45deg);
+        }
+        
+        .slide.next {
+            transform: translateX(100%) rotateY(45deg);
+        }
+        
+        .slide-content {
+            max-width: 1400px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            animation: slideContentIn 1s ease-out 0.3s both;
+            min-height: fit-content;
+            padding-bottom: 100px;
+        }
+        
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            border: 1px solid var(--glass-border);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .scroll-indicator.visible {
+            opacity: 1;
+        }
+        
+        .scroll-to-top {
+            position: absolute;
+            bottom: 80px;
+            right: 20px;
+            background: var(--secondary-gradient);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: var(--shadow-secondary);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+            z-index: 1000;
+        }
+        
+        .scroll-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .scroll-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.4);
+        }
+        
+        .slide-header {
+            display: none;
+        }
+        
+        .progress-bar {
+            display: none;
+        }
+        
+        .floating-menu {
+            display: none;
+        }
+        
+        .navigation {
+            display: none;
+        }
+        
+        .nav-btn {
+            display: none;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #a8edea 50%, #fd9a9a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            text-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ffffff 0%, #a8edea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+        }
+        
+        h3 {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+        
+        .subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.8rem);
+            font-weight: 400;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            line-height: 1.6;
+            animation: slideInUp 1s ease-out 0.5s both;
+        }
+        
+        .mega-number {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(4rem, 15vw, 12rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 0.9;
+            margin: 30px 0;
+            text-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            animation: numberPulse 3s ease-in-out infinite;
+        }
+        
+        .premium-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            margin: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-primary);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--secondary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .premium-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .premium-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+        
+        .stat-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .stat-card:hover::after {
+            opacity: 1;
+        }
+        
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 15px;
+            background: var(--secondary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+            animation: counterUp 2s ease-out;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 25px;
+            background: var(--glass-bg);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--accent-gradient);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateX(15px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: var(--shadow-secondary);
+        }
+        
+        .feature-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-right: 20px;
+            min-width: 50px;
+            text-align: center;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+        }
+        
+        .feature-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        
+        .tech-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        
+        .tech-item {
+            background: var(--glass-bg);
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.2) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            transition: all 0.6s ease;
+            border-radius: 50%;
+        }
+        
+        .tech-item:hover {
+            transform: scale(1.08) rotateY(5deg);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+        
+        .tech-item:hover::before {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .quote-section {
+            background: var(--glass-bg);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 6px solid;
+            border-image: var(--accent-gradient) 1;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 8rem;
+            font-family: 'Playfair Display', serif;
+            color: rgba(255, 255, 255, 0.1);
+            line-height: 1;
+        }
+        
+        .quote-text {
+            font-size: 1.4rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .quote-author {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+        
+        .cta-section {
+            background: var(--glass-bg);
+            border-radius: 24px;
+            padding: 50px;
+            margin: 40px 0;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button {
+            background: var(--secondary-gradient);
+            border: none;
+            border-radius: 50px;
+            padding: 20px 50px;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            margin: 20px 10px;
+            box-shadow: 0 10px 30px rgba(79, 172, 254, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(79, 172, 254, 0.6);
+        }
+        
+        .cta-button:hover::before {
+            left: 100%;
+        }
+        
+        .zoom-controls {
+            position: fixed;
+            left: 30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--shadow-primary);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 120px;
+        }
+        
+        .zoom-btn {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            padding: 8px 12px;
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .zoom-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .zoom-display {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin: 5px 0;
+        }
+        
+        .presentation-wrapper {
+            transform-origin: center center;
+            transition: transform 0.3s ease;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Slide-specific styles */
+        .title-slide .slide-content {
+            text-align: center;
+            max-width: 1000px;
+        }
+        
+        .problem-slide .mega-number {
+            color: #ff6b6b;
+        }
+        
+        .solution-slide h2 {
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Animations */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(120deg); }
+            66% { transform: translateY(-10px) rotate(240deg); }
+        }
+        
+        @keyframes slideContentIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes titleGlow {
+            from { text-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); }
+            to { text-shadow: 0 8px 32px rgba(102, 126, 234, 0.5); }
+        }
+        
+        @keyframes numberPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes counterUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .slide {
+                padding: 40px 60px;
+            }
+            
+            .stats-grid,
+            .feature-grid,
+            .tech-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px 40px;
+                padding-bottom: 80px; /* Reduced since no navigation */
+            }
+            
+            .slide-header {
+                padding: 0 20px;
+            }
+            
+            .stats-grid,
+            .feature-grid,
+            .tech-showcase {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .zoom-controls {
+                left: 10px;
+                top: auto;
+                bottom: 20px; /* Moved up since no navigation */
+                transform: none;
+                flex-direction: row;
+                padding: 10px;
+                min-width: auto;
+                flex-wrap: wrap;
+            }
+            
+            .zoom-btn {
+                padding: 6px 8px;
+                font-size: 10px;
+                min-width: 60px;
+            }
+            
+            .zoom-display {
+                margin: 0;
+                min-width: 40px;
+            }
+            
+            .scroll-indicator {
+                bottom: 100px;
+                right: 10px;
+                font-size: 11px;
+                padding: 6px 10px;
+            }
+            
+            .scroll-to-top {
+                bottom: 80px;
+                right: 10px;
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+            
+            .slide-content {
+                padding-bottom: 100px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .slide {
+                padding: 20px 25px;
+                padding-bottom: 80px;
+            }
+            
+            .zoom-controls {
+                left: 5px;
+                bottom: 10px;
+                padding: 8px;
+            }
+            
+            .zoom-btn {
+                padding: 4px 6px;
+                font-size: 9px;
+                min-width: 50px;
+            }
+            
+            .scroll-indicator {
+                bottom: 80px;
+                right: 5px;
+                font-size: 10px;
+                padding: 5px 8px;
+            }
+            
+            .scroll-to-top {
+                bottom: 60px;
+                right: 5px;
+                width: 32px;
+                height: 32px;
+                font-size: 12px;
+            }
+            
+            .slide-content {
+                padding-bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-wrapper" id="presentation-wrapper">
+        <div class="presentation-container">
+            <!-- Background Animation -->
+            <div class="background-animation"></div>
+            
+            <!-- Geometric Shapes -->
+            <div class="geometric-shapes" id="shapes"></div>
+            
+            <!-- Zoom Controls -->
+            <div class="zoom-controls" id="zoom-controls">
+                <button class="zoom-btn" onclick="zoomIn()">🔍 Zoom In</button>
+                <button class="zoom-btn" onclick="zoomOut()">🔍 Zoom Out</button>
+                <button class="zoom-btn" onclick="autoFit()">📐 Auto Fit</button>
+                <button class="zoom-btn" onclick="resetZoom()">🔄 Reset</button>
+                <div class="zoom-display" id="zoom-display">100%</div>
+                <button class="zoom-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+            </div>
+        
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <div class="scroll-indicator" id="scroll-indicator-0">Scroll for more ↓</div>
+            <button class="scroll-to-top" id="scroll-top-0" onclick="scrollToTop(0)">↑</button>
+            <div class="slide-content">
+                <h1>CREDAI</h1>
+                <div class="subtitle">Democratizing Credit Access for 190 Million Underbanked Indians</div>
+                <div class="subtitle">Transforming Alternative Data into Financial Opportunities Through Artificial Intelligence</div>
+                <div class="premium-card">
+                    <h3>Presented by: Akash Kathole</h3>
+                    <p style="font-size: 1.2rem; margin-top: 10px;">AI Engineer & Founder</p>
+                </div>
+                <div class="cta-section">
+                    <p style="font-size: 1.1rem; opacity: 0.9;">Building the Future of Financial Inclusion</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: The Problem -->
+        <div class="slide problem-slide">
+            <div class="scroll-indicator" id="scroll-indicator-1">Scroll for more ↓</div>
+            <button class="scroll-to-top" id="scroll-top-1" onclick="scrollToTop(1)">↑</button>
+            <div class="slide-content">
+                <h2>THE MASSIVE PROBLEM WE'RE SOLVING</h2>
+                <div class="mega-number">190 MILLION</div>
+                <h3>INDIANS ARE FINANCIALLY EXCLUDED</h3>
+                
+                <div class="premium-card">
+                    <h4>Despite having:</h4>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <span class="feature-text">Smartphones and digital behavior</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💳</span>
+                            <span class="feature-text">UPI transactions and payment history</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💼</span>
+                            <span class="feature-text">Verifiable income from gig work</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🏘️</span>
+                            <span class="feature-text">Community ties and social networks</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎓</span>
+                            <span class="feature-text">Skills and entrepreneurial spirit</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h4 style="color: #ff6b6b;">They Cannot Access:</h4>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">❌</span>
+                            <span class="feature-text">Formal credit and loans</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">❌</span>
+                            <span class="feature-text">Business financing</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">❌</span>
+                            <span class="feature-text">Emergency funds</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">❌</span>
+                            <span class="feature-text">Growth capital</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Human Impact -->
+        <div class="slide">
+            <div class="scroll-indicator" id="scroll-indicator-2">Scroll for more ↓</div>
+            <button class="scroll-to-top" id="scroll-top-2" onclick="scrollToTop(2)">↑</button>
+            <div class="slide-content">
+                <h2>THE HUMAN IMPACT OF FINANCIAL EXCLUSION</h2>
+                <h3>REAL CONSEQUENCES FOR REAL PEOPLE</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="quote-section">
+                            <div class="quote-text">"I drive for Ola 12 hours daily, earning ₹40,000/month. I need ₹50,000 for bike repairs to keep working. Bank says 'no salary slips, no loan'. Money lender charges 10% per month"</div>
+                            <div class="quote-author">- Gig Worker Story</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="quote-section">
+                            <div class="quote-text">"My grocery store serves 200 families daily. Demonetization taught me digital payments. ₹2 lakh monthly UPI transactions. Still can't get ₹1 lakh business loan"</div>
+                            <div class="quote-author">- Small Business Owner</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3 style="color: #ff6b6b;">The Cost:</h3>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">🔴</span>
+                            <span class="feature-text">30-100% annual interest from informal lenders</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔴</span>
+                            <span class="feature-text">Business growth stunted by lack of capital</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔴</span>
+                            <span class="feature-text">Economic potential wasted at national scale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Why Traditional Fails -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>WHY TRADITIONAL CREDIT SCORING FAILS</h2>
+                <h3>THE BROKEN SYSTEM</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Traditional Credit Bureaus Look For:</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Credit card history → Only 50M Indians have cards</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">Bank loan history → Requires existing bank relationship</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">Fixed salary → Misses 400M gig/informal workers</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏢</span>
+                                <span class="feature-text">Employment certificates → Not available for entrepreneurs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>But These Same People Have:</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">40 billion UPI transactions annually</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Rich smartphone behavioral data</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Verifiable platform-based income</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Digital footprints spanning years</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Community and social connections</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <div class="mega-number">190 Million</div>
+                    <h3>People = "NO DATA"</h3>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: CREDAI Solution -->
+        <div class="slide solution-slide">
+            <div class="slide-content">
+                <h2>CREDAI'S REVOLUTIONARY SOLUTION</h2>
+                <h3>AI-POWERED ALTERNATIVE CREDIT SCORING</h3>
+                
+                <div class="cta-section">
+                    <h3>We Transform Digital Footprints Into Credit Scores</h3>
+                </div>
+                
+                <div class="tech-showcase">
+                    <div class="tech-item">
+                        <div class="feature-icon">🔍</div>
+                        <h4>UPI Transaction Analysis</h4>
+                        <p>Cash flow patterns and stability, merchant diversity and spending behavior, payment timing and regularity</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="feature-icon">📱</div>
+                        <h4>Mobile Behavior Intelligence</h4>
+                        <p>App usage patterns indicating stability, location consistency and work patterns, digital engagement and literacy</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="feature-icon">💼</div>
+                        <h4>Employment Verification</h4>
+                        <p>Gig platform earnings validation, income consistency across platforms, professional skill assessment</p>
+                    </div>
+                    <div class="tech-item">
+                        <div class="feature-icon">🤝</div>
+                        <h4>Social Network Analysis</h4>
+                        <p>Professional connections quality, reference network strength, community engagement indicators</p>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">75%+</div>
+                        <p>Prediction Accuracy</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">&lt;3s</div>
+                        <p>Real-time Processing</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <p>Feature Variables</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <p>Explainable Decisions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: Technology Advantage -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>THE CREDAI TECHNOLOGY ADVANTAGE</h2>
+                <h3>WORLD-CLASS AI MEETS INDIAN MARKET NEEDS</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🧠 Advanced Machine Learning</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">Ensemble AI Models (Gradient Boosting + Neural Networks)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">500+ Feature Variables from Alternative Data</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Continuous Learning from Loan Performance</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">75%+ Accuracy vs 60-65% traditional methods</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🇮🇳 Indian Market Specialization</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">Built for UPI transaction patterns</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Multi-language support (Hindi, regional languages)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Urban and rural market optimization</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Smartphone-first design</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3>⚡ Enterprise-Grade Infrastructure</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">&lt;3s</div>
+                            <p>API Response Time</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">99.9%</div>
+                            <p>Uptime SLA</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">∞</div>
+                            <p>Unlimited Scalability</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">Bank-Grade Security & Privacy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Proven Results -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>PROVEN RESULTS & VALIDATION</h2>
+                <h3>REAL IMPACT WITH REAL NUMBERS</h3>
+                
+                <div class="premium-card">
+                    <h4>Pilot Program Results:</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">15%</div>
+                            <p>Improvement in Loan Approval Rates</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">12%</div>
+                            <p>Reduction in Default Rates</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">85%</div>
+                            <p>Faster Credit Decisions</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">40%</div>
+                            <p>Cost Reduction in Underwriting</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="quote-section">
+                            <div class="quote-text">"CREDAI helped us approve 2,000 more loans monthly for gig workers we couldn't assess before"</div>
+                            <div class="quote-author">- Leading NBFC Partner</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="quote-section">
+                            <div class="quote-text">"Finally, a credit score that makes sense for our delivery partners and driver ecosystem"</div>
+                            <div class="quote-author">- Major Platform Company</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h4>Market Validation:</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">5</div>
+                            <p>Progressive NBFCs in Pilot Phase</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">10,000+</div>
+                            <p>Credit Scores Generated</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">78%</div>
+                            <p>Model Accuracy Achieved</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">0</div>
+                            <p>Security Incidents</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Value Proposition -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>VALUE PROPOSITION FOR ALL STAKEHOLDERS</h2>
+                <h3>EVERYONE WINS WITH CREDAI</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>💰 For Lenders (Banks, NBFCs, Fintechs)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">15% Higher Approval Rates = More Revenue</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📉</span>
+                                <span class="feature-text">12% Lower Default Rates = Reduced Risk</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚡</span>
+                                <span class="feature-text">10x Faster Decisions = Operational Efficiency</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">190M New Customers = Market Expansion</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Better Data = Competitive Advantage</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>👥 For Borrowers (Underbanked Population)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Access to Formal Credit at Fair Rates</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💳</span>
+                                <span class="feature-text">Build Credit History Through Digital Behavior</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚀</span>
+                                <span class="feature-text">Grow Businesses and Improve Livelihoods</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">Privacy-Protected Data Usage</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">Fair and Transparent Scoring</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <h3>🇮🇳 For Economy & Society</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">₹30T</div>
+                            <p>Credit Gap Reduction</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">🏭</div>
+                            <p>MSME Growth & Job Creation</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">🎯</div>
+                            <p>Financial Inclusion Goals</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">🇮🇳</div>
+                            <p>Global Fintech Leadership</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Market Opportunity -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>MARKET OPPORTUNITY & TIMING</h2>
+                <h3>PERFECT STORM OF OPPORTUNITY</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>📊 Market Size</h4>
+                        <div class="stat-number">$270B</div>
+                        <p>Digital Lending Market</p>
+                        <div class="stat-number">30%</div>
+                        <p>Annual Growth Rate</p>
+                        <div class="feature-text">250+ Potential Enterprise Customers</div>
+                        <div class="feature-text">$50+ Billion Alternative Credit Opportunity</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🚀 Technology Readiness</h4>
+                        <div class="stat-number">40B</div>
+                        <p>UPI Transactions</p>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">AI/ML Technology Mature for Production</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Cloud Infrastructure Enabling Scale</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Privacy Regulations Creating Compliance Value</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3>🏛️ Government Support</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">₹10,300Cr</div>
+                            <p>IndiaAI Mission</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">Financial Inclusion Policy Priority</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">Account Aggregator Framework</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">RBI Regulatory Sandbox Support</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3>🎯 Competitive Landscape</h3>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">🚀</span>
+                            <span class="feature-text">First-Mover Advantage Available</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🐌</span>
+                            <span class="feature-text">Traditional Players Slow to Innovate</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🌐</span>
+                            <span class="feature-text">International Success Models to Adapt</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🎪</span>
+                            <span class="feature-text">Strong Network Effects Potential</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Platform Ecosystem -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>THE CREDAI PLATFORM ECOSYSTEM</h2>
+                <h3>BUILDING THE FUTURE OF CREDIT INFRASTRUCTURE</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Phase 1: Core Credit Scoring (Year 1-2)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Alternative Data Credit Scores</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">Fraud Detection & Prevention</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Income Verification & Stability</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Phase 2: Comprehensive Risk Platform (Year 2-3)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Portfolio Risk Monitoring</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎨</span>
+                                <span class="feature-text">Custom Model Development</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤖</span>
+                                <span class="feature-text">Automated Decision Engines</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📋</span>
+                                <span class="feature-text">Regulatory Reporting Automation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Phase 3: Financial Services Infrastructure (Year 3-5)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">Insurance Risk Assessment</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">Investment Suitability Analysis</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏪</span>
+                                <span class="feature-text">Merchant Credit Underwriting</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌾</span>
+                                <span class="feature-text">Agricultural Finance Scoring</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Phase 4: Global Financial Inclusion OS (Year 5+)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">International Market Expansion</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <span class="feature-text">Embedded Finance Solutions</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🧠</span>
+                                <span class="feature-text">AI-Powered Financial Advisory</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🆔</span>
+                                <span class="feature-text">Digital Identity & KYC Infrastructure</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Continuing with slides 11-30... -->
+        <!-- Due to length constraints, I'll add a few more key slides and include navigation for all 30 -->
+        
+        <!-- Slide 11: Social Impact -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>SOCIAL IMPACT & ESG VALUE</h2>
+                <h3>CREATING LASTING POSITIVE IMPACT</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🎯 Financial Inclusion Goals</h4>
+                        <div class="stat-number">50M</div>
+                        <p>New Credit Access by 2030</p>
+                        <div class="stat-number">₹1T</div>
+                        <p>Additional Credit Facilitated</p>
+                        <div class="stat-number">500K</div>
+                        <p>Small Businesses Funded</p>
+                        <div class="stat-number">25M</div>
+                        <p>Families Impacted</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>📈 Economic Development</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">GDP Growth Through MSME Expansion</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💼</span>
+                                <span class="feature-text">Job Creation in Underserved Communities</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚜</span>
+                                <span class="feature-text">Rural Economic Development</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">👩‍💼</span>
+                                <span class="feature-text">Women Entrepreneurs Empowerment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3>🌟 Global Recognition</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="feature-icon">🏆</div>
+                            <p>UN Sustainable Development Goals Alignment</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-icon">🌟</div>
+                            <p>Financial Inclusion Innovation Awards</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-icon">📚</div>
+                            <p>Harvard Business School Case Study</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-icon">🎤</div>
+                            <p>World Economic Forum Speaker</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Technical Architecture -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>TECHNICAL ARCHITECTURE & SECURITY</h2>
+                <h3>ENTERPRISE-GRADE TECHNOLOGY FOUNDATION</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🧠 AI/ML Pipeline</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">Data Ingestion → Feature Engineering → Model Training</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Ensemble Models → Score Generation → Explainability</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Continuous Learning → Performance Monitoring → Updates</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🔒 Security & Compliance</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">Zero-Knowledge Architecture (No Plaintext Storage)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">End-to-End Encryption (AES-256)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">DPDPA Compliance Framework</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">SOC 2 Type II Certification Target</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔍</span>
+                                <span class="feature-text">Real-Time Fraud Detection</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3>☁️ Infrastructure Excellence</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="feature-text">Multi-Cloud Architecture (AWS + Azure)</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">99.9%</div>
+                            <p>Uptime SLA</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">&lt;3s</div>
+                            <p>Global Response Time</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">Automated Backup & Disaster Recovery</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3>🔌 Integration Capabilities</h3>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">🔌</span>
+                            <span class="feature-text">RESTful APIs with OpenAPI Documentation</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🔗</span>
+                            <span class="feature-text">Webhook Support for Real-Time Updates</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <span class="feature-text">SDK Support (Python, Java, Node.js)</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🏦</span>
+                            <span class="feature-text">Pre-Built Integrations (Major Platforms)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 13: Implementation & Deployment -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>IMPLEMENTATION & DEPLOYMENT</h2>
+                <h3>SEAMLESS INTEGRATION FOR ENTERPRISE CUSTOMERS</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Phase 1: Discovery & Setup (Week 1-2)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔍</span>
+                                <span class="feature-text">Requirements Analysis & Use Case Definition</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔧</span>
+                                <span class="feature-text">API Integration & Technical Setup</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Data Mapping & Feature Configuration</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🧪</span>
+                                <span class="feature-text">Sandbox Testing & Validation</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Phase 2: Pilot Deployment (Week 3-6)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Limited Production Deployment</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Performance Monitoring & Optimization</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">Model Calibration for Customer Portfolio</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📋</span>
+                                <span class="feature-text">Training & Documentation</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Phase 3: Full Production (Week 7-8)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🚀</span>
+                                <span class="feature-text">Complete Integration Rollout</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Real-Time Monitoring & Support</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Performance Analytics & Reporting</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">Continuous Optimization & Updates</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Ongoing Support</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">👨‍💻</span>
+                                <span class="feature-text">Dedicated Customer Success Manager</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📞</span>
+                                <span class="feature-text">24/7 Technical Support & Monitoring</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Monthly Performance Reviews</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">Quarterly Business Reviews & Strategy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Competitive Advantages -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>COMPETITIVE ADVANTAGES & DIFFERENTIATION</h2>
+                <h3>WHY CREDAI LEADS THE MARKET</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>vs Traditional Credit Bureaus</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">10x More Population Coverage (190M vs 50M)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Real-Time Scoring vs Batch Processing</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Alternative Data vs Limited Banking History</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">API-First vs Legacy Integration Methods</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>vs Alternative Data Players</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Comprehensive Multi-Source Platform vs Point Solutions</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Advanced AI/ML vs Basic Rule-Based Models</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Indian Market Specialization vs Generic Approaches</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Full-Stack Solution vs Partial Data Services</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>vs In-House Solutions</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">10x Faster Implementation vs 2+ Year Development</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Proven Cross-Portfolio Performance vs Limited Training Data</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Continuous Innovation vs Resource-Constrained Updates</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Regulatory Compliance Expertise vs Internal Learning</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🎯 Unique Differentiators</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">First Comprehensive Alternative Credit Platform in India</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🧠</span>
+                                <span class="feature-text">Superior AI Technology with Explainable Decisions</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇮🇳</span>
+                                <span class="feature-text">Deep Indian Market Understanding & Cultural Context</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">👨‍💻</span>
+                                <span class="feature-text">Founder with AI Engineering + Trading Background</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 15: Partnership Ecosystem -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>PARTNERSHIP ECOSYSTEM & INTEGRATIONS</h2>
+                <h3>BUILDING A COMPREHENSIVE FINTECH ECOSYSTEM</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🏦 Data Partnerships</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">Payment Processors (UPI Transaction Data)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚚</span>
+                                <span class="feature-text">Gig Platforms (Swiggy, Zomato, Ola - Income Verification)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛒</span>
+                                <span class="feature-text">E-commerce (Amazon, Flipkart - Purchase Behavior)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📞</span>
+                                <span class="feature-text">Telecom Operators (Mobile Usage Patterns)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">Government APIs (GST, Professional Licenses)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>⚙️ Technology Partnerships</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">☁️</span>
+                                <span class="feature-text">Cloud Providers (AWS, Microsoft Azure)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔧</span>
+                                <span class="feature-text">System Integrators (TCS, Infosys, Wipro)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔌</span>
+                                <span class="feature-text">API Platforms (Razorpay, Cashfree)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">Security Partners (Cybersecurity & Compliance)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🚀 Distribution Partnerships</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏪</span>
+                                <span class="feature-text">Fintech Marketplaces & App Stores</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎓</span>
+                                <span class="feature-text">Industry Accelerators & Incubators</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <span class="feature-text">Consulting Firms (Implementation Services)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">Government Initiatives (Financial Inclusion Programs)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🎯 Strategic Alliances</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">Progressive Banks (Innovation Partnerships)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏢</span>
+                                <span class="feature-text">Large NBFCs (Volume Partnerships)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">International Players (Global Expansion)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📚</span>
+                                <span class="feature-text">Academic Institutions (Research & Development)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 16: Customer Success Stories -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>CUSTOMER SUCCESS STORIES</h2>
+                <h3>REAL IMPACT ON REAL BUSINESSES</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🏦 NBFC Partner Success</h4>
+                        <div class="quote-section">
+                            <div class="quote-text">"Before CREDAI: 40% loan rejection rate for gig workers<br>After CREDAI: 25% rejection rate with same risk profile<br>Result: 2,000 additional loans monthly, ₹50 crore incremental business"</div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">2,000</div>
+                                <p>Additional Loans/Month</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">₹50Cr</div>
+                                <p>Incremental Business</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>💻 Digital Lending Platform</h4>
+                        <div class="quote-section">
+                            <div class="quote-text">"CREDAI reduced our underwriting time from 3 days to 3 hours while improving our default prediction by 15%. Our customer satisfaction increased 40% due to faster decisions"</div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">3 Hours</div>
+                                <p>vs 3 Days Processing</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">40%</div>
+                                <p>Customer Satisfaction ↑</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🚗 Gig Economy Platform</h4>
+                        <div class="quote-section">
+                            <div class="quote-text">"Our drivers can now access instant loans for vehicle maintenance. CREDAI's income verification helped them get fair rates. 95% loan completion rate vs 60% with traditional banks"</div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">95%</div>
+                                <p>Loan Completion Rate</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">vs 60%</div>
+                                <p>Traditional Banks</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🏘️ Microfinance Institution</h4>
+                        <div class="quote-section">
+                            <div class="quote-text">"Rural customers with no credit history now get scored. CREDAI's mobile behavior analysis works even in remote areas. Expanded our serviceable market by 300%"</div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">300%</div>
+                                <p>Market Expansion</p>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">✅</div>
+                                <p>Rural Coverage</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 17: Regulatory Compliance -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>REGULATORY COMPLIANCE & GOVERNANCE</h2>
+                <h3>LEADING IN RESPONSIBLE AI & COMPLIANCE</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🔒 Data Protection Excellence</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">Digital Personal Data Protection Act (DPDPA) Compliant</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">Granular Consent Management System</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⏰</span>
+                                <span class="feature-text">Automated Data Retention & Deletion Policies</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔍</span>
+                                <span class="feature-text">Complete Audit Trails & Access Logs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🏛️ Financial Services Compliance</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">RBI Regulatory Sandbox Participant</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">Account Aggregator Framework Integration</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📋</span>
+                                <span class="feature-text">Know Your Customer (KYC) Compliance</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">Anti-Money Laundering (AML) Standards</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🤖 AI Ethics & Fairness</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🤖</span>
+                                <span class="feature-text">Explainable AI with Clear Reason Codes</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">Algorithmic Fairness Testing & Monitoring</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">Inclusive Model Development & Testing</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Bias Detection & Mitigation Frameworks</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🌐 International Standards</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🌐</span>
+                                <span class="feature-text">GDPR Compliance for Global Expansion</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <span class="feature-text">ISO 27001 Security Management System</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">SOC 2 Type II Certification Target</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">PCI DSS Compliance for Payment Data</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 18: Financial Projections -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>FINANCIAL PROJECTIONS & GROWTH TRAJECTORY</h2>
+                <h3>SUSTAINABLE GROWTH WITH STRONG UNIT ECONOMICS</h3>
+                
+                <div class="premium-card">
+                    <h4>📈 Revenue Growth</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">₹50L</div>
+                            <p>Year 1 (Pilot Phase)</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">₹8Cr</div>
+                            <p>Year 2 (Market Validation)</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">₹25Cr</div>
+                            <p>Year 3 (Scale Phase)</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">₹60Cr</div>
+                            <p>Year 4 (Market Leadership)</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">₹120Cr</div>
+                            <p>Year 5 (Platform Expansion)</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>📊 Key Business Metrics</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">Average Revenue per API Call: ₹15</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Gross Margin: 70%+ at Scale</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Customer Lifetime Value: ₹5.4 crore</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Customer Acquisition Cost: ₹15 lakh</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">LTV/CAC Ratio: 36:1 (Best-in-Class)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>💰 Path to Profitability</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📅</span>
+                                <span class="feature-text">Month 18: Cash Flow Positive</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Year 2: 25% EBITDA Margin</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Year 3: 40% EBITDA Margin</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <span class="feature-text">Year 5: 50% EBITDA Margin</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h4>🎯 Market Opportunity</h4>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">$50B+</div>
+                            <p>Alternative Credit Market</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">5-10%</div>
+                            <p>Market Share Target</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">₹500Cr</div>
+                            <p>Revenue Potential</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">🌍</div>
+                            <p>International Expansion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 19: Global Expansion -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>GLOBAL EXPANSION STRATEGY</h2>
+                <h3>EXPORTING INDIAN INNOVATION TO THE WORLD</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Phase 1: Southeast Asia (Years 3-4)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🇮🇩</span>
+                                <span class="feature-text">Indonesia (270M Population, Similar Demographics)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇵🇭</span>
+                                <span class="feature-text">Philippines (110M Population, Growing Digital Payments)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇻🇳</span>
+                                <span class="feature-text">Vietnam (95M Population, Expanding Financial Services)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>Phase 2: Latin America (Years 5-6)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🇧🇷</span>
+                                <span class="feature-text">Brazil (215M Population, Large Unbanked Population)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇲🇽</span>
+                                <span class="feature-text">Mexico (130M Population, Growing Fintech Market)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇨🇴</span>
+                                <span class="feature-text">Colombia (50M Population, Financial Inclusion Focus)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>Phase 3: Africa (Years 6-7)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🇳🇬</span>
+                                <span class="feature-text">Nigeria (220M Population, Mobile Money Growth)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇰🇪</span>
+                                <span class="feature-text">Kenya (55M Population, Fintech Innovation Hub)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇿🇦</span>
+                                <span class="feature-text">South Africa (60M Population, Advanced Banking Sector)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🚀 Expansion Strategy</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <span class="feature-text">Local Partnerships with Regional Banks/NBFCs</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">Regulatory Compliance & Licensing</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Cultural Adaptation of AI Models</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💼</span>
+                                <span class="feature-text">Local Team Building & Operations</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <h3>🌍 Global Impact Target</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">1B</div>
+                            <p>People Served by 2030</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">$10B</div>
+                            <p>Credit Facilitated Globally</p>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">🏆</div>
+                            <p>Leading Alternative Credit Infrastructure Worldwide</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 20: Technology Roadmap -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>TECHNOLOGY ROADMAP & INNOVATION</h2>
+                <h3>CONTINUOUS INNOVATION FOR MARKET LEADERSHIP</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🧠 AI/ML Advancement</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🧠</span>
+                                <span class="feature-text">Next-Gen Neural Networks (Transformer Models)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">Federated Learning for Privacy-Preserving AI</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Reinforcement Learning for Dynamic Pricing</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌐</span>
+                                <span class="feature-text">Natural Language Processing for Unstructured Data</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>💡 Product Innovation</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Real-Time Portfolio Risk Monitoring</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏪</span>
+                                <span class="feature-text">Merchant Credit Scoring for E-commerce</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏥</span>
+                                <span class="feature-text">Healthcare Finance Risk Assessment</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎓</span>
+                                <span class="feature-text">Education Loan Suitability Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🔧 Platform Development</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔧</span>
+                                <span class="feature-text">No-Code Model Builder for Lenders</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Advanced Analytics & Business Intelligence</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔌</span>
+                                <span class="feature-text">Open API Marketplace & Developer Ecosystem</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤖</span>
+                                <span class="feature-text">Automated Compliance & Regulatory Reporting</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🔮 Emerging Technologies</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">⛓️</span>
+                                <span class="feature-text">Blockchain for Immutable Credit History</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔮</span>
+                                <span class="feature-text">Quantum Computing for Complex Risk Models</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🥽</span>
+                                <span class="feature-text">AR/VR for Enhanced Customer Experience</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛰️</span>
+                                <span class="feature-text">Satellite Data for Agricultural Credit Assessment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 21: Team & Advisory -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>TEAM & ADVISORY EXCELLENCE</h2>
+                <h3>WORLD-CLASS TEAM BUILDING THE FUTURE</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>👨‍💻 Founding Team</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">👨‍💻</span>
+                                <span class="feature-text">Founder & CEO: AI Engineer + Trading Experience</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Unique Combination: Technical Depth + Financial Intuition</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <span class="feature-text">Proven Track Record: Employee of the Quarter Recognition</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇮🇳</span>
+                                <span class="feature-text">Market Understanding: Native Indian + Global Standards</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🌟 Key Team Members</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">👩‍💼</span>
+                                <span class="feature-text">CTO: Former Fintech Technology Leader</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Head of Data Science: PhD in Machine Learning</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💼</span>
+                                <span class="feature-text">VP Sales: Ex-Banking Executive with NBFC Network</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">Compliance Officer: Former RBI Regulatory Expert</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🎯 Advisory Board</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">Former NBFC CEO: Industry Strategy & Relationships</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚀</span>
+                                <span class="feature-text">Successful Fintech Founder: Scaling & Execution Experience</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎓</span>
+                                <span class="feature-text">IIT AI Research Professor: Technical Innovation</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">Ex-RBI Official: Regulatory Navigation & Policy</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🚀 Talent Strategy</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">IIT/IIM Alumni Network Recruitment</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">Global Remote Talent for Specialized Roles</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">Competitive Compensation + Significant Equity</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <span class="feature-text">Performance-Driven Culture & Recognition</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 22: Risk Management -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>RISK MANAGEMENT & MITIGATION</h2>
+                <h3>COMPREHENSIVE RISK STRATEGY</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>⚙️ Technology Risks</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">Multi-Cloud Architecture (No Single Point of Failure)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">Continuous Model Monitoring & Performance Validation</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🧪</span>
+                                <span class="feature-text">A/B Testing Framework for Safe Deployments</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Real-Time System Health & Performance Monitoring</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>📈 Market Risks</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Diversified Customer Base (No Single Customer >15% Revenue)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">Geographic Diversification Strategy</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Multiple Revenue Streams & Product Lines</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <span class="feature-text">Strong Customer Relationships & Long-Term Contracts</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>⚖️ Regulatory Risks</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">Proactive Compliance Team & Legal Advisory</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">Strong Relationships with Regulators & Policymakers</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📋</span>
+                                <span class="feature-text">Flexible Architecture Adapting to Regulatory Changes</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌐</span>
+                                <span class="feature-text">International Best Practices & Standards Adoption</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🏢 Operational Risks</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">👥</span>
+                                <span class="feature-text">Strong Leadership Team & Succession Planning</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">Conservative Cash Management (18+ Month Runway)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">Comprehensive Insurance Coverage & Risk Transfer</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Detailed Scenario Planning & Contingency Procedures</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 23: Partnership Opportunities -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>PARTNERSHIP OPPORTUNITIES</h2>
+                <h3>JOIN THE CREDAI ECOSYSTEM</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🏦 For Banks & NBFCs</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <span class="feature-text">Strategic Partnership: White-Label Solutions</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">API Integration: Seamless Credit Scoring</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Custom Models: Tailored to Your Portfolio</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Performance Guarantee: Risk-Shared Growth</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>💼 For Gig Platforms</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">💼</span>
+                                <span class="feature-text">Employee Benefits: Instant Credit Access for Workers</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔗</span>
+                                <span class="feature-text">Revenue Sharing: Monetize Your User Base</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Data Partnership: Mutually Beneficial Data Exchange</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚀</span>
+                                <span class="feature-text">Co-Marketing: Joint Financial Inclusion Initiatives</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>⚙️ For Technology Companies</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">⚙️</span>
+                                <span class="feature-text">Technical Integration: API & Platform Partnerships</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">☁️</span>
+                                <span class="feature-text">Infrastructure: Cloud & Security Collaborations</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤖</span>
+                                <span class="feature-text">AI Research: Joint Innovation & Development</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌐</span>
+                                <span class="feature-text">Global Expansion: International Market Entry</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🏛️ For Government & NGOs</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Financial Inclusion: Policy Implementation Support</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Research Collaboration: Impact Measurement & Analysis</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎓</span>
+                                <span class="feature-text">Capacity Building: Training & Knowledge Transfer</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <span class="feature-text">Recognition: Joint Awards & Industry Leadership</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 24: Sustainability -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>SUSTAINABILITY & LONG-TERM VISION</h2>
+                <h3>BUILDING A SUSTAINABLE FUTURE</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🌱 Environmental Impact</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🌱</span>
+                                <span class="feature-text">Carbon-Neutral Operations (Renewable Energy)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📱</span>
+                                <span class="feature-text">Digital-First Approach Reducing Paper Usage</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">☁️</span>
+                                <span class="feature-text">Efficient Cloud Computing & Resource Optimization</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">Global Sustainability Standards Compliance</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🤝 Social Responsibility</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">👨‍👩‍👧‍👦</span>
+                                <span class="feature-text">Financial Inclusion for Underserved Communities</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">👩‍💼</span>
+                                <span class="feature-text">Women Entrepreneurs & Gender Equality</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎓</span>
+                                <span class="feature-text">Digital Literacy & Financial Education Programs</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <span class="feature-text">Community Development & Economic Empowerment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>⚖️ Governance Excellence</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">Transparent & Ethical Business Practices</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏛️</span>
+                                <span class="feature-text">Strong Board Governance & Oversight</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Regular ESG Reporting & Impact Measurement</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌐</span>
+                                <span class="feature-text">International Standards & Best Practices</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🎯 Long-Term Vision (2030)</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">1 Billion People with Improved Credit Access</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">$100 Billion in Credit Facilitated Globally</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <span class="feature-text">Global Leader in Alternative Credit Infrastructure</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇮🇳</span>
+                                <span class="feature-text">India as Global Fintech Innovation Hub</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 25: Call to Action -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>JOIN THE FINANCIAL INCLUSION REVOLUTION</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🎯 The Opportunity</h4>
+                        <div class="mega-number">190M</div>
+                        <p>Indians Need Credit Access TODAY</p>
+                        <div class="stat-number">$270B</div>
+                        <p>Market Growing 30% Annually</p>
+                        <div class="feature-text">First-Mover Advantage in Alternative Credit Scoring</div>
+                        <div class="feature-text">Global Expansion Potential Worth $500+ Billion</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🚀 The Solution</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🤖</span>
+                                <span class="feature-text">AI-Powered Alternative Credit Scoring Platform</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">75%+ Accuracy with Real-Time Processing</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">Enterprise-Grade Security & Compliance</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🇮🇳</span>
+                                <span class="feature-text">Built for Indian Market, Scalable Globally</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <h3>🌟 The Impact</h3>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="feature-text">Trillion-Dollar Credit Gap Reduction</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">MSME Growth & Job Creation</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">Reduced Informal Lending Exploitation</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="feature-text">India's Global Fintech Leadership</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="premium-card">
+                    <h3>📞 Next Steps</h3>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-icon">📧</span>
+                            <span class="feature-text">Contact: founder@credai.in</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">📱</span>
+                            <span class="feature-text">Phone: +91-XXXX-XXXXXX</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">🌐</span>
+                            <span class="feature-text">Website: www.credai.in</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-icon">💼</span>
+                            <span class="feature-text">LinkedIn: [Founder Profile]</span>
+                        </div>
+                    </div>
+                    <button class="cta-button">Let's Transform Financial Inclusion Together!</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 26: Technical Specifications -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>APPENDIX - TECHNICAL SPECIFICATIONS</h2>
+                <h3>DETAILED TECHNICAL ARCHITECTURE</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🔌 API Specifications</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔌</span>
+                                <span class="feature-text">RESTful APIs with JSON Response Format</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚡</span>
+                                <span class="feature-text">&lt;3 Second Response Time (95th Percentile)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Rate Limiting: 10,000 Calls/Minute per Client</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">OAuth 2.0 Authentication & Authorization</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📝</span>
+                                <span class="feature-text">OpenAPI 3.0 Documentation & SDKs</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>📊 Data Processing Pipeline</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Real-Time Data Ingestion (Kafka Streams)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">Feature Engineering (Apache Spark)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🧠</span>
+                                <span class="feature-text">Model Serving (TensorFlow Serving)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Performance Monitoring (MLflow + DataDog)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🔒 Security Architecture</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🔒</span>
+                                <span class="feature-text">Zero-Knowledge Data Processing</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🛡️</span>
+                                <span class="feature-text">End-to-End Encryption (AES-256)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔍</span>
+                                <span class="feature-text">Real-Time Threat Detection</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📋</span>
+                                <span class="feature-text">Automated Compliance Reporting</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>☁️ Infrastructure Specifications</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">☁️</span>
+                                <span class="feature-text">Multi-Cloud Deployment (AWS + Azure)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Auto-Scaling (Kubernetes + Terraform)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💾</span>
+                                <span class="feature-text">Data Backup & Recovery (99.99% Durability)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌐</span>
+                                <span class="feature-text">Global CDN & Edge Computing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 27: Financial Model -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>FINANCIAL MODEL DEEP DIVE</h2>
+                <h3>COMPREHENSIVE FINANCIAL ANALYSIS</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>💰 Revenue Model</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">Primary: API Calls (₹8-25 per score)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Secondary: Premium Analytics (₹5L+/month)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏷️</span>
+                                <span class="feature-text">Tertiary: White-Label Solutions (₹2-5 cr/year)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>📊 Unit Economics</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">Customer Lifetime Value: ₹5.4 crore</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Customer Acquisition Cost: ₹15 lakh</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Gross Margin: 70%+ at Scale</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Payback Period: 8 months</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>📈 Growth Assumptions</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">Year 1: 5 customers, 20K scores/month</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Year 3: 75 customers, 500K scores/month</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Year 5: 300+ customers, 2.5M scores/month</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🎯 Sensitivity Analysis</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Conservative: 50% of Base Case</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Base Case: Central Projections</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🚀</span>
+                                <span class="feature-text">Upside: 150% of Base Case</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Break-Even: Month 18 in All Scenarios</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 28: Competitive Analysis -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>COMPETITIVE LANDSCAPE ANALYSIS</h2>
+                <h3>MARKET POSITION & COMPETITIVE ADVANTAGES</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🏆 Direct Competitors</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">CIBIL/Experian: Traditional Credit Bureaus</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">CreditVidya: Alternative Data Player</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔍</span>
+                                <span class="feature-text">FinBox: Banking Data Analytics</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💡</span>
+                                <span class="feature-text">Perfios: Bank Statement Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>✅ Competitive Advantages</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">10x Population Coverage vs Traditional Players</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Comprehensive Data vs Single-Source Competitors</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Advanced AI vs Rule-Based Systems</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">✅</span>
+                                <span class="feature-text">Indian Market Specialization vs Generic Solutions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🎯 Market Positioning</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Premium Alternative Credit Infrastructure</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏆</span>
+                                <span class="feature-text">Technology Leadership & Innovation</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🤝</span>
+                                <span class="feature-text">Customer Success & Partnership Focus</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌍</span>
+                                <span class="feature-text">Global Expansion & Scalability</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🛡️ Moats & Defensibility</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Data Network Effects (More Data = Better Models)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔧</span>
+                                <span class="feature-text">Integration Switching Costs (Deep Customer Embedding)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚖️</span>
+                                <span class="feature-text">Regulatory Compliance Expertise</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🧠</span>
+                                <span class="feature-text">Proprietary AI & Technical Excellence</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 29: Success Metrics -->
+        <div class="slide">
+            <div class="slide-content">
+                <h2>SUCCESS METRICS & KPIs</h2>
+                <h3>MEASURING IMPACT & PERFORMANCE</h3>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>📈 Business Metrics</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Monthly Recurring Revenue Growth</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">👥</span>
+                                <span class="feature-text">Customer Acquisition & Retention Rates</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">Average Revenue Per Customer (ARPC)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Net Revenue Retention (Target: 120%+)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>🎯 Product Metrics</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🎯</span>
+                                <span class="feature-text">Model Accuracy (Target: 75%+)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⚡</span>
+                                <span class="feature-text">API Response Time (Target: &lt;3 seconds)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">System Uptime (Target: 99.9%+)</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📊</span>
+                                <span class="feature-text">Customer Satisfaction Score (Target: 8.5+/10)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🌟 Impact Metrics</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">🏦</span>
+                                <span class="feature-text">Loans Facilitated Through CREDAI Scoring</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">👥</span>
+                                <span class="feature-text">Individuals Gaining Credit Access</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💰</span>
+                                <span class="feature-text">Total Credit Amount Enabled</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📈</span>
+                                <span class="feature-text">Default Rate Improvement for Customers</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>⚙️ Operational Metrics</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">👨‍💻</span>
+                                <span class="feature-text">Team Productivity & Performance</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💸</span>
+                                <span class="feature-text">Customer Acquisition Cost Trends</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">⏰</span>
+                                <span class="feature-text">Sales Cycle Length & Conversion Rates</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🔄</span>
+                                <span class="feature-text">Product Development Velocity</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 30: Thank You -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>THANK YOU</h1>
+                <div class="subtitle">CREDAI: Democratizing Credit Access Through AI</div>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>🎯 Key Takeaways</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-text">190 Million Indians Need Financial Inclusion NOW</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">AI Technology Ready to Solve This Massive Problem</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">$270 Billion Market with Strong Unit Economics</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Exceptional Team & Technology for Execution</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-text">Global Impact Potential with Sustainable Returns</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <h4>📞 Contact Information</h4>
+                        <div class="feature-grid">
+                            <div class="feature-item">
+                                <span class="feature-icon">📧</span>
+                                <span class="feature-text">akash@credai.in</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">📱</span>
+                                <span class="feature-text">+91-8999-079598</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🌐</span>
+                                <span class="feature-text">www.credai.in</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">💼</span>
+                                <span class="feature-text">LinkedIn: Akash Kathole</span>
+                            </div>
+                            <div class="feature-item">
+                                <span class="feature-icon">🏢</span>
+                                <span class="feature-text">Pune/Mumbai/Bangalore, India</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <h2>Let's Build the Future of Financial Inclusion Together!</h2>
+                    <button class="cta-button">Start Partnership Discussion</button>
+                    <button class="cta-button">Schedule Demo</button>
+                </div>
+                
+                <div class="premium-card">
+                    <h4>❓ Questions & Discussion</h4>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <span class="feature-text">Technical Implementation Details</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-text">Partnership & Collaboration Opportunities</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-text">Market Strategy & Competitive Positioning</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-text">Financial Projections & Business Model</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feature-text">Global Expansion & International Strategy</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Navigation -->
+        <div class="navigation">
+            <button class="nav-btn" id="prev-btn" onclick="previousSlide()">← Previous</button>
+            <button class="nav-btn" id="home-btn" onclick="goToSlide(0)">Home</button>
+            <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next →</button>
+        </div>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Slide titles for navigation menu
+        const slideTitles = [
+            'Title', 'Problem', 'Impact', 'Traditional Fails', 'Solution', 'Technology', 'Results', 'Value Prop',
+            'Market Opportunity', 'Platform', 'Social Impact', 'Architecture', 'Implementation', 'Competitive Edge',
+            'Partnerships', 'Success Stories', 'Compliance', 'Financials', 'Global Expansion', 'Tech Roadmap',
+            'Team', 'Risk Management', 'Partnership Ops', 'Sustainability', 'Call to Action', 'Tech Specs',
+            'Financial Model', 'Competition', 'Success Metrics', 'Thank You'
+        ];
+        
+        // Initialize
+        // Removed slide counter elements
+        
+        // Create floating menu - REMOVED
+        function createFloatingMenu() {
+            // Removed - no longer needed
+        }
+        
+        // Create geometric shapes
+        function createShapes() {
+            const shapesContainer = document.getElementById('shapes');
+            for (let i = 0; i < 20; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'shape';
+                shape.style.width = shape.style.height = Math.random() * 100 + 50 + 'px';
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.top = Math.random() * 100 + '%';
+                shape.style.animationDelay = Math.random() * 20 + 's';
+                shape.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                shapesContainer.appendChild(shape);
+            }
+        }
+        
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev', 'next');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                    // Reset scroll position when switching slides
+                    slide.scrollTop = 0;
+                    // Check if content is scrollable
+                    setTimeout(() => checkScrollable(index), 100);
+                } else if (index < currentSlide) {
+                    slide.classList.add('prev');
+                } else {
+                    slide.classList.add('next');
+                }
+            });
+        }
+        
+        function checkScrollable(slideIndex) {
+            const slide = slides[slideIndex];
+            const scrollIndicator = document.getElementById(`scroll-indicator-${slideIndex}`);
+            const scrollTopBtn = document.getElementById(`scroll-top-${slideIndex}`);
+            
+            if (slide && slide.scrollHeight > slide.clientHeight) {
+                if (scrollIndicator) scrollIndicator.classList.add('visible');
+                
+                // Add scroll event listener for this slide
+                slide.addEventListener('scroll', () => {
+                    if (scrollIndicator) {
+                        if (slide.scrollTop > 50) {
+                            scrollIndicator.classList.remove('visible');
+                            if (scrollTopBtn) scrollTopBtn.classList.add('visible');
+                        } else {
+                            scrollIndicator.classList.add('visible');
+                            if (scrollTopBtn) scrollTopBtn.classList.remove('visible');
+                        }
+                    }
+                });
+            } else {
+                if (scrollIndicator) scrollIndicator.classList.remove('visible');
+                if (scrollTopBtn) scrollTopBtn.classList.remove('visible');
+            }
+        }
+        
+        function scrollToTop(slideIndex) {
+            const slide = slides[slideIndex];
+            if (slide) {
+                slide.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }
+        }
+        
+        // Add scroll indicators to all slides
+        function addScrollIndicators() {
+            slides.forEach((slide, index) => {
+                if (!slide.querySelector('.scroll-indicator')) {
+                    const scrollIndicator = document.createElement('div');
+                    scrollIndicator.className = 'scroll-indicator';
+                    scrollIndicator.id = `scroll-indicator-${index}`;
+                    scrollIndicator.textContent = 'Scroll for more ↓';
+                    slide.appendChild(scrollIndicator);
+                }
+                
+                if (!slide.querySelector('.scroll-to-top')) {
+                    const scrollTopBtn = document.createElement('button');
+                    scrollTopBtn.className = 'scroll-to-top';
+                    scrollTopBtn.id = `scroll-top-${index}`;
+                    scrollTopBtn.innerHTML = '↑';
+                    scrollTopBtn.onclick = () => scrollToTop(index);
+                    slide.appendChild(scrollTopBtn);
+                }
+            });
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        function goToSlide(index) {
+            if (index >= 0 && index < totalSlides) {
+                currentSlide = index;
+                updateSlide();
+            }
+        }
+        
+        // Touch navigation
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    nextSlide();
+                } else {
+                    previousSlide();
+                }
+            }
+        }
+        
+        // Mouse wheel navigation - modified to handle slide scrolling
+        let wheelTimeout;
+        let isScrollingInSlide = false;
+        
+        document.addEventListener('wheel', (e) => {
+            const activeSlide = slides[currentSlide];
+            
+            // Check if we're scrolling within the slide content
+            if (activeSlide && activeSlide.scrollHeight > activeSlide.clientHeight) {
+                const atTop = activeSlide.scrollTop <= 0;
+                const atBottom = activeSlide.scrollTop >= activeSlide.scrollHeight - activeSlide.clientHeight - 1;
+                
+                if (e.deltaY < 0 && atTop) {
+                    // Scrolling up and at top - go to previous slide
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        previousSlide();
+                    }, 150);
+                    e.preventDefault();
+                } else if (e.deltaY > 0 && atBottom) {
+                    // Scrolling down and at bottom - go to next slide
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        nextSlide();
+                    }, 150);
+                    e.preventDefault();
+                } else {
+                    // Let the slide scroll naturally
+                    isScrollingInSlide = true;
+                    clearTimeout(wheelTimeout);
+                    wheelTimeout = setTimeout(() => {
+                        isScrollingInSlide = false;
+                    }, 150);
+                }
+            } else {
+                // No scrollable content - navigate slides
+                clearTimeout(wheelTimeout);
+                wheelTimeout = setTimeout(() => {
+                    if (e.deltaY > 0) {
+                        nextSlide();
+                    } else {
+                        previousSlide();
+                    }
+                }, 150);
+                e.preventDefault();
+            }
+        }, { passive: false });
+        
+        // Initialize everything
+        createShapes();
+        createFloatingMenu();
+        addScrollIndicators(); // Add scroll indicators to all slides
+        updateSlide();
+        
+        // Auto-fit on page load
+        setTimeout(() => {
+            autoFit();
+        }, 1000);
+        
+        // Zoom Controls Functionality
+        let currentZoom = 1;
+        const presentationWrapper = document.getElementById('presentation-wrapper');
+        const zoomDisplay = document.getElementById('zoom-display');
+        
+        function updateZoomDisplay() {
+            zoomDisplay.textContent = Math.round(currentZoom * 100) + '%';
+        }
+        
+        function applyZoom() {
+            presentationWrapper.style.transform = `scale(${currentZoom})`;
+            updateZoomDisplay();
+        }
+        
+        function zoomIn() {
+            if (currentZoom < 2) {
+                currentZoom += 0.1;
+                applyZoom();
+            }
+        }
+        
+        function zoomOut() {
+            if (currentZoom > 0.3) {
+                currentZoom -= 0.1;
+                applyZoom();
+            }
+        }
+        
+        function resetZoom() {
+            currentZoom = 1;
+            applyZoom();
+        }
+        
+        function autoFit() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            
+            // Calculate optimal zoom based on screen size
+            let optimalZoom = 1;
+            
+            if (windowWidth < 1200) {
+                optimalZoom = 0.7;
+            } else if (windowWidth < 1400) {
+                optimalZoom = 0.8;
+            } else if (windowWidth < 1600) {
+                optimalZoom = 0.9;
+            } else if (windowWidth > 1920) {
+                optimalZoom = 1.1;
+            }
+            
+            // Adjust for height if needed
+            if (windowHeight < 800) {
+                optimalZoom *= 0.8;
+            } else if (windowHeight < 900) {
+                optimalZoom *= 0.9;
+            }
+            
+            currentZoom = optimalZoom;
+            applyZoom();
+        }
+        
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    setTimeout(autoFit, 100);
+                });
+            } else {
+                document.exitFullscreen().then(() => {
+                    setTimeout(autoFit, 100);
+                });
+            }
+        }
+        
+        // Keyboard shortcuts for zoom only
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case '=':
+                    case '+':
+                        e.preventDefault();
+                        zoomIn();
+                        break;
+                    case '-':
+                        e.preventDefault();
+                        zoomOut();
+                        break;
+                    case '0':
+                        e.preventDefault();
+                        resetZoom();
+                        break;
+                    case 'f':
+                        e.preventDefault();
+                        autoFit();
+                        break;
+                }
+            }
+            
+            // Fullscreen toggle
+            if (e.key === 'F11') {
+                e.preventDefault();
+                toggleFullscreen();
+            }
+        });
+        
+        // Auto-fit on window resize
+        window.addEventListener('resize', () => {
+            setTimeout(autoFit, 200);
+        });
+        
+        // Initialize zoom display
+        updateZoomDisplay();
+        
+        // Auto-play functionality (optional)
+        let autoPlayInterval;
+        function startAutoPlay() {
+            autoPlayInterval = setInterval(() => {
+                if (currentSlide < totalSlides - 1) {
+                    nextSlide();
+                } else {
+                    goToSlide(0);
+                }
+            }, 10000);
+        }
+        
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+        
+        // Pause auto-play on user interaction
+        ['click', 'keydown', 'touchstart'].forEach(event => {
+            document.addEventListener(event, stopAutoPlay);
+        });
+    </script>
+</body>
+</html>
