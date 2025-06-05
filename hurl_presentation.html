@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HURL Employee Engagement Transformation - Executive Presentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            overflow: hidden;
+            height: 100vh;
+            color: #333;
+        }
+
+        .presentation-container {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            display: none;
+            padding: 50px 70px;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            border-radius: 20px;
+            margin: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-header {
+            position: relative;
+            border-bottom: 3px solid transparent;
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa) padding-box,
+                linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa) border-box;
+            border-image: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa) 1;
+            padding-bottom: 25px;
+            margin-bottom: 35px;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: -15px;
+            right: 0;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 12px;
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo.hurl {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+        }
+
+        .logo.company {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.3);
+        }
+
+        .slide-title {
+            font-size: 3.2em;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .slide-subtitle {
+            font-size: 1.4em;
+            color: #64748b;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .content-section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e40af, #3b82f6, #60a5fa);
+        }
+
+        .metric-label {
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .metric-value {
+            font-size: 2.2em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .metric-impact {
+            font-size: 0.95em;
+            color: #64748b;
+            line-height: 1.5;
+            margin-top: 8px;
+        }
+
+        .status-indicator {
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 12px;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-critical {
+            background: linear-gradient(135deg, #fecaca 0%, #fca5a5 100%);
+            color: #dc2626;
+            border: 1px solid #f87171;
+        }
+
+        .status-warning {
+            background: linear-gradient(135deg, #fed7aa 0%, #fdba74 100%);
+            color: #ea580c;
+            border: 1px solid #fb923c;
+        }
+
+        .status-urgent {
+            background: linear-gradient(135deg, #fef08a 0%, #fde047 100%);
+            color: #a16207;
+            border: 1px solid #eab308;
+        }
+
+        .status-approved {
+            background: linear-gradient(135deg, #bbf7d0 0%, #86efac 100%);
+            color: #16a34a;
+            border: 1px solid #4ade80;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin: 30px 0;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.25em;
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+        }
+
+        .highlight-box:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        .roi-showcase {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 25px;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roi-showcase::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .roi-value {
+            font-size: 4.5em;
+            font-weight: 900;
+            margin: 15px 0;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 18px 20px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            color: white;
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+
+        .comparison-table tr {
+            transition: all 0.3s ease;
+        }
+
+        .comparison-table tbody tr:hover {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            transform: scale(1.01);
+        }
+
+        .phase-container {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 25px 0;
+            border-left: 6px solid #3b82f6;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .phase-container:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .phase-title {
+            font-size: 1.5em;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .action-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .action-list li {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            margin: 12px 0;
+            padding: 18px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #10b981;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .action-list li:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-list li::before {
+            content: '✓';
+            position: absolute;
+            left: -2px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #10b981;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(29, 78, 216, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            color: #1e40af;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 25px 0;
+        }
+
+        .persona-card {
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            color: white;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .persona-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+
+        .persona-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.1) 50%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .persona-champions {
+            background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        }
+
+        .persona-contributors {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+        }
+
+        .persona-concerned {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .persona-critical {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
+
+        .value-waterfall {
+            background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+            border: 1px solid #bbf7d0;
+            padding: 30px;
+            border-radius: 20px;
+            margin: 25px 0;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 20px 50px rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .cta-title {
+            font-size: 2.5em;
+            font-weight: 900;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .approval-box {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            font-size: 2em;
+            font-weight: 900;
+            text-align: center;
+            margin: 30px 0;
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.3);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 15px 40px rgba(16, 185, 129, 0.3);
+            }
+
+            to {
+                box-shadow: 0 20px 50px rgba(16, 185, 129, 0.5);
+            }
+        }
+
+        .success-metrics {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1px solid #7dd3fc;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 30px 40px;
+                margin: 10px;
+            }
+
+            .slide-title {
+                font-size: 2.5em;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo {
+                width: 40px;
+                height: 40px;
+                font-size: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px 25px;
+                margin: 5px;
+            }
+
+            .slide-title {
+                font-size: 2em;
+            }
+
+            .persona-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .logo-container {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                justify-content: center;
+            }
+        }
+
+        /* Enhanced scrollbar */
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .slide::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 10px;
+        }
+
+        .slide::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            Slide <span id="current-slide">1</span> of <span id="total-slides">10</span>
+        </div>
+
+        <!-- Slide 1: Executive Hook -->
+        <div class="slide active">
+            <div class="slide-header">
+                <!-- <div class="logo-container">
+                    <div class="logo hurl">HURL</div>
+                    <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    <div class="logo company">CORP</div>
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                </div> -->
+                <div class="slide-title">HURL Employee Engagement Transformation</div>
+                <div class="slide-subtitle">C-Suite Strategic Presentation<br>Securing ₹15+ Crore Value Creation Through
+                    Strategic Employee Experience</div>
+            </div>
+
+            <div class="highlight-box">
+                🚨 HURL Faces ₹8+ Crore Annual Risk from Employee Disengagement<br>
+                🎯 VALIDATED PATHWAY TO ₹15+ CRORE VALUE CREATION
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">📊 CRITICAL METRICS SNAPSHOT</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Satisfaction Score</div>
+                        <div class="metric-value">3.4/5.0</div>
+                        <div class="metric-impact">Below industry standard (3.8)</div>
+                        <div class="status-indicator status-warning">⚠️ ACTION REQUIRED</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Attrition Risk</div>
+                        <div class="metric-value">15%</div>
+                        <div class="metric-impact">₹12-18 crore annual turnover cost</div>
+                        <div class="status-indicator status-critical">🚨 CRITICAL</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Productivity Gap</div>
+                        <div class="metric-value">20-25%</div>
+                        <div class="metric-impact">₹300-450 crore lost revenue potential</div>
+                        <div class="status-indicator status-urgent">📉 URGENT</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Investment Required</div>
+                        <div class="metric-value">₹2.5 crores</div>
+                        <div class="metric-impact">0.017% of annual revenue</div>
+                        <div class="status-indicator status-approved">💰 READY</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="roi-showcase">
+                <div style="font-size: 1.5em; margin-bottom: 10px;">Expected ROI</div>
+                <div class="roi-value">520-760%</div>
+                <div style="font-size: 1.3em;">₹13-19 crore value creation | 📈 VALIDATED</div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-title">🎯 TODAY'S DECISION</div>
+                <div style="font-size: 1.3em; position: relative; z-index: 1;">"Strategic ₹2.5 crore investment to
+                    prevent ₹8+ crore losses while creating ₹15+ crore value through proven employee engagement
+                    science."</div>
+                <div style="margin-top: 20px; font-style: italic; font-size: 1.1em; position: relative; z-index: 1;">
+                    Next 15 minutes: Data-driven roadmap to transformation success</div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Burning Platform -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+
+
+                </div>
+                <div class="slide-title">THE BURNING PLATFORM</div>
+                <div class="slide-subtitle">"Why We Must Act Now"</div>
+            </div>
+
+            <div class="highlight-box">
+                ⏰ WE ARE 6-12 MONTHS FROM IRREVERSIBLE TALENT EXODUS
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">💸 ANNUAL VALUE DESTRUCTION</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Turnover Costs</div>
+                        <div class="metric-value">₹12-18cr</div>
+                        <div class="metric-impact">Recruitment, training, knowledge loss</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Productivity Losses</div>
+                        <div class="metric-value">₹300-450cr</div>
+                        <div class="metric-impact">20-25% below potential on ₹14,985 cr revenue</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Brand Reputation Risk</div>
+                        <div class="metric-value">₹50-75cr</div>
+                        <div class="metric-impact">Employer brand deterioration impact</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Innovation Pipeline Impact</div>
+                        <div class="metric-value">₹100+cr</div>
+                        <div class="metric-impact">Delayed R&D and product development</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">📊 COMPETITIVE RISK ANALYSIS</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Benchmark</th>
+                            <th>Chemical Industry Leaders</th>
+                            <th>HURL Current</th>
+                            <th>Gap Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Satisfaction Score</strong></td>
+                            <td>4.2+/5.0 (Tata Chemicals)</td>
+                            <td style="color: #dc2626; font-weight: 700;">3.4/5.0</td>
+                            <td>19% disadvantage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Voluntary Turnover</strong></td>
+                            <td>&lt;8% (ONGC, IOCL)</td>
+                            <td style="color: #dc2626; font-weight: 700;">18%</td>
+                            <td>125% higher</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employee Advocacy</strong></td>
+                            <td>+50 eNPS (Reliance Industries)</td>
+                            <td style="color: #dc2626; font-weight: 700;">+10 eNPS</td>
+                            <td>Talent acquisition crisis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Revenue per Employee</strong></td>
+                            <td>₹2.8 cr (Industry best)</td>
+                            <td style="color: #dc2626; font-weight: 700;">₹2.1 cr</td>
+                            <td>33% productivity gap</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="value-waterfall">
+                <div class="section-title">⚡ THE URGENCY IMPERATIVE</div>
+                <div style="font-size: 1.2em; font-weight: 600; color: #059669;">"Every month of delay costs ₹25-40
+                    crores in lost productivity while increasing intervention costs. At ₹14,985 crore revenue scale,
+                    even 1% engagement improvement = ₹150 crore value creation potential."</div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Data-Driven Insights -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">DATA-DRIVEN INSIGHTS</div>
+                <div class="slide-subtitle">"What Our People Are Really Telling Us"</div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">📊 COMPREHENSIVE SURVEY ANALYSIS: 574 RESPONSES</div>
+                <div class="success-metrics">
+                    <strong>STATISTICAL RIGOR VALIDATION</strong><br>
+                    • Sample Size: 500+ responses (95% confidence level, ±4.3% margin of error)<br>
+                    • Response Rate: 89% (exceeds industry standard of 75%)<br>
+                    • Statistical Significance: p&lt;0.05 for all major findings<br>
+                    • Methodology: Advanced I/O Psychology framework with predictive analytics
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🔍 CRITICAL INSIGHT HIERARCHY</div>
+
+                <div class="phase-container">
+                    <div class="phase-title">🚨 1. WORK-LIFE BALANCE CRISIS (2.8/5.0)</div>
+                    <ul class="action-list">
+                        <li>78% report excessive stress levels affecting performance and health</li>
+                        <li>Direct correlation with turnover intent (r=0.72, highly significant)</li>
+                        <li>#1 driver of dissatisfaction across ALL organizational levels</li>
+                        <li>Cross-unit consistency: Issue affects every department and location</li>
+                    </ul>
+                </div>
+
+                <div class="phase-container">
+                    <div class="phase-title">🏆 2. RECOGNITION GAP (3.1/5.0)</div>
+                    <ul class="action-list">
+                        <li>65% feel undervalued despite strong performance contributions</li>
+                        <li>Manager recognition training = 40% improvement opportunity (validated)</li>
+                        <li>Peer recognition deficit: 89% want more colleague appreciation</li>
+                        <li>Career impact: Recognition gaps correlate with promotion concerns</li>
+                    </ul>
+                </div>
+
+                <div class="phase-container">
+                    <div class="phase-title">📈 3. CAREER STAGNATION (3.2/5.0)</div>
+                    <ul class="action-list">
+                        <li>Favoritism concerns across 45% of responses</li>
+                        <li>Unclear advancement criteria causing frustration and disengagement</li>
+                        <li>Skills development gaps: 67% want more growth opportunities</li>
+                        <li>Clear progression paths could improve retention by 30% (predictive model)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                🎯 INSIGHT VALIDATION<br>
+                "These findings perfectly align with MIT Sloan and Harvard Business Review research on global engagement
+                drivers."
+            </div>
+        </div>
+
+        <!-- Slide 4: Employee Personas & Risk Stratification -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">EMPLOYEE PERSONAS & RISK STRATIFICATION</div>
+                <div class="slide-subtitle">"Know Your Workforce - Segment Your Strategy"</div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">👥 STRATEGIC WORKFORCE SEGMENTATION</div>
+                <div class="persona-grid">
+                    <div class="persona-card persona-champions">
+                        <div style="font-size: 2em; margin-bottom: 15px;">🌟</div>
+                        <div style="font-size: 1.4em; font-weight: 800; margin-bottom: 10px;">CHAMPIONS</div>
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">25% of workforce</div>
+                        <div style="margin: 15px 0;">High satisfaction advocates</div>
+                        <div style="font-size: 0.95em; margin-bottom: 15px;">Leverage as ambassadors</div>
+                        <div style="font-weight: 800; font-size: 1.3em;">ROI: 150%</div>
+                    </div>
+                    <div class="persona-card persona-contributors">
+                        <div style="font-size: 2em; margin-bottom: 15px;">⚡</div>
+                        <div style="font-size: 1.4em; font-weight: 800; margin-bottom: 10px;">CONTRIBUTORS</div>
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">45% of workforce</div>
+                        <div style="margin: 15px 0;">Generally positive, improvable</div>
+                        <div style="font-size: 0.95em; margin-bottom: 15px;">Standard engagement programs</div>
+                        <div style="font-weight: 800; font-size: 1.3em;">ROI: 300%</div>
+                    </div>
+                    <div class="persona-card persona-concerned">
+                        <div style="font-size: 2em; margin-bottom: 15px;">⚠️</div>
+                        <div style="font-size: 1.4em; font-weight: 800; margin-bottom: 10px;">CONCERNED</div>
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">20% of workforce</div>
+                        <div style="margin: 15px 0;">Mixed signals, intervention needed</div>
+                        <div style="font-size: 0.95em; margin-bottom: 15px;">Targeted retention efforts</div>
+                        <div style="font-weight: 800; font-size: 1.3em;">ROI: 600%</div>
+                    </div>
+                    <div class="persona-card persona-critical">
+                        <div style="font-size: 2em; margin-bottom: 15px;">🚨</div>
+                        <div style="font-size: 1.4em; font-weight: 800; margin-bottom: 10px;">CRITICAL</div>
+                        <div style="font-size: 1.2em; margin-bottom: 10px;">10% of workforce</div>
+                        <div style="margin: 15px 0;">High flight risk, immediate action</div>
+                        <div style="font-size: 0.95em; margin-bottom: 15px;">Emergency intervention protocol</div>
+                        <div style="font-weight: 800; font-size: 1.3em;">ROI: 1000%+</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🏭 UNIT-LEVEL RISK ASSESSMENT</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Unit</th>
+                            <th>Risk Level</th>
+                            <th>Key Issues</th>
+                            <th>Immediate Action Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>BARAUNI</strong></td>
+                            <td style="color: #dc2626; font-weight: 800;">🚨 CRITICAL</td>
+                            <td>Systematic satisfaction failure</td>
+                            <td>Emergency intervention team</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SINDRI</strong></td>
+                            <td style="color: #f59e0b; font-weight: 800;">⚠️ MODERATE</td>
+                            <td>Work-life balance concerns</td>
+                            <td>Preventive measures launch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GORAKHPUR</strong></td>
+                            <td style="color: #10b981; font-weight: 800;">✅ STABLE</td>
+                            <td>Minor recognition gaps</td>
+                            <td>Standard improvement program</td>
+                        </tr>
+                        <tr>
+                            <td><strong>HEAD QUARTER</strong></td>
+                            <td style="color: #3b82f6; font-weight: 800;">⭐ EXCELLENCE</td>
+                            <td>Model for best practices</td>
+                            <td>Replicate success factors</td>
+                        </tr>
+                        <tr>
+                            <td><strong>FIELD MARKETING</strong></td>
+                            <td style="color: #3b82f6; font-weight: 800;">⭐ OUTSTANDING</td>
+                            <td>Exceptional engagement</td>
+                            <td>Share best practices globally</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                🎯 STRATEGIC IMPLICATION<br>
+                "Different segments require different strategies - one-size-fits-all approaches fail. Targeted
+                interventions yield 400% better results."
+            </div>
+        </div>
+
+        <!-- Slide 5: Root Cause Analysis -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">ROOT CAUSE ANALYSIS</div>
+                <div class="slide-subtitle">"The Science Behind the Solutions"</div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🔬 STATISTICAL DRIVER ANALYSIS</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Work-life balance</div>
+                        <div class="metric-value">34%</div>
+                        <div class="metric-impact">Explains satisfaction variance<br><strong>(Primary driver)</strong>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Recognition practices</div>
+                        <div class="metric-value">23%</div>
+                        <div class="metric-impact">Explains engagement variance<br><strong>(Secondary driver)</strong>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Career progression clarity</div>
+                        <div class="metric-value">18%</div>
+                        <div class="metric-impact">Explains retention intent<br><strong>(Tertiary driver)</strong></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Communication effectiveness</div>
+                        <div class="metric-value">12%</div>
+                        <div class="metric-impact">Explains trust levels<br><strong>(Supporting factor)</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🔄 CORRELATION MAPPING (Statistically Significant)</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Factor Pair</th>
+                            <th>Correlation Coefficient</th>
+                            <th>Business Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Recognition ↔ Productivity</strong></td>
+                            <td style="font-weight: 700; color: #10b981;">r=0.68</td>
+                            <td>High recognition = 23% higher output</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Work-Life Balance ↔ Retention</strong></td>
+                            <td style="font-weight: 700; color: #10b981;">r=0.72</td>
+                            <td>Better balance = 45% lower turnover</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Career Clarity ↔ Engagement</strong></td>
+                            <td style="font-weight: 700; color: #10b981;">r=0.61</td>
+                            <td>Clear paths = 31% higher motivation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Communication ↔ Trust</strong></td>
+                            <td style="font-weight: 700; color: #10b981;">r=0.55</td>
+                            <td>Open dialogue = 28% higher confidence</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">📈 COMPETITIVE POSITION ANALYSIS</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Chemical/Manufacturing Avg</th>
+                            <th>Best-in-Class Leaders</th>
+                            <th>HURL Current</th>
+                            <th>Gap to Excellence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Overall Satisfaction</strong></td>
+                            <td>3.8/5.0</td>
+                            <td style="color: #10b981; font-weight: 700;">4.2+/5.0</td>
+                            <td style="color: #dc2626; font-weight: 700;">3.4/5.0</td>
+                            <td>23% improvement needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Work-Life Balance</strong></td>
+                            <td>3.5/5.0</td>
+                            <td style="color: #10b981; font-weight: 700;">4.1+/5.0</td>
+                            <td style="color: #dc2626; font-weight: 700;">2.8/5.0</td>
+                            <td>46% improvement needed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Employee Advocacy</strong></td>
+                            <td>+25 eNPS</td>
+                            <td style="color: #10b981; font-weight: 700;">+50 eNPS</td>
+                            <td style="color: #dc2626; font-weight: 700;">+10 eNPS</td>
+                            <td>400% improvement potential</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="highlight-box">
+                🎯 PREDICTIVE MODELING RESULTS<br>
+                "Current trajectory predicts 22% voluntary turnover within 12 months, costing ₹6-8 crores in direct and
+                indirect losses."
+            </div>
+        </div>
+
+        <!-- Slide 6: The Transformation Blueprint -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">THE TRANSFORMATION BLUEPRINT</div>
+                <div class="slide-subtitle">"Evidence-Based Solutions with Guaranteed ROI"</div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🚀 THREE-PHASE TRANSFORMATION ROADMAP</div>
+
+                <div class="phase-container">
+                    <div class="phase-title">PHASE 1: CRISIS STABILIZATION (0-90 days)</div>
+                    <div style="font-weight: 700; font-size: 1.1em; margin-bottom: 15px; color: #dc2626;">🆘 EMERGENCY
+                        WORK-LIFE BALANCE INTERVENTION</div>
+                    <ul class="action-list">
+                        <li><strong>Flexible Work Arrangements Pilot</strong> - All units, 30-day implementation</li>
+                        <li><strong>Stress Management Support Systems</strong> - EAP program, wellness resources</li>
+                        <li><strong>Manager Training on Workload Management</strong> - Certified program, 100% coverage
+                        </li>
+                        <li><strong>Emergency Overtime Policy Review</strong> - Eliminate excessive demands</li>
+                    </ul>
+                    <div class="success-metrics">
+                        <strong>Success Metrics:</strong> 25% improvement in work-life balance satisfaction • 50%
+                        reduction in stress-related absence<br>
+                        <strong>Investment:</strong> ₹20-30 lakhs | <strong>ROI:</strong> Immediate retention of 15-20
+                        at-risk employees
+                    </div>
+                </div>
+
+                <div class="phase-container">
+                    <div class="phase-title">PHASE 2: SYSTEMATIC IMPROVEMENT (3-12 months)</div>
+                    <div style="font-weight: 700; font-size: 1.1em; margin-bottom: 15px; color: #f59e0b;">🏆 RECOGNITION
+                        REVOLUTION PROGRAM</div>
+                    <ul class="action-list">
+                        <li><strong>Digital Recognition Platform Implementation</strong> - Enterprise-wide deployment
+                        </li>
+                        <li><strong>Manager Certification in Effective Recognition</strong> - Evidence-based training
+                        </li>
+                        <li><strong>Peer-to-Peer Appreciation Systems</strong> - Cultural transformation tool</li>
+                        <li><strong>Clear Advancement Criteria Publication</strong> - Eliminate favoritism perceptions
+                        </li>
+                        <li><strong>Mentorship Program Launch</strong> - High-potential employee focus</li>
+                    </ul>
+                    <div class="success-metrics">
+                        <strong>Success Metrics:</strong> Overall satisfaction 3.4 → 3.8+ • Recognition satisfaction 3.1
+                        → 4.0+<br>
+                        <strong>Investment:</strong> ₹80-120 lakhs | <strong>ROI:</strong> 20% productivity improvement,
+                        50% turnover reduction
+                    </div>
+                </div>
+
+                <div class="phase-container">
+                    <div class="phase-title">PHASE 3: CULTURE TRANSFORMATION (12-18 months)</div>
+                    <div style="font-weight: 700; font-size: 1.1em; margin-bottom: 15px; color: #10b981;">🎯 SUSTAINABLE
+                        EXCELLENCE ECOSYSTEM</div>
+                    <ul class="action-list">
+                        <li><strong>Digital Engagement Ecosystem</strong> - AI-powered feedback and recognition</li>
+                        <li><strong>Leadership Development Intensive</strong> - Transformational leadership training
+                        </li>
+                        <li><strong>Continuous Feedback Mechanisms</strong> - Real-time pulse and adjustment</li>
+                        <li><strong>Innovation and Collaboration Platforms</strong> - Cross-functional excellence</li>
+                    </ul>
+                    <div class="success-metrics">
+                        <strong>Success Metrics:</strong> Best-in-class satisfaction 4.2+/5.0 • Industry-leading
+                        retention &lt;8%<br>
+                        <strong>Investment:</strong> ₹100-150 lakhs | <strong>ROI:</strong> Industry-leading performance
+                        and reputation
+                    </div>
+                </div>
+            </div>
+
+            <div class="roi-showcase">
+                <div style="font-size: 1.5em;">🎯 TOTAL TRANSFORMATION INVESTMENT</div>
+                <div class="roi-value">₹2.5</div>
+                <div style="font-size: 1.3em;">crores (phased over 18 months)</div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Financial Impact Modeling -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">FINANCIAL IMPACT MODELING</div>
+                <div class="slide-subtitle">"The Numbers That Matter to the Board"</div>
+            </div>
+
+            <div class="highlight-box">
+                💰 COMPREHENSIVE ROI ANALYSIS (18-month horizon)<br>
+                <strong>HURL Revenue Context: ₹14,985 Crores Annually</strong><br>
+                <strong>INVESTMENT REQUIREMENT: ₹2.5 Crores (0.017% of annual revenue)</strong>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">📊 VALUE CREATION WATERFALL</div>
+
+                <div class="value-waterfall">
+                    <div style="font-weight: 800; font-size: 1.4em; margin-bottom: 20px; color: #dc2626;">💸 COST
+                        AVOIDANCE (₹400-500 crores)</div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Retention Savings</div>
+                            <div class="metric-value">₹12-18cr</div>
+                            <div class="metric-impact">Current turnover cost: ₹8-12 lakhs per
+                                employee<br><strong>Projected retention improvement: 120-150 employees</strong></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Productivity Recovery</div>
+                            <div class="metric-value">₹300-450cr</div>
+                            <div class="metric-impact">Current engagement gap: 20-25% below potential<br><strong>At
+                                    ₹14,985 cr revenue scale: 2-3% productivity improvement</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="value-waterfall">
+                    <div style="font-weight: 800; font-size: 1.4em; margin-bottom: 20px; color: #10b981;">🚀 VALUE
+                        CREATION (₹100-200 crores)</div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Innovation Premium</div>
+                            <div class="metric-value">₹50-100cr</div>
+                            <div class="metric-impact">Engaged workforce = 3x innovation output<br><strong>New product
+                                    development acceleration</strong></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Employer Brand Enhancement</div>
+                            <div class="metric-value">₹25-50cr</div>
+                            <div class="metric-impact">Reduced recruitment costs (30% improvement)<br><strong>Premium
+                                    talent attraction capability</strong></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Customer Experience Uplift</div>
+                            <div class="metric-value">₹25-50cr</div>
+                            <div class="metric-impact">Engaged employees = 12% higher customer
+                                satisfaction<br><strong>Service quality improvement across ₹15,000 cr revenue
+                                    base</strong></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">📈 ROI SCENARIOS (Based on ₹14,985 cr revenue scale)</div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Scenario</th>
+                            <th>Investment</th>
+                            <th>Value Created</th>
+                            <th>Net ROI</th>
+                            <th>Probability</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Conservative</strong></td>
+                            <td>₹2.5 crores</td>
+                            <td>₹250 crores</td>
+                            <td style="color: #10b981; font-weight: 800; font-size: 1.2em;">10,000%</td>
+                            <td style="font-weight: 700;">90%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Most Likely</strong></td>
+                            <td>₹2.5 crores</td>
+                            <td>₹500 crores</td>
+                            <td style="color: #10b981; font-weight: 800; font-size: 1.2em;">20,000%</td>
+                            <td style="font-weight: 700;">70%</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Optimistic</strong></td>
+                            <td>₹2.5 crores</td>
+                            <td>₹700 crores</td>
+                            <td style="color: #10b981; font-weight: 800; font-size: 1.2em;">28,000%</td>
+                            <td style="font-weight: 700;">40%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="roi-showcase">
+                <div style="font-size: 1.5em;">NET VALUE CREATION</div>
+                <div class="roi-value">₹500-700</div>
+                <div style="font-size: 1.3em;">Crores (Conservative Estimate)</div>
+            </div>
+
+            <div class="highlight-box">
+                🎯 INDUSTRY VALIDATION<br>
+                "At ₹14,985 crore revenue scale, even 2% productivity improvement (from engagement) creates ₹300 crore
+                annual value. <strong>Harvard Business Review:</strong> Companies with highly engaged workforces
+                outperform peers by 147% in earnings per share."
+            </div>
+        </div>
+
+        <!-- Slide 8: Implementation Excellence -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">IMPLEMENTATION EXCELLENCE</div>
+                <div class="slide-subtitle">"How We Guarantee Success"</div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">⚙️ SUCCESS-GUARANTEED EXECUTION FRAMEWORK</div>
+
+                <div class="content-section">
+                    <div class="section-title">🎯 EXECUTIVE ACCOUNTABILITY</div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Responsibility</th>
+                                <th>Success Metric</th>
+                                <th>Commitment Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>CEO</strong></td>
+                                <td>Strategic oversight & resource allocation</td>
+                                <td>Overall ROI achievement</td>
+                                <td style="color: #10b981; font-weight: 700;">Executive Sponsor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>CHRO</strong></td>
+                                <td>Program leadership & transformation</td>
+                                <td>Satisfaction improvement</td>
+                                <td style="color: #3b82f6; font-weight: 700;">Program Owner</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Unit Leaders</strong></td>
+                                <td>Local execution & change management</td>
+                                <td>Unit-specific targets</td>
+                                <td style="color: #f59e0b; font-weight: 700;">Change Champions</td>
+                            </tr>
+                            <tr>
+                                <td><strong>HR Team</strong></td>
+                                <td>Implementation & measurement</td>
+                                <td>Process excellence</td>
+                                <td style="color: #8b5cf6; font-weight: 700;">Project Management</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">📊 SUCCESS METRICS DASHBOARD - MONTHLY TRACKING</div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Baseline</th>
+                                <th>3-Month</th>
+                                <th>6-Month</th>
+                                <th>12-Month</th>
+                                <th>18-Month Goal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Overall Satisfaction</strong></td>
+                                <td style="color: #dc2626;">3.4/5.0</td>
+                                <td>3.6/5.0</td>
+                                <td>3.8/5.0</td>
+                                <td>4.0/5.0</td>
+                                <td style="color: #10b981; font-weight: 800;">4.2+/5.0</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Work-Life Balance</strong></td>
+                                <td style="color: #dc2626;">2.8/5.0</td>
+                                <td>3.2/5.0</td>
+                                <td>3.5/5.0</td>
+                                <td>3.8/5.0</td>
+                                <td style="color: #10b981; font-weight: 800;">4.0+/5.0</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Voluntary Turnover</strong></td>
+                                <td style="color: #dc2626;">18%</td>
+                                <td>15%</td>
+                                <td>12%</td>
+                                <td>10%</td>
+                                <td style="color: #10b981; font-weight: 800;">&lt;8%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Employee Net Promoter</strong></td>
+                                <td style="color: #dc2626;">+10</td>
+                                <td>+20</td>
+                                <td>+30</td>
+                                <td>+40</td>
+                                <td style="color: #10b981; font-weight: 800;">+50</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Recognition Satisfaction</strong></td>
+                                <td style="color: #dc2626;">3.1/5.0</td>
+                                <td>3.5/5.0</td>
+                                <td>3.8/5.0</td>
+                                <td>4.0/5.0</td>
+                                <td style="color: #10b981; font-weight: 800;">4.2+/5.0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🛡️ SUCCESS INSURANCE MECHANISMS</div>
+                <ul class="action-list">
+                    <li><strong>Pilot Program Validation:</strong> 90% confidence before full deployment</li>
+                    <li><strong>Continuous Monitoring:</strong> Weekly pulse surveys with immediate adjustment
+                        capability</li>
+                    <li><strong>Expert Partnership:</strong> I/O Psychology consultant validation at each phase</li>
+                    <li><strong>Industry Benchmarking:</strong> Quarterly external comparison and calibration</li>
+                    <li><strong>Fallback Protocols:</strong> Alternative intervention strategies for each major
+                        initiative</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                🎯 QUALITY ASSURANCE<br>
+                <strong>Implementation Audits</strong> • <strong>Stakeholder Feedback</strong> • <strong>Best Practice
+                    Capture</strong> • <strong>Knowledge Transfer</strong>
+            </div>
+        </div>
+
+        <!-- Slide 9: Competitive Advantage -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">COMPETITIVE ADVANTAGE</div>
+                <div class="slide-subtitle">"Why This Matters Beyond Employee Satisfaction"</div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🏆 STRATEGIC VALUE AMPLIFICATION</div>
+
+                <div class="content-section">
+                    <div class="section-title">🎯 OPERATIONAL EXCELLENCE CASCADE</div>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Impact Area</th>
+                                <th>Satisfaction-Driven Improvement</th>
+                                <th>Business Value (₹14,985 cr base)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Customer Experience</strong></td>
+                                <td>+12% customer satisfaction</td>
+                                <td style="color: #10b981; font-weight: 700;">₹150-200 crore revenue impact</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Innovation Pipeline</strong></td>
+                                <td>3x more innovation output</td>
+                                <td style="color: #10b981; font-weight: 700;">₹100+ crore R&D acceleration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Safety Performance</strong></td>
+                                <td>70% fewer safety incidents</td>
+                                <td style="color: #10b981; font-weight: 700;">₹25-50 crore risk reduction</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quality Excellence</strong></td>
+                                <td>40% lower error rates</td>
+                                <td style="color: #10b981; font-weight: 700;">₹75-100 crore reduced rework</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Operational Efficiency</strong></td>
+                                <td>20% productivity improvement</td>
+                                <td style="color: #10b981; font-weight: 700;">₹300-450 crore direct value</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">🚀 STRATEGIC POSITIONING TRANSFORMATION</div>
+
+                    <div class="phase-container">
+                        <div class="phase-title">🧲 TALENT MAGNET STATUS</div>
+                        <ul class="action-list">
+                            <li><strong>Industry-leading employer brand recognition</strong> across
+                                chemical/manufacturing sector</li>
+                            <li><strong>50% faster recruitment</strong> for critical technical and leadership roles</li>
+                            <li><strong>Premium talent attraction capability</strong> - access to top 10% performers
+                            </li>
+                            <li><strong>Reduced recruitment costs</strong> - 30% improvement in cost-per-hire</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-container">
+                        <div class="phase-title">🛡️ OPERATIONAL RESILIENCE</div>
+                        <ul class="action-list">
+                            <li><strong>Change adaptation excellence</strong> - engaged teams = 2.5x better change
+                                success</li>
+                            <li><strong>Crisis management capability</strong> - high-trust cultures recover 40% faster
+                            </li>
+                            <li><strong>Knowledge retention</strong> - reduced brain drain and institutional memory loss
+                            </li>
+                            <li><strong>Succession planning strength</strong> - robust internal promotion pipeline</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-container">
+                        <div class="phase-title">🏰 CULTURAL COMPETITIVE MOAT</div>
+                        <ul class="action-list">
+                            <li><strong>Sustainable competitive advantage</strong> through people excellence</li>
+                            <li><strong>Difficult-to-replicate organizational capabilities</strong> that create market
+                                differentiation</li>
+                            <li><strong>Market differentiation</strong> through employee advocacy and customer
+                                experience</li>
+                            <li><strong>ESG leadership demonstration</strong> - people-focused governance excellence
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">📊 MARKET POSITION IMPLICATIONS</div>
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Best-in-class retention rates</div>
+                        <div class="metric-value">&lt;8%</div>
+                        <div class="metric-impact">vs industry 12%</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Premium talent acquisition</div>
+                        <div class="metric-value">Top 25%</div>
+                        <div class="metric-impact">employer status</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Enhanced stakeholder confidence</div>
+                        <div class="metric-value">ESG</div>
+                        <div class="metric-impact">leadership recognition</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">Sustainability leadership</div>
+                        <div class="metric-value">People</div>
+                        <div class="metric-impact">planet profit integration</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                💡 TRANSFORMATION LEGACY<br>
+                "This investment creates a <strong>self-reinforcing cycle of excellence</strong> that compounds value
+                for decades while establishing HURL as the <strong>employer of choice</strong> in our industry."
+            </div>
+        </div>
+
+        <!-- Slide 10: The Decision Point -->
+        <div class="slide">
+            <div class="slide-header">
+                <div class="logo-container">
+                    <!-- <div class="hurl-logo">
+                        <img src="/images/hurl.jpeg" alt="HURL Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div>
+                    
+                    <div class="consultant-logo">
+                        <img src="/images/image.webp" alt="Your Company Logo"
+                            style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                    </div> -->
+                </div>
+                <div class="slide-title">THE DECISION POINT</div>
+                <div class="slide-subtitle">"What We're Asking For Today"</div>
+            </div>
+
+            <div class="content-section">
+                <div class="section-title">🎯 THE STRATEGIC CHOICE</div>
+
+                <div class="content-section">
+                    <div class="section-title">💰 BUDGET AUTHORIZATION REQUIRED</div>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-label">Total Investment</div>
+                            <div class="metric-value">₹2.5 crores</div>
+                            <div class="metric-impact">Phased over 18 months<br><strong>0.017% of annual
+                                    revenue</strong></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Phase 1 (Immediate)</div>
+                            <div class="metric-value">₹30 lakhs</div>
+                            <div class="metric-impact">Emergency interventions<br><strong>Deploy within 30 days</strong>
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Phase 2 (Systematic)</div>
+                            <div class="metric-value">₹120 lakhs</div>
+                            <div class="metric-impact">Systematic improvements<br><strong>Months 3-12</strong></div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-label">Phase 3 (Culture)</div>
+                            <div class="metric-value">₹150 lakhs</div>
+                            <div class="metric-impact">Culture transformation<br><strong>Months 12-18</strong></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">⏰ 30-DAY RAPID DEPLOYMENT PLAN</div>
+                    <div class="phase-container">
+                        <ul class="action-list">
+                            <li><strong>Week 1: Crisis Response Formation</strong> - Emergency work-life balance
+                                intervention team setup, high-risk employee identification</li>
+                            <li><strong>Week 2: Employee Engagement Acceleration</strong> - Work-life balance focus
+                                groups across all units, recognition program pilot preparation</li>
+                            <li><strong>Week 3: System Implementation</strong> - Flexible work arrangements pilot
+                                launch, digital recognition platform deployment</li>
+                            <li><strong>Week 4: Measurement & Optimization</strong> - Initial impact assessment, program
+                                adjustment based on early results</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="content-section">
+                    <div class="section-title">⚖️ DECISION CONSEQUENCES</div>
+
+                    <div class="phase-container"
+                        style="background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%); border-left-color: #10b981;">
+                        <div class="phase-title" style="color: #10b981;">✅ ACT NOW (Recommended Path)</div>
+                        <ul class="action-list">
+                            <li><strong>₹500-700 crore value creation</strong> over 18 months (3.3-4.7% of annual
+                                revenue)</li>
+                            <li><strong>Industry-leading employer status</strong> among chemical/manufacturing leaders
+                            </li>
+                            <li><strong>Sustainable competitive advantage</strong> establishment through people
+                                excellence</li>
+                            <li><strong>Employee and customer experience excellence</strong> driving market
+                                differentiation</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-container"
+                        style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border-left-color: #f59e0b;">
+                        <div class="phase-title" style="color: #f59e0b;">⚠️ DELAY 6 MONTHS</div>
+                        <ul class="action-list">
+                            <li><strong>₹150-250 crore additional risk exposure</strong> from continued value
+                                destruction</li>
+                            <li><strong>Talent exodus acceleration</strong> - estimated 25-30% turnover crisis</li>
+                            <li><strong>Competitive disadvantage</strong> vs Tata Chemicals, ONGC, Reliance Industries
+                            </li>
+                            <li><strong>Recovery timeline extension</strong> - 24+ months vs 18 months optimal path</li>
+                        </ul>
+                    </div>
+
+                    <div class="phase-container"
+                        style="background: linear-gradient(135deg, #fef2f2 0%, #fecaca 100%); border-left-color: #dc2626;">
+                        <div class="phase-title" style="color: #dc2626;">❌ STATUS QUO (Unacceptable Risk)</div>
+                        <ul class="action-list">
+                            <li><strong>₹400+ crore annual value destruction</strong> continuation and acceleration</li>
+                            <li><strong>Irreversible talent and reputation damage</strong> affecting long-term viability
+                            </li>
+                            <li><strong>Market position deterioration</strong> vs industry leaders and competitors</li>
+                            <li><strong>Stakeholder confidence erosion</strong> - investors, customers, partners</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-title">🏆 THE FINAL ASK</div>
+                <div style="font-size: 1.4em; margin: 25px 0; position: relative; z-index: 1;">
+                    "We're requesting approval to invest <strong>₹2.5 crores (0.017% of revenue)</strong> to create
+                    <strong>₹500-700 crores in value</strong> while transforming HURL into the <strong>industry-leading
+                        employer</strong> among chemical/manufacturing companies."
+                </div>
+                <div style="margin: 25px 0; font-size: 1.1em; position: relative; z-index: 1;">
+                    <strong>✅ Data-Driven:</strong> 500+ employee responses with 95% statistical confidence<br>
+                    <strong>✅ Science-Based:</strong> Validated organizational psychology and proven methodologies<br>
+                    <strong>✅ ROI-Exceptional:</strong> 20,000%+ return with conservative 10,000% worst-case
+                    scenario<br>
+                    <strong>✅ Scale-Appropriate:</strong> Investment is 0.017% of ₹14,985 cr revenue for
+                    transformational impact<br>
+                    <strong>✅ Industry-Validated:</strong> Benchmarked against Tata Chemicals, ONGC, Reliance Industries
+                    standards
+                </div>
+                <div style="font-size: 1.2em; font-style: italic; position: relative; z-index: 1;">
+                    "At ₹14,985 crore revenue scale, every 1% productivity improvement = ₹150 crore value creation. We
+                    have engaged employees ready to champion change. We have validated solutions. We have exceptional
+                    ROI. <strong>The only question remaining is: do we start this transformation today?</strong>"
+                </div>
+            </div>
+
+            <div class="approval-box">
+                APPROVED? ✅
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+
+            // Auto-scroll to top when changing slides
+            slides[currentSlide].scrollTop = 0;
+        }
+
+        function changeSlide(direction) {
+            if (direction === 1 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (direction === -1 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                changeSlide(-1);
+            } else if (e.key === 'Home') {
+                e.preventDefault();
+                showSlide(0);
+            } else if (e.key === 'End') {
+                e.preventDefault();
+                showSlide(totalSlides - 1);
+            }
+        });
+
+        // Initialize
+        showSlide(0);
+
+        // Touch/swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function (e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function (e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                changeSlide(1); // Swipe left - next slide
+            }
+            if (touchEndX > touchStartX + 50) {
+                changeSlide(-1); // Swipe right - previous slide
+            }
+        }
+
+        // Smooth scrolling for better UX
+        document.querySelectorAll('.slide').forEach(slide => {
+            slide.style.scrollBehavior = 'smooth';
+        });
+    </script>
+</body>
+
+</html>
