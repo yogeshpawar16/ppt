@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HURL Management Effectiveness - Executive Presentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            overflow: hidden;
+            color: #1e293b;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            width: 95%;
+            height: 90%;
+            margin: 1% auto;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            padding: 60px;
+            display: none;
+            position: relative;
+            overflow-y: auto;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .slide.active {
+            display: block;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            color: #0f172a;
+            font-size: 42px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .slide h2 {
+            color: #1e40af;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #3b82f6;
+            padding-bottom: 15px;
+        }
+
+        .slide h3 {
+            color: #dc2626;
+            font-size: 24px;
+            font-weight: 600;
+            margin: 25px 0 20px 0;
+        }
+
+        .slide ul {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .slide li {
+            margin: 18px 0;
+            padding-left: 35px;
+            position: relative;
+            font-size: 19px;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        .slide li:before {
+            content: "→";
+            color: #3b82f6;
+            font-weight: 700;
+            font-size: 20px;
+            position: absolute;
+            left: 0;
+        }
+
+        .score-hero {
+            text-align: center;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .score-circle {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #dc2626 0deg, #f59e0b 126deg, #059669 234deg, #059669 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-circle::before {
+            content: '';
+            width: 240px;
+            height: 240px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .score-text {
+            font-size: 64px;
+            font-weight: 800;
+            color: #f59e0b;
+            z-index: 10;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .score-label {
+            font-size: 20px;
+            color: #64748b;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        .score-medium {
+            font-size: 28px;
+            font-weight: 700;
+            color: #dc2626;
+            display: inline-block;
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            padding: 15px 25px;
+            border-radius: 12px;
+            border: 2px solid #dc2626;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+        }
+
+        .score-good {
+            color: #059669;
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #059669;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+        }
+
+        .premium-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            padding: 30px;
+            margin: 25px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        .callout-box {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-left: 6px solid #3b82f6;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 6px solid #dc2626;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.15);
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 6px solid #059669;
+            padding: 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+            box-shadow: 0 4px 12px rgba(5, 150, 105, 0.15);
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin: 30px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .stat-number {
+            font-size: 72px;
+            font-weight: 800;
+            color: #3b82f6;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-label {
+            font-size: 22px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        .stat-sublabel {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .dept-performance {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .dept-card {
+            padding: 25px;
+            border-radius: 16px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 18px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dept-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .dept-high {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #059669;
+            color: #059669;
+        }
+
+        .dept-medium {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 2px solid #f59e0b;
+            color: #f59e0b;
+        }
+
+        .dept-low {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border: 2px solid #dc2626;
+            color: #dc2626;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .timeline-phase {
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 3px solid;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-phase:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .phase-1 {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-color: #dc2626;
+        }
+
+        .phase-2 {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-color: #f59e0b;
+        }
+
+        .phase-3 {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-color: #059669;
+        }
+
+        .roi-hero {
+            text-align: center;
+            background: linear-gradient(135deg, #059669 0%, #34d399 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 20px 40px rgba(5, 150, 105, 0.3);
+        }
+
+        .roi-number {
+            font-size: 72px;
+            font-weight: 800;
+            margin: 20px 0;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .critical-finding {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3);
+        }
+
+        .critical-finding h3 {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .action-items {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border: 3px solid #f59e0b;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 15px 30px rgba(245, 158, 11, 0.2);
+        }
+
+        .checkbox-list {
+            list-style: none;
+        }
+
+        .checkbox-list li {
+            position: relative;
+            padding-left: 50px;
+            margin: 20px 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .checkbox-list li:before {
+            content: "☐";
+            font-size: 24px;
+            color: #f59e0b;
+            position: absolute;
+            left: 0;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 15px 30px;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .nav-btn {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .nav-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .nav-btn:disabled {
+            background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .slide-counter {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #334155;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .slide-info {
+            color: white;
+            font-weight: 600;
+            padding: 0 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .performance-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .bar-high {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border-left: 5px solid #059669;
+        }
+
+        .bar-low {
+            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
+            border-left: 5px solid #dc2626;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid #3b82f6;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+        }
+
+        .metric-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .metric-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .hurl-logo {
+            width: 180px;
+            height: 70px;
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 20px rgba(30, 64, 175, 0.3);
+        }
+
+        .consultant-logo {
+            width: 180px;
+            height: 70px;
+            background: linear-gradient(135deg, #059669 0%, #34d399 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(5, 150, 105, 0.3);
+        }
+
+        .currency-dual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .currency-primary {
+            font-size: 32px;
+            font-weight: 800;
+            color: #f59e0b;
+        }
+
+        .currency-secondary {
+            font-size: 24px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .cost-inaction {
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(234, 88, 12, 0.3);
+        }
+
+        .progress-arrow {
+            font-size: 48px;
+            color: #059669;
+            margin: 0 20px;
+            font-weight: bold;
+        }
+
+        .transformation-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px 0;
+            font-size: 48px;
+            font-weight: 800;
+        }
+
+        .current-score {
+            color: #f59e0b;
+        }
+
+        .target-score {
+            color: #059669;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active title-slide">
+            <div class="slide-counter">1 / 16</div>
+            <div class="logo-container">
+                <div class="hurl-logo">
+                    <img src="/images/hurl.jpeg" alt="HURL Logo"
+                        style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div class="consultant-logo">
+                    <img src="/images/image.webp" alt="Your Company Logo"
+                        style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+            </div>
+            <h1>UNLOCK MANAGEMENT POTENTIAL</h1>
+            <h1 style="color: #059669; margin-top: 20px; font-size: 36px;">DRIVE 75/100 EFFECTIVENESS IN 12 MONTHS</h1>
+
+            <div class="score-hero">
+                <div class="score-circle">
+                    <div class="score-text">63.8</div>
+                </div>
+                <div class="score-label">Current Management Effectiveness Score</div>
+            </div>
+
+            <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 50px;">
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 48px; color: #3b82f6; font-weight: 800;">366</div>
+                    <div style="font-size: 18px; font-weight: 600; margin-top: 10px;">Employee Voices</div>
+                </div>
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 48px; color: #059669; font-weight: 800;">+11.2</div>
+                    <div style="font-size: 18px; font-weight: 600; margin-top: 10px;">Points Achievable</div>
+                </div>
+                <div class="premium-card" style="text-align: center;">
+                    <div style="font-size: 48px; color: #f59e0b; font-weight: 800;">8</div>
+                    <div style="font-size: 18px; font-weight: 600; margin-top: 10px;">Key Dimensions</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Executive Summary -->
+        <div class="slide">
+            <div class="slide-counter">2 / 16</div>
+            <h1>THE BOTTOM LINE – ACT NOW OR LOSE COMPETITIVE ADVANTAGE</h1>
+
+            <div class="two-column">
+                <div style="text-align: center;">
+                    <div class="score-hero">
+                        <div class="score-circle" style="width: 250px; height: 250px;">
+                            <div class="score-text" style="font-size: 48px;">63.8</div>
+                        </div>
+                        <div class="score-label">Management Effectiveness</div>
+                        <div style="color: #f59e0b; font-weight: 600; margin-top: 10px;">(Moderate Performance)</div>
+                    </div>
+                </div>
+                <div>
+                    <div class="warning-box">
+                        <h3 style="color: #dc2626; margin-bottom: 25px; font-size: 24px;">🚨 CRITICAL FINDINGS</h3>
+                        <ul style="margin: 0;">
+                            <li style="font-size: 18px; margin: 15px 0;"><strong>Finding 1:</strong> Feedback systems
+                                failing (54.4/100)</li>
+                            <li style="font-size: 18px; margin: 15px 0;"><strong>Finding 2:</strong> Performance
+                                visibility crisis (59.0/100)</li>
+                            <li style="font-size: 18px; margin: 15px 0;"><strong>Finding 3:</strong> Leadership
+                                development gaps threaten growth</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout-box" style="text-align: center; margin-top: 40px;">
+                <h3 style="color: #dc2626; margin-bottom: 15px; font-size: 32px;">💰 Critical productivity gaps
+                    identified</h3>
+                <p style="font-size: 20px; font-weight: 600;">Systematic issues preventing organizational excellence</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Survey Overview -->
+        <div class="slide">
+            <div class="slide-counter">3 / 16</div>
+            <h1>COMPREHENSIVE ANALYSIS – 366 VOICES ACROSS 40 PRACTICES</h1>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">366</div>
+                    <div class="stat-label">Employee Responses</div>
+                    <div class="stat-sublabel">(92% participation rate)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">40</div>
+                    <div class="stat-label">Management Practices</div>
+                    <div class="stat-sublabel">evaluated comprehensively</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">25</div>
+                    <div class="stat-label">Departments</div>
+                    <div class="stat-sublabel">represented across HURL</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Key Dimensions</div>
+                    <div class="stat-sublabel">measured systematically</div>
+                </div>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h3 style="color: #059669; font-size: 24px; margin-bottom: 15px;">📊 May 2025 Data – Current State
+                    Snapshot</h3>
+                <p style="font-size: 20px; font-weight: 600;">High participation ensures statistical reliability and
+                    organizational buy-in</p>
+            </div>
+        </div>
+
+        <!-- Slide 4: Current Reality -->
+        <div class="slide">
+            <div class="slide-counter">4 / 16</div>
+            <h1>STRONG FOUNDATION WITH CRITICAL GAPS</h1>
+
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #059669; font-size: 28px; margin-bottom: 30px;">🏆 ORGANIZATIONAL STRENGTHS</h3>
+                    <div class="performance-bar bar-high">
+                        <span style="font-size: 18px;">Team collaboration excellence</span>
+                        <span class="score-medium score-good">70.6/100</span>
+                    </div>
+                    <div class="performance-bar bar-high">
+                        <span style="font-size: 18px;">Customer awareness strength</span>
+                        <span class="score-medium score-good">69.8/100</span>
+                    </div>
+                    <div class="performance-bar bar-high">
+                        <span style="font-size: 18px;">Values clarity established</span>
+                        <span class="score-medium score-good">69.2/100</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #dc2626; font-size: 28px; margin-bottom: 30px;">⚠️ CRITICAL GAPS</h3>
+                    <div class="performance-bar bar-low">
+                        <span style="font-size: 18px;">Feedback systems breakdown</span>
+                        <span class="score-medium">54.4/100</span>
+                    </div>
+                    <div class="performance-bar bar-low">
+                        <span style="font-size: 18px;">Performance visibility failure</span>
+                        <span class="score-medium">59.0/100</span>
+                    </div>
+                    <div class="performance-bar bar-low">
+                        <span style="font-size: 18px;">Leadership development absent</span>
+                        <span class="score-medium">varies</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="callout-box" style="text-align: center; margin-top: 40px;">
+                <h3 style="color: #1e40af; font-size: 24px; margin-bottom: 15px;">💪 Excellent foundations for
+                    transformation exist</h3>
+                <p style="font-size: 20px; font-weight: 600;">Three critical gaps are preventing management excellence
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Critical Finding 1 -->
+        <div class="slide">
+            <div class="slide-counter">5 / 16</div>
+            <h1>CRITICAL FINDING 1 – FEEDBACK BREAKDOWN COSTS US DAILY</h1>
+
+            <div class="critical-finding">
+                <h3>⚡ Weekly feedback collection: 54.4/100</h3>
+                <p style="font-size: 22px; margin: 15px 0; font-weight: 600;">Lowest score across all 40 practices</p>
+            </div>
+
+            <div class="impact-grid">
+                <div class="warning-box">
+                    <h4 style="color: #dc2626; margin-bottom: 20px; font-size: 22px;">🔍 Root Cause</h4>
+                    <p style="font-size: 18px;">No systematic feedback mechanisms in place across the organization</p>
+                </div>
+                <div class="warning-box">
+                    <h4 style="color: #dc2626; margin-bottom: 20px; font-size: 22px;">📉 Business Impact</h4>
+                    <p style="font-size: 18px;">Slower problem resolution, employee disengagement, missed opportunities
+                    </p>
+                </div>
+            </div>
+
+            <div class="cost-inaction">
+                <h3 style="margin-bottom: 20px; font-size: 28px;">💸 Impact of Inaction</h3>
+                <div style="font-size: 56px; font-weight: 800; color: white; margin: 20px 0;">Reduced</div>
+                <div style="font-size: 48px; font-weight: 600; color: #fed7aa; margin: 10px 0;">Productivity</div>
+                <p style="font-size: 20px; margin-top: 15px;">Ongoing performance decline</p>
+            </div>
+
+            <div class="success-box" style="text-align: center;">
+                <h4 style="color: #059669; margin-bottom: 20px; font-size: 24px;">🚀 Quick Win Opportunity</h4>
+                <p style="font-size: 22px; font-weight: 700;">Deploy pulse surveys immediately – 30-day implementation
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Critical Finding 2 -->
+        <div class="slide">
+            <div class="slide-counter">6 / 16</div>
+            <h1>CRITICAL FINDING 2 – PERFORMANCE VISIBILITY CRISIS</h1>
+
+            <div class="critical-finding">
+                <h3>📊 Visual scoreboards: 59.0/100</h3>
+                <p style="font-size: 22px; margin: 15px 0; font-weight: 600;">Major transparency gap undermining
+                    accountability</p>
+            </div>
+
+            <div class="impact-grid">
+                <div class="warning-box">
+                    <h4 style="color: #dc2626; margin-bottom: 20px; font-size: 22px;">🔍 Root Cause</h4>
+                    <p style="font-size: 18px;">Lack of visual management systems across departments</p>
+                </div>
+                <div class="warning-box">
+                    <h4 style="color: #dc2626; margin-bottom: 20px; font-size: 22px;">📉 Business Impact</h4>
+                    <p style="font-size: 18px;">Unclear progress tracking, reduced accountability, goals missed</p>
+                </div>
+            </div>
+
+            <div class="callout-box"
+                style="text-align: center; background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-left-color: #dc2626;">
+                <h3 style="color: #dc2626; margin-bottom: 15px; font-size: 28px;">⚠️ Teams can't manage what they can't
+                    see</h3>
+                <p style="font-size: 20px; font-weight: 600;">Performance drift without real-time visibility</p>
+            </div>
+
+            <div class="success-box" style="text-align: center;">
+                <h4 style="color: #059669; margin-bottom: 20px; font-size: 24px;">🚀 Quick Win Opportunity</h4>
+                <p style="font-size: 22px; font-weight: 700;">Install department dashboards now – immediate transparency
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Critical Finding 3 -->
+        <div class="slide">
+            <div class="slide-counter">7 / 16</div>
+            <h1>CRITICAL FINDING 3 – LEADERSHIP DEVELOPMENT GAPS</h1>
+
+            <div class="critical-finding">
+                <h3>👥 Leadership coaching: Inconsistent coverage</h3>
+                <p style="font-size: 22px; margin: 15px 0; font-weight: 600;">Especially critical in production areas
+                </p>
+            </div>
+
+            <div class="impact-grid">
+                <div class="warning-box">
+                    <h4 style="color: #dc2626; margin-bottom: 20px; font-size: 22px;">🔍 Root Cause</h4>
+                    <p style="font-size: 18px;">No structured leadership development programs</p>
+                </div>
+                <div class="warning-box">
+                    <h4 style="color: #dc2626; margin-bottom: 20px; font-size: 22px;">📉 Business Impact</h4>
+                    <p style="font-size: 18px;">Weak succession planning, critical skill gaps</p>
+                </div>
+            </div>
+
+            <div class="cost-inaction">
+                <h3 style="margin-bottom: 20px; font-size: 28px;">⏰ Cost of Inaction</h3>
+                <div style="font-size: 48px; font-weight: 800; margin: 20px 0; color: white;">Leadership Crisis</div>
+                <p style="font-size: 20px; margin-top: 15px;">Within 24 months</p>
+            </div>
+
+            <div class="success-box" style="text-align: center;">
+                <h4 style="color: #059669; margin-bottom: 20px; font-size: 24px;">🚀 Quick Win Opportunity</h4>
+                <p style="font-size: 22px; font-weight: 700;">Launch coaching for production leaders immediately</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Department Performance -->
+        <div class="slide">
+            <div class="slide-counter">8 / 16</div>
+            <h1>28.4-POINT DEPARTMENT GAP DEMANDS ACTION</h1>
+
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #059669; font-size: 28px; margin-bottom: 30px;">🏆 TOP PERFORMERS</h3>
+                    <div class="dept-card dept-high" style="margin: 15px 0;">
+                        <div style="font-size: 20px; font-weight: 700;">Instrumentation</div>
+                        <div style="font-size: 32px; margin-top: 10px;">79.2/100</div>
+                    </div>
+                    <div class="dept-card dept-high" style="margin: 15px 0;">
+                        <div style="font-size: 20px; font-weight: 700;">Security</div>
+                        <div style="font-size: 32px; margin-top: 10px;">77.4/100</div>
+                    </div>
+                    <div class="dept-card dept-high" style="margin: 15px 0;">
+                        <div style="font-size: 20px; font-weight: 700;">Marketing</div>
+                        <div style="font-size: 32px; margin-top: 10px;">76.4/100</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #dc2626; font-size: 28px; margin-bottom: 30px;">🚨 NEED IMMEDIATE SUPPORT</h3>
+                    <div class="dept-card dept-low" style="margin: 15px 0;">
+                        <div style="font-size: 20px; font-weight: 700;">Urea Production</div>
+                        <div style="font-size: 32px; margin-top: 10px;">50.8/100</div>
+                    </div>
+                    <div class="dept-card dept-low" style="margin: 15px 0;">
+                        <div style="font-size: 20px; font-weight: 700;">Ammonia Production</div>
+                        <div style="font-size: 32px; margin-top: 10px;">53.2/100</div>
+                    </div>
+                    <div class="dept-card dept-low" style="margin: 15px 0;">
+                        <div style="font-size: 20px; font-weight: 700;">Finance</div>
+                        <div style="font-size: 32px; margin-top: 10px;">57.6/100</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="critical-finding" style="margin-top: 50px;">
+                <h3 style="font-size: 36px; margin-bottom: 20px;">⚠️ 28.4-POINT PERFORMANCE GAP</h3>
+                <p style="font-size: 22px; font-weight: 600;">Between best and worst performing departments</p>
+                <p style="font-size: 20px; margin-top: 15px;">This gap is unacceptable and solvable</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Transformation Plan -->
+        <div class="slide">
+            <div class="slide-counter">9 / 16</div>
+            <h1>THREE-PHASE TRANSFORMATION PLAN</h1>
+
+            <div class="transformation-visual">
+                <span class="current-score">63.8</span>
+                <span class="progress-arrow">→</span>
+                <span class="target-score">75+</span>
+            </div>
+            <p style="text-align: center; font-size: 24px; font-weight: 600; color: #64748b; margin-bottom: 50px;">Score
+                Progression in 12 Months</p>
+
+            <div class="timeline">
+                <div class="timeline-phase phase-1">
+                    <h3 style="color: #dc2626; margin-bottom: 20px; font-size: 24px;">⚡ IMMEDIATE</h3>
+                    <p style="font-weight: 700; margin-bottom: 20px; font-size: 18px;">(0-3 MONTHS)</p>
+                    <ul style="text-align: left; font-size: 16px;">
+                        <li>Deploy feedback systems</li>
+                        <li>Install visual dashboards</li>
+                        <li>Launch production support</li>
+                    </ul>
+                </div>
+                <div class="timeline-phase phase-2">
+                    <h3 style="color: #f59e0b; margin-bottom: 20px; font-size: 24px;">🎯 MEDIUM-TERM</h3>
+                    <p style="font-weight: 700; margin-bottom: 20px; font-size: 18px;">(3-12 MONTHS)</p>
+                    <ul style="text-align: left; font-size: 16px;">
+                        <li>Leadership development academy</li>
+                        <li>HR system integration</li>
+                        <li>Strategic planning enhancement</li>
+                    </ul>
+                </div>
+                <div class="timeline-phase phase-3">
+                    <h3 style="color: #059669; margin-bottom: 20px; font-size: 24px;">🚀 LONG-TERM</h3>
+                    <p style="font-weight: 700; margin-bottom: 20px; font-size: 18px;">(1-2 YEARS)</p>
+                    <ul style="text-align: left; font-size: 16px;">
+                        <li>Management operating system</li>
+                        <li>Cultural transformation</li>
+                        <li>Performance revolution</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success-box" style="text-align: center; margin-top: 40px;">
+                <h3 style="color: #059669; font-size: 24px; margin-bottom: 15px;">🎯 Practical roadmap with measurable
+                    outcomes</h3>
+                <p style="font-size: 20px; font-weight: 600;">Significant improvement in 90 days, transformation in 12
+                    months</p>
+            </div>
+        </div>
+
+        <!-- Slide 10: Immediate Action 1 -->
+        <div class="slide">
+            <div class="slide-counter">10 / 16</div>
+            <h1>ACTION 1: DEPLOY WEEKLY FEEDBACK SYSTEM</h1>
+
+            <div class="transformation-visual" style="margin: 40px 0;">
+                <span style="color: #dc2626;">54.4</span>
+                <span class="progress-arrow">→</span>
+                <span style="color: #059669;">70+</span>
+            </div>
+            <p style="text-align: center; font-size: 20px; font-weight: 600; color: #64748b; margin-bottom: 40px;">
+                Target Score Improvement</p>
+
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #1e40af; font-size: 24px; margin-bottom: 25px;">📱 Implementation</h3>
+                    <p style="font-size: 18px; margin: 15px 0;">Simple pulse surveys via mobile/web platform</p>
+
+                    <h3 style="color: #1e40af; font-size: 24px; margin: 30px 0 25px 0;">⏰ Timeline</h3>
+                    <ul style="font-size: 18px;">
+                        <li>Deploy by Day 30</li>
+                        <li>Full adoption by Day 60</li>
+                    </ul>
+
+                    <h3 style="color: #1e40af; font-size: 24px; margin: 30px 0 25px 0;">📋 Resources Needed</h3>
+                    <div class="premium-card" style="text-align: center;">
+                        <div style="font-size: 20px; font-weight: 600; color: #059669;">HR Team</div>
+                        <div style="font-size: 16px; margin-top: 10px; color: #64748b;">+ Survey Platform</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #059669; font-size: 24px; margin-bottom: 25px;">🎯 Success Metrics</h3>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">📊</div>
+                        <div class="metric-title">85% Participation Rate</div>
+                    </div>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">📈</div>
+                        <div class="metric-title">15-Point Score Improvement</div>
+                    </div>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">⚡</div>
+                        <div class="metric-title">Weekly Insights Generation</div>
+                    </div>
+
+                    <div class="success-box" style="margin-top: 25px; text-align: center;">
+                        <h4 style="color: #059669; margin-bottom: 15px;">👤 Owner</h4>
+                        <p style="font-size: 18px; font-weight: 700;">VP,HR with IT support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Immediate Action 2 -->
+        <div class="slide">
+            <div class="slide-counter">11 / 16</div>
+            <h1>ACTION 2: INSTALL VISUAL DASHBOARDS</h1>
+
+            <div class="transformation-visual" style="margin: 40px 0;">
+                <span style="color: #dc2626;">59.0</span>
+                <span class="progress-arrow">→</span>
+                <span style="color: #059669;">71+</span>
+            </div>
+            <p style="text-align: center; font-size: 20px; font-weight: 600; color: #64748b; margin-bottom: 40px;">
+                Target Score Improvement</p>
+
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #1e40af; font-size: 24px; margin-bottom: 25px;">📺 Implementation</h3>
+                    <p style="font-size: 18px; margin: 15px 0;">Digital scoreboards showing KPIs + goals</p>
+
+                    <h3 style="color: #1e40af; font-size: 24px; margin: 30px 0 25px 0;">⏰ Timeline</h3>
+                    <ul style="font-size: 18px;">
+                        <li>Design: Week 1-2</li>
+                        <li>Install: Week 3-4</li>
+                    </ul>
+
+                    <h3 style="color: #1e40af; font-size: 24px; margin: 30px 0 25px 0;">📋 Resources Needed</h3>
+                    <div class="premium-card" style="text-align: center;">
+                        <div style="font-size: 20px; font-weight: 600; color: #059669;">IT Support</div>
+                        <div style="font-size: 16px; margin-top: 10px; color: #64748b;">+ Display Hardware</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #059669; font-size: 24px; margin-bottom: 25px;">🎯 Success Metrics</h3>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">🏢</div>
+                        <div class="metric-title">100% Departments Covered</div>
+                    </div>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">📈</div>
+                        <div class="metric-title">12-Point Score Improvement</div>
+                    </div>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">⏱️</div>
+                        <div class="metric-title">Real-Time Performance Tracking</div>
+                    </div>
+
+                    <div class="success-box" style="margin-top: 25px; text-align: center;">
+                        <h4 style="color: #059669; margin-bottom: 15px;">👤 Owner</h4>
+                        <p style="font-size: 18px; font-weight: 700;">Operations Director + Dept Heads</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Immediate Action 3 -->
+        <div class="slide">
+            <div class="slide-counter">12 / 16</div>
+            <h1>ACTION 3: PRODUCTION DEPARTMENT SUPPORT</h1>
+
+            <div class="transformation-visual" style="margin: 40px 0;">
+                <span style="color: #dc2626;">50.8</span>
+                <span class="progress-arrow">→</span>
+                <span style="color: #059669;">66+</span>
+            </div>
+            <p style="text-align: center; font-size: 20px; font-weight: 600; color: #64748b; margin-bottom: 40px;">
+                Target Improvement (Urea Production)</p>
+
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #1e40af; font-size: 24px; margin-bottom: 25px;">🎯 Implementation</h3>
+                    <p style="font-size: 18px; margin: 15px 0;">External coaching + best practice transfer</p>
+
+                    <h3 style="color: #1e40af; font-size: 24px; margin: 30px 0 25px 0;">⏰ Timeline</h3>
+                    <ul style="font-size: 18px;">
+                        <li>90-day intensive program</li>
+                        <li>Starting immediately</li>
+                    </ul>
+
+                    <h3 style="color: #1e40af; font-size: 24px; margin: 30px 0 25px 0;">📋 Resources Needed</h3>
+                    <div class="premium-card" style="text-align: center;">
+                        <div style="font-size: 20px; font-weight: 600; color: #059669;">External Coach</div>
+                        <div style="font-size: 16px; margin-top: 10px; color: #64748b;">+ Internal Team</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #059669; font-size: 24px; margin-bottom: 25px;">🎯 Success Metrics</h3>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">📈</div>
+                        <div class="metric-title">15-Point Score Improvement</div>
+                    </div>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">⚙️</div>
+                        <div class="metric-title">Best Practice Implementation</div>
+                    </div>
+                    <div class="metric-card" style="margin: 15px 0;">
+                        <div class="metric-icon">🔧</div>
+                        <div class="metric-title">Sustainable Management Systems</div>
+                    </div>
+
+                    <div class="warning-box" style="margin-top: 25px; text-align: center;">
+                        <h4 style="color: #dc2626; margin-bottom: 15px;">🏭 Priority Focus</h4>
+                        <p style="font-size: 18px; font-weight: 700;">Urea & Ammonia Production</p>
+                    </div>
+
+                    <div class="success-box" style="margin-top: 20px; text-align: center;">
+                        <h4 style="color: #059669; margin-bottom: 15px;">👤 Owner</h4>
+                        <p style="font-size: 18px; font-weight: 700;">COO with Plant Managers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Expected Outcomes -->
+        <div class="slide">
+            <div class="slide-counter">13 / 16</div>
+            <div class="logo-container">
+                <div class="hurl-logo">
+                    <img src="/images/hurl.jpeg" alt="HURL Logo"
+                        style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+                <div class="consultant-logo">
+                    <img src="/images/image.webp" alt="Your Company Logo"
+                        style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+            </div>
+            <h1>EXPECTED TRANSFORMATION OUTCOMES</h1>
+
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #3b82f6; font-size: 28px; margin-bottom: 30px;">📊 ORGANIZATIONAL IMPROVEMENTS
+                    </h3>
+                    <div class="premium-card"
+                        style="text-align: center; background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 2px solid #3b82f6;">
+                        <div style="font-size: 24px; font-weight: 700; color: #1e40af; margin: 20px 0;">Management Score
+                        </div>
+                        <div style="font-size: 32px; font-weight: 800; color: #3b82f6;">63.8 → 75+</div>
+                        <p style="color: #6b7280; margin-top: 10px;">(18% improvement)</p>
+
+                        <div style="margin: 30px 0;">
+                            <div class="metric-card"
+                                style="border: none; background: transparent; box-shadow: none; margin: 15px 0;">
+                                <div style="color: #1e40af; font-size: 16px; font-weight: 600;">Department gap reduced
+                                    from 28.4 to <10 points</div>
+                                </div>
+                                <div class="metric-card"
+                                    style="border: none; background: transparent; box-shadow: none; margin: 15px 0;">
+                                    <div style="color: #1e40af; font-size: 16px; font-weight: 600;">Feedback collection:
+                                        54.4 → 70+ score</div>
+                                </div>
+                                <div class="metric-card"
+                                    style="border: none; background: transparent; box-shadow: none; margin: 15px 0;">
+                                    <div style="color: #1e40af; font-size: 16px; font-weight: 600;">Performance
+                                        visibility: 59.0 → 75+ score</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 style="color: #059669; font-size: 28px; margin-bottom: 30px;">🎯 BUSINESS BENEFITS</h3>
+                        <div class="premium-card"
+                            style="text-align: center; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border: 2px solid #059669;">
+                            <div class="metric-card"
+                                style="border: none; background: transparent; box-shadow: none; margin: 15px 0;">
+                                <div class="metric-icon">📈</div>
+                                <div class="metric-title">Productivity Enhancement</div>
+                                <div class="metric-value">8-12% operational improvement</div>
+                            </div>
+                            <div class="metric-card"
+                                style="border: none; background: transparent; box-shadow: none; margin: 15px 0;">
+                                <div class="metric-icon">👥</div>
+                                <div class="metric-title">Employee Retention</div>
+                                <div class="metric-value">15% improvement in retention rates</div>
+                            </div>
+                            <div class="metric-card"
+                                style="border: none; background: transparent; box-shadow: none; margin: 15px 0;">
+                                <div class="metric-icon">⚡</div>
+                                <div class="metric-title">Problem Resolution</div>
+                                <div class="metric-value">Faster identification & solution</div>
+                            </div>
+                            <div class="metric-card"
+                                style="border: none; background: transparent; box-shadow: none; margin: 15px 0;">
+                                <div class="metric-icon">🎯</div>
+                                <div class="metric-title">Goal Achievement</div>
+                                <div class="metric-value">Improved accountability & tracking</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-box" style="text-align: center; margin-top: 40px;">
+                    <h3 style="margin-bottom: 25px; font-size: 32px;">🚀 TRANSFORMATION TIMELINE</h3>
+                    <p style="font-size: 28px; margin: 25px 0; font-weight: 700;">⚡ Significant improvement in 90 days
+                    </p>
+                    <p style="font-size: 20px;">Full transformation within 12 months</p>
+                </div>
+            </div>
+
+            <!-- Slide 14: Success Metrics -->
+            <div class="slide">
+                <div class="slide-counter">14 / 16</div>
+                <h1>QUARTERLY TRACKING ENSURES DELIVERY</h1>
+
+                <h3 style="color: #1e40af; margin-bottom: 40px; font-size: 28px; text-align: center;">📊 KEY PERFORMANCE
+                    INDICATORS</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+                    <div class="metric-card">
+                        <div class="metric-icon">📈</div>
+                        <div class="metric-title">Overall Management Effectiveness</div>
+                        <div class="metric-value">Quarterly | Target: 75/100 by year-end</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-icon">🏢</div>
+                        <div class="metric-title">Department Performance Gaps</div>
+                        <div class="metric-value">Monthly | Target: <10 point spread</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">📝</div>
+                            <div class="metric-title">Feedback Collection Rate</div>
+                            <div class="metric-value">Weekly | Target: 85% participation</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">📺</div>
+                            <div class="metric-title">Dashboard Utilization</div>
+                            <div class="metric-value">Daily | Target: 100% departments</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">👥</div>
+                            <div class="metric-title">Leadership Development</div>
+                            <div class="metric-value">Monthly | Target: 100% leaders coached</div>
+                        </div>
+                        <div class="metric-card"
+                            style="background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-color: #059669;">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-title">Quarterly Review Process</div>
+                            <div class="metric-value">Standard leadership integration</div>
+                        </div>
+                    </div>
+
+                    <div class="success-box" style="text-align: center; margin-top: 40px;">
+                        <h3 style="color: #059669; font-size: 24px; margin-bottom: 15px;">📊 What gets measured gets
+                            managed</h3>
+                        <p style="font-size: 20px; font-weight: 600;">Real-time course correction with accountability
+                            built-in</p>
+                    </div>
+                </div>
+
+                <!-- Slide 15: Decisions Needed -->
+                <div class="slide">
+                    <div class="slide-counter">15 / 16</div>
+                    <div class="logo-container">
+                        <div class="hurl-logo">
+                            <img src="/images/hurl.jpeg" alt="HURL Logo"
+                                style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="consultant-logo">
+                            <img src="/images/image.webp" alt="Your Company Logo"
+                                style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                    </div>
+                    <h1>DECISIONS NEEDED TODAY</h1>
+
+                    <h3 style="color: #dc2626; margin-bottom: 40px; text-align: center; font-size: 32px;">⚡ EXECUTIVE
+                        ACTION ITEMS</h3>
+
+                    <div class="action-items">
+                        <h4 style="color: #f59e0b; font-size: 24px; margin-bottom: 30px;">🎯 IMMEDIATE DECISIONS
+                            REQUIRED</h4>
+                        <ul class="checkbox-list">
+                            <li><strong>Approve transformation initiative resources</strong> → Decision: <span
+                                    style="color: #dc2626; font-weight: 800;">TODAY</span></li>
+                            <li><strong>Assign executive sponsors for each priority</strong> → Assignment: <span
+                                    style="color: #dc2626; font-weight: 800;">THIS WEEK</span></li>
+                            <li><strong>Authorize production support program</strong> → Start: <span
+                                    style="color: #dc2626; font-weight: 800;">WITHIN 7 DAYS</span></li>
+                            <li><strong>Commit to quarterly review process</strong> → Calendar: <span
+                                    style="color: #dc2626; font-weight: 800;">NEXT 30 DAYS</span></li>
+                            <li><strong>Communication plan approval</strong> → Rollout: <span
+                                    style="color: #dc2626; font-weight: 800;">WEEK 2</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="critical-finding" style="margin-top: 50px;">
+                        <h3 style="font-size: 32px; margin-bottom: 20px;">🚀 THE ORGANIZATION IS READY</h3>
+                        <p style="font-size: 24px; font-weight: 700; margin-bottom: 15px;">The question is whether
+                            leadership will act</p>
+                        <p style="font-size: 20px;">These five decisions, made today, will initiate our journey from
+                            good to great</p>
+                    </div>
+                </div>
+
+                <!-- Slide 16: Appendix -->
+                <div class="slide">
+                    <div class="slide-counter">16 / 16</div>
+                    <div class="logo-container">
+                        <div class="hurl-logo">
+                            <img src="/images/hurl.jpeg" alt="HURL Logo"
+                                style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                        <div class="consultant-logo">
+                            <img src="/images/image.webp" alt="Your Company Logo"
+                                style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                    </div>
+                    <h1>SUPPORTING ANALYSIS AVAILABLE</h1>
+
+                    <div style="text-align: center; margin: 60px 0;">
+                        <h3 style="color: #1e40af; margin-bottom: 50px; font-size: 32px;">📚 ADDITIONAL RESOURCES</h3>
+
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin: 50px 0;">
+                            <div class="metric-card">
+                                <div class="metric-icon">📊</div>
+                                <div class="metric-title">Complete Statistical Analysis</div>
+                                <div class="metric-value">40-question detailed findings with correlation analysis</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon">🏢</div>
+                                <div class="metric-title">Department Breakdown</div>
+                                <div class="metric-value">Department-by-department detailed performance analysis</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon">⚡</div>
+                                <div class="metric-title">Implementation Guides</div>
+                                <div class="metric-value">Timeline details and vendor recommendations</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-icon">🎯</div>
+                                <div class="metric-title">Executive Briefings</div>
+                                <div class="metric-value">Ready for immediate follow-up sessions</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="roi-hero" style="margin-top: 60px;">
+                        <h3 style="margin-bottom: 25px; font-size: 28px;">🚀 READY FOR IMMEDIATE ACTION</h3>
+                        <p style="font-size: 24px; font-weight: 700; margin: 20px 0;">Full report and implementation
+                            support available now</p>
+                        <p style="font-size: 20px; margin-top: 20px;">From decision to action with comprehensive support
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="navigation">
+                    <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+                    <div class="slide-info" id="slideInfo">1 / 16</div>
+                    <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+                </div>
+            </div>
+
+            <script>
+                let currentSlide = 0;
+                const slides = document.querySelectorAll('.slide');
+                const totalSlides = slides.length;
+
+                function showSlide(n) {
+                    slides[currentSlide].classList.remove('active');
+                    currentSlide = (n + totalSlides) % totalSlides;
+                    slides[currentSlide].classList.add('active');
+
+                    document.getElementById('slideInfo').textContent = `${currentSlide + 1} / ${totalSlides}`;
+
+                    // Update navigation buttons
+                    document.getElementById('prevBtn').disabled = currentSlide === 0;
+                    document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+                }
+
+                function changeSlide(direction) {
+                    if (direction === 1 && currentSlide < totalSlides - 1) {
+                        showSlide(currentSlide + 1);
+                    } else if (direction === -1 && currentSlide > 0) {
+                        showSlide(currentSlide - 1);
+                    }
+                }
+
+                // Keyboard navigation
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'ArrowRight' || e.key === ' ') {
+                        e.preventDefault();
+                        changeSlide(1);
+                    } else if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        changeSlide(-1);
+                    }
+                });
+
+                // Touch/swipe support
+                let touchStartX = 0;
+                let touchEndX = 0;
+
+                document.addEventListener('touchstart', function (e) {
+                    touchStartX = e.changedTouches[0].screenX;
+                });
+
+                document.addEventListener('touchend', function (e) {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                });
+
+                function handleSwipe() {
+                    if (touchEndX < touchStartX - 50) {
+                        changeSlide(1); // Swipe left, go to next slide
+                    }
+                    if (touchEndX > touchStartX + 50) {
+                        changeSlide(-1); // Swipe right, go to previous slide
+                    }
+                }
+
+                // Initialize
+                showSlide(0);
+
+                // Auto-hide cursor during presentation
+                let mouseTimer;
+                document.addEventListener('mousemove', function () {
+                    document.body.style.cursor = 'default';
+                    clearTimeout(mouseTimer);
+                    mouseTimer = setTimeout(() => {
+                        document.body.style.cursor = 'none';
+                    }, 3000);
+                });
+            </script>
+</body>
+
+</html>
